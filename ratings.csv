@@ -1,41 +1,521 @@
 registerno,department,semester,staff,subject,q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,average
-922523244051,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,10,10,10,10,10,10,10,10,10,10,10
-922523244051,Computer Science and Business Systems,4,Pavithra,Database Management Systems,6,5,6,5,6,5,6,5,5,6,5.5
-922523244051,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,8,7,8,7,8,7,8,7,8,7,7.5
-922523244051,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,4,2,3,3,3,4,2,3,4,3,3.1
-922523244051,Computer Science and Business Systems,4,Manonmani,Machine Learning,8,9,9,8,8,9,8,9,9,8,8.5
-922523244051,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,8,9,8,8,9,8,9,8,9,8,8.4
-922523244051,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,6,7,7,7,6,6,7,6,7,7,6.6
-922523244051,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,9,8,9,8,9,8,8,9,8,9,8.5
-922523244051,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,8,6,6,7,6,7,7,6,6,7,6.6
-922523244051,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,7,8,7,7,8,7,8,7,7,8,7.4
-922523244029,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,10,10,10,10,10,10,10,10,10,10,10
-922523244029,Computer Science and Business Systems,4,Pavithra,Database Management Systems,7,8,5,6,9,7,7,7,5,5,6.6
-922523244029,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,8,7,10,9,6,9,9,9,10,7,8.4
-922523244029,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,1,1,1,1,1,1,1,1,1,1,1
-922523244029,Computer Science and Business Systems,4,Manonmani,Machine Learning,10,9,8,9,9,8,7,9,9,7,8.5
-922523244029,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,9,9,8,7,9,7,8,8,9,10,8.4
-922523244029,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,5,9,8,6,8,4,5,7,4,5,6.1
-922523244029,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,9,7,9,7,7,7,9,7,6,8,7.6
-922523244029,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,9,8,8,8,9,8,9,7,7,9,8.2
-922523244029,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,8,8,10,9,8,9,9,8,9,10,8.8
-922523244017,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,9,9,9,9,9,9,9,9,9,9,9
-922523244017,Computer Science and Business Systems,4,Pavithra,Database Management Systems,4,4,5,5,5,5,4,4,4,5,4.5
-922523244017,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,8,9,9,8,8,8,8,9,9,9,8.5
-922523244017,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,2,3,3,3,3,3,3,2,2,2,2.6
-922523244017,Computer Science and Business Systems,4,Manonmani,Machine Learning,8,8,8,9,9,8,8,9,9,8,8.4
-922523244017,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,8,8,8,8,7,7,7,7,8,8,7.6
-922523244017,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,8,7,7,7,7,6,6,6,7,7,6.8
-922523244017,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,8,9,9,9,8,8,8,8,8,9,8.4
-922523244017,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,6,6,7,7,7,7,6,6,6,6,6.4
-922523244017,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,7,8,8,8,7,7,7,8,8,8,7.6
-922523244022,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,9.00,9.00,8.00,8.00,9.00,9.00,9.00,8.00,8.00,9.00,8.60
-922523244022,Computer Science and Business Systems,4,Pavithra,Database Management Systems,7.00,7.00,7.00,7.00,7.00,8.00,8.00,8.00,8.00,7.00,7.40
-922523244022,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,8.00,8.00,7.00,7.00,7.00,8.00,8.00,8.00,7.00,8.00,7.60
-922523244022,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,1.00,2.00,1.00,1.00,1.00,1.00,1.00,2.00,2.00,1.00,1.30
-922523244022,Computer Science and Business Systems,4,Manonmani,Machine Learning,9.00,9.00,8.00,8.00,8.00,9.00,9.00,9.00,8.00,8.00,8.50
-922523244022,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,8.00,9.00,9.00,8.00,8.00,8.00,9.00,9.00,9.00,8.00,8.50
-922523244022,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,9.00,6.00,7.00,7.00,6.00,6.00,6.00,7.00,7.00,7.00,6.80
-922523244022,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,8.00,8.00,9.00,9.00,9.00,9.00,8.00,8.00,8.00,9.00,8.50
-922523244022,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,7.00,8.00,7.00,7.00,7.00,7.00,7.00,8.00,7.00,7.00,7.20
-922523244022,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,8.00,8.00,8.00,9.00,7.00,6.00,6.00,7.00,7.00,7.00,7.30
+922523244007,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,5.00,6.00,5.00,5.00,5.00,5.00,5.00,5.00,5.00,5.00,5.10
+922523244007,Computer Science and Business Systems,4,Pavithra,Database Management Systems,5.00,4.00,3.00,2.00,1.00,5.00,4.00,3.00,2.00,1.00,3.00
+922523244007,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,6.00,6.00,6.00,6.00,5.00,6.00,6.00,6.00,5.00,6.00,5.80
+922523244007,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
+922523244007,Computer Science and Business Systems,4,Manonmani,Machine Learning,4.00,5.00,5.00,5.00,5.00,6.00,6.00,5.00,6.00,5.00,5.20
+922523244007,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,7.00,7.00,8.00,6.00,7.00,7.00,7.00,7.00,7.00,7.00,7.00
+922523244007,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,1.00,1.00,3.00,2.00,2.00,3.00,1.00,2.00,3.00,1.00,1.90
+922523244007,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,4.00,5.00,5.00,6.00,5.00,4.00,4.00,6.00,5.00,5.00,4.90
+922523244007,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,8.00,7.00,5.00,6.00,5.00,3.00,6.00,5.00,7.00,4.00,5.60
+922523244007,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,4.00,6.00,7.00,6.00,4.00,4.00,7.00,7.00,7.00,8.00,6.00
+922523244036,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244036,Computer Science and Business Systems,4,Pavithra,Database Management Systems,9.00,8.00,10.00,8.00,8.00,9.00,10.00,10.00,8.00,8.00,8.80
+922523244036,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
+922523244036,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
+922523244036,Computer Science and Business Systems,4,Manonmani,Machine Learning,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244036,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,7.00,8.00,9.00,6.00,5.00,8.00,8.00,9.00,10.00,10.00,8.00
+922523244036,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,10.00,10.00,10.00,10.00,10.00,10.00,9.00,10.00,10.00,10.00,9.90
+922523244036,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244036,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,8.00,9.00,7.00,6.00,6.00,3.00,7.00,8.00,10.00,9.00,7.30
+922523244036,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
+922523244038,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244038,Computer Science and Business Systems,4,Pavithra,Database Management Systems,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244038,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244038,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244038,Computer Science and Business Systems,4,Manonmani,Machine Learning,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244038,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244038,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244038,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244038,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244038,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244022,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,6.00,6.00,6.00,6.00,6.00,7.00,7.00,7.00,7.00,7.00,6.50
+922523244022,Computer Science and Business Systems,4,Pavithra,Database Management Systems,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00
+922523244022,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00
+922523244022,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
+922523244022,Computer Science and Business Systems,4,Manonmani,Machine Learning,7.00,7.00,7.00,7.00,7.00,7.00,7.00,7.00,7.00,7.00,7.00
+922523244022,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00
+922523244022,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,8.00,8.00,8.00,9.00,9.00,9.00,8.00,8.00,8.00,9.00,8.40
+922523244022,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,9.00,8.00,9.00,8.00,9.00,8.00,9.00,8.00,9.00,8.00,8.50
+922523244022,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00
+922523244022,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,10.00,10.00,10.00,10.00,10.00,10.00,10.00,9.00,10.00,10.00,9.90
+922523244023,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,8.00,9.00,8.00,8.00,9.00,8.00,9.00,8.00,9.00,9.00,8.50
+922523244023,Computer Science and Business Systems,4,Pavithra,Database Management Systems,7.00,6.00,5.00,6.00,7.00,8.00,8.00,8.00,7.00,8.00,7.00
+922523244023,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,7.00,7.00,8.00,7.00,8.00,7.00,8.00,8.00,8.00,6.00,7.40
+922523244023,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,5.00,6.00,3.00,5.00,6.00,4.00,6.00,7.00,5.00,6.00,5.30
+922523244023,Computer Science and Business Systems,4,Manonmani,Machine Learning,8.00,8.00,9.00,7.00,8.00,9.00,8.00,8.00,9.00,8.00,8.20
+922523244023,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,6.00,8.00,9.00,8.00,9.00,7.00,8.00,9.00,8.00,9.00,8.10
+922523244023,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,7.00,6.00,7.00,6.00,8.00,6.00,6.00,7.00,7.00,8.00,6.80
+922523244023,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,10.00,9.00,10.00,9.00,10.00,9.00,10.00,10.00,9.00,10.00,9.60
+922523244023,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,7.00,6.00,6.00,7.00,7.00,6.00,6.00,7.00,6.00,6.00,6.40
+922523244023,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,8.00,8.00,7.00,8.00,9.00,10.00,7.00,8.00,7.00,8.00,8.00
+922523244047,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,5.00,5.00,6.00,5.00,6.00,5.00,6.00,5.00,5.00,5.00,5.30
+922523244047,Computer Science and Business Systems,4,Pavithra,Database Management Systems,2.00,1.00,1.00,2.00,3.00,2.00,1.00,3.00,2.00,2.00,1.90
+922523244047,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,9.00,8.00,8.00,8.00,8.00,8.00,8.00,9.00,8.00,8.00,8.20
+922523244047,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,3.00,4.00,2.00,4.00,3.00,3.00,1.00,2.00,1.00,3.00,2.60
+922523244047,Computer Science and Business Systems,4,Manonmani,Machine Learning,6.00,7.00,7.00,6.00,7.00,7.00,7.00,6.00,7.00,6.00,6.60
+922523244047,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,9.00,9.00,9.00,10.00,9.00,9.00,10.00,10.00,9.00,10.00,9.40
+922523244047,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,5.00,5.00,6.00,6.00,5.00,6.00,3.00,3.00,3.00,3.00,4.50
+922523244047,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,9.00,8.00,8.00,7.00,9.00,6.00,8.00,9.00,8.00,8.00,8.00
+922523244047,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,7.00,6.00,7.00,7.00,6.00,6.00,8.00,7.00,7.00,8.00,6.90
+922523244047,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,7.00,7.00,8.00,7.00,8.00,7.00,8.00,6.00,8.00,6.00,7.20
+922523244008,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,5.00,5.00,3.00,3.00,4.00,4.00,4.00,5.00,6.00,4.00,4.30
+922523244008,Computer Science and Business Systems,4,Pavithra,Database Management Systems,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244008,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244008,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
+922523244008,Computer Science and Business Systems,4,Manonmani,Machine Learning,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244008,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,10.00,10.00,10.00,10.00,10.00,10.00,10.00,9.00,8.00,10.00,9.70
+922523244008,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244008,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244008,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244008,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244004,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,7.00,7.00,8.00,7.00,7.00,9.00,7.00,8.00,7.00,9.00,7.60
+922523244004,Computer Science and Business Systems,4,Pavithra,Database Management Systems,9.00,9.00,9.00,8.00,9.00,10.00,9.00,9.00,9.00,10.00,9.10
+922523244004,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,10.00,10.00,10.00,10.00,10.00,10.00,9.00,9.00,10.00,9.00,9.70
+922523244004,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,9.00,9.00,9.00,8.00,9.00,8.00,9.00,9.00,8.00,9.00,8.70
+922523244004,Computer Science and Business Systems,4,Manonmani,Machine Learning,9.00,9.00,10.00,8.00,10.00,10.00,8.00,9.00,10.00,8.00,9.10
+922523244004,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,10.00,9.00,10.00,9.00,9.00,9.00,8.00,9.00,10.00,9.00,9.20
+922523244004,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,10.00,10.00,8.00,9.00,10.00,10.00,7.00,9.00,10.00,10.00,9.30
+922523244004,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,10.00,10.00,9.00,9.00,10.00,9.00,10.00,9.00,9.00,10.00,9.50
+922523244004,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,10.00,9.00,8.00,8.00,10.00,9.00,9.00,9.00,10.00,10.00,9.20
+922523244004,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,8.00,9.00,9.00,10.00,10.00,10.00,8.00,9.00,10.00,9.00,9.20
+922523244055,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00
+922523244055,Computer Science and Business Systems,4,Pavithra,Database Management Systems,7.00,6.00,7.00,7.00,6.00,7.00,7.00,7.00,7.00,8.00,6.90
+922523244055,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,9.00,9.00,9.00,9.00,9.00,9.00,9.00,9.00,9.00,9.00,9.00
+922523244055,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,6.00,7.00,6.00,6.00,6.00,6.00,6.00,6.00,6.00,6.00,6.10
+922523244055,Computer Science and Business Systems,4,Manonmani,Machine Learning,8.00,8.00,8.00,8.00,9.00,9.00,8.00,9.00,9.00,8.00,8.40
+922523244055,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,9.00,9.00,8.00,7.00,8.00,8.00,9.00,8.00,8.00,8.00,8.20
+922523244055,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,8.00,7.00,9.00,7.00,8.00,9.00,8.00,9.00,8.00,8.00,8.10
+922523244055,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,7.00,9.00,8.00,9.00,8.00,9.00,8.00,8.00,8.00,10.00,8.40
+922523244055,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,9.00,8.00,9.00,9.00,9.00,9.00,8.00,9.00,9.00,9.00,8.80
+922523244055,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,9.00,9.00,9.00,9.00,9.00,9.00,9.00,9.00,9.00,9.00,9.00
+922523244013,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,8.00,7.00,8.00,8.00,9.00,6.00,8.00,8.00,8.00,7.00,7.70
+922523244013,Computer Science and Business Systems,4,Pavithra,Database Management Systems,9.00,8.00,8.00,9.00,10.00,9.00,10.00,9.00,10.00,9.00,9.10
+922523244013,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,8.00,9.00,8.00,8.00,8.00,8.00,9.00,8.00,9.00,9.00,8.40
+922523244013,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,7.00,6.00,7.00,6.00,8.00,8.00,7.00,8.00,8.00,7.00,7.20
+922523244013,Computer Science and Business Systems,4,Manonmani,Machine Learning,8.00,7.00,8.00,9.00,8.00,9.00,10.00,7.00,7.00,8.00,8.10
+922523244013,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,8.00,7.00,7.00,8.00,8.00,8.00,6.00,6.00,8.00,7.00,7.30
+922523244013,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,8.00,7.00,8.00,7.00,8.00,7.00,9.00,9.00,8.00,9.00,8.00
+922523244013,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,8.00,9.00,10.00,8.00,9.00,7.00,9.00,9.00,8.00,10.00,8.70
+922523244013,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,8.00,8.00,9.00,9.00,8.00,7.00,9.00,8.00,8.00,9.00,8.30
+922523244013,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,9.00,9.00,8.00,9.00,7.00,9.00,8.00,8.00,7.00,8.00,8.20
+922523244046,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,5.00,8.00,7.00,8.00,7.00,7.00,7.00,4.00,8.00,10.00,7.10
+922523244046,Computer Science and Business Systems,4,Pavithra,Database Management Systems,8.00,5.00,5.00,7.00,8.00,5.00,6.00,7.00,6.00,10.00,6.70
+922523244046,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,4.00,6.00,7.00,7.00,6.00,8.00,6.00,7.00,8.00,9.00,6.80
+922523244046,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,4.00,5.00,8.00,7.00,8.00,4.00,2.00,6.00,7.00,9.00,6.00
+922523244046,Computer Science and Business Systems,4,Manonmani,Machine Learning,7.00,7.00,8.00,6.00,8.00,8.00,9.00,6.00,8.00,5.00,7.20
+922523244046,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,8.00,7.00,7.00,7.00,6.00,9.00,5.00,5.00,8.00,10.00,7.20
+922523244046,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,7.00,5.00,6.00,6.00,8.00,5.00,6.00,7.00,8.00,9.00,6.70
+922523244046,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,7.00,8.00,8.00,8.00,8.00,8.00,10.00,9.00,7.00,10.00,8.30
+922523244046,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,6.00,8.00,6.00,9.00,5.00,9.00,7.00,5.00,4.00,10.00,6.90
+922523244046,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,4.00,6.00,3.00,7.00,8.00,7.00,7.00,6.00,6.00,10.00,6.40
+922523244034,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,5.00,6.00,7.00,6.00,6.00,5.00,7.00,5.00,5.00,5.00,5.70
+922523244034,Computer Science and Business Systems,4,Pavithra,Database Management Systems,7.00,8.00,5.00,5.00,5.00,6.00,7.00,5.00,6.00,7.00,6.10
+922523244034,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,5.00,6.00,6.00,7.00,7.00,5.00,8.00,7.00,7.00,5.00,6.30
+922523244034,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
+922523244034,Computer Science and Business Systems,4,Manonmani,Machine Learning,8.00,5.00,8.00,7.00,6.00,5.00,9.00,8.00,7.00,8.00,7.10
+922523244034,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,7.00,8.00,7.00,9.00,8.00,7.00,8.00,9.00,7.00,6.00,7.60
+922523244034,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,4.00,6.00,5.00,4.00,8.00,7.00,5.00,9.00,7.00,6.00,6.10
+922523244034,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,10.00,10.00,8.00,7.00,7.00,4.00,10.00,9.00,9.00,9.00,8.30
+922523244034,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,1.00,2.00,2.00,1.00,3.00,4.00,2.00,3.00,3.00,4.00,2.50
+922523244034,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,6.00,4.00,9.00,7.00,8.00,7.00,8.00,8.00,6.00,9.00,7.20
+922523244026,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00
+922523244026,Computer Science and Business Systems,4,Pavithra,Database Management Systems,7.00,6.00,7.00,7.00,7.00,6.00,7.00,7.00,6.00,6.00,6.60
+922523244026,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244026,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,6.00,6.00,7.00,6.00,7.00,6.00,6.00,6.00,7.00,6.00,6.30
+922523244026,Computer Science and Business Systems,4,Manonmani,Machine Learning,9.00,9.00,9.00,8.00,9.00,8.00,8.00,8.00,8.00,8.00,8.40
+922523244026,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,9.00,9.00,9.00,8.00,9.00,9.00,9.00,9.00,9.00,8.00,8.80
+922523244026,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,6.00,6.00,6.00,6.00,7.00,7.00,7.00,6.00,6.00,7.00,6.40
+922523244026,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,8.00,9.00,8.00,8.00,8.00,9.00,8.00,8.00,8.00,8.00,8.20
+922523244026,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,9.00,9.00,8.00,9.00,9.00,8.00,8.00,8.00,9.00,9.00,8.60
+922523244026,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244056,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,6.00,8.00,7.00,8.00,7.00,7.00,8.00,8.00,8.00,8.00,7.50
+922523244056,Computer Science and Business Systems,4,Pavithra,Database Management Systems,8.00,5.00,5.00,7.00,6.00,8.00,8.00,7.00,7.00,8.00,6.90
+922523244056,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,6.00,6.00,7.00,7.00,7.00,6.00,8.00,6.00,8.00,7.00,6.80
+922523244056,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,8.00,5.00,8.00,7.00,8.00,7.00,8.00,8.00,9.00,8.00,7.60
+922523244056,Computer Science and Business Systems,4,Manonmani,Machine Learning,7.00,7.00,8.00,8.00,8.00,8.00,8.00,7.00,7.00,9.00,7.70
+922523244056,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,9.00,8.00,7.00,7.00,7.00,7.00,8.00,8.00,8.00,8.00,7.70
+922523244056,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,7.00,4.00,6.00,8.00,8.00,8.00,8.00,8.00,7.00,8.00,7.20
+922523244056,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,7.00,8.00,8.00,8.00,7.00,8.00,7.00,8.00,9.00,8.00,7.80
+922523244056,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,6.00,8.00,6.00,7.00,6.00,8.00,8.00,8.00,9.00,8.00,7.40
+922523244056,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,8.00,6.00,7.00,6.00,6.00,8.00,7.00,8.00,7.00,8.00,7.10
+922523244049,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,10.00,5.00,1.00,9.00,1.00,10.00,8.00,9.00,1.00,10.00,6.40
+922523244049,Computer Science and Business Systems,4,Pavithra,Database Management Systems,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244049,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244049,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
+922523244049,Computer Science and Business Systems,4,Manonmani,Machine Learning,9.00,9.00,10.00,9.00,9.00,5.00,2.00,2.00,5.00,6.00,6.60
+922523244049,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,9.00,9.00,5.00,2.00,5.00,5.00,8.00,9.00,6.00,7.00,6.50
+922523244049,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244049,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,10.00,10.00,9.00,10.00,10.00,10.00,9.00,10.00,10.00,10.00,9.80
+922523244049,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,10.00,10.00,10.00,9.00,10.00,10.00,10.00,10.00,10.00,10.00,9.90
+922523244049,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,10.00,10.00,9.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,9.90
+922523244050,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,7.00,9.00,7.00,7.00,8.00,8.00,8.00,7.00,7.00,8.00,7.60
+922523244050,Computer Science and Business Systems,4,Pavithra,Database Management Systems,8.00,8.00,8.00,8.00,8.00,8.00,8.00,9.00,8.00,8.00,8.10
+922523244050,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,8.00,9.00,8.00,9.00,9.00,8.00,7.00,8.00,9.00,8.00,8.30
+922523244050,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,9.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.10
+922523244050,Computer Science and Business Systems,4,Manonmani,Machine Learning,9.00,8.00,9.00,8.00,8.00,9.00,8.00,8.00,8.00,7.00,8.20
+922523244050,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,8.00,7.00,7.00,8.00,7.00,6.00,7.00,7.00,8.00,8.00,7.30
+922523244050,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,9.00,8.00,8.10
+922523244050,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,7.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,7.00,7.80
+922523244050,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,9.00,9.00,9.00,10.00,10.00,10.00,10.00,9.00,10.00,9.00,9.50
+922523244050,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,9.00,8.00,8.00,9.00,8.00,8.00,9.00,8.00,8.00,8.00,8.30
+922523244009,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,6.00,7.00,5.00,5.00,8.00,3.00,2.00,2.00,3.00,4.00,4.50
+922523244009,Computer Science and Business Systems,4,Pavithra,Database Management Systems,7.00,6.00,8.00,8.00,7.00,8.00,5.00,8.00,8.00,7.00,7.20
+922523244009,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,4.00,4.00,7.00,6.00,6.00,5.00,4.00,6.00,5.00,6.00,5.30
+922523244009,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
+922523244009,Computer Science and Business Systems,4,Manonmani,Machine Learning,7.00,8.00,7.00,8.00,7.00,9.00,8.00,7.00,7.00,8.00,7.60
+922523244009,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,6.00,6.00,7.00,8.00,8.00,7.00,8.00,7.00,7.00,8.00,7.20
+922523244009,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,7.00,7.00,6.00,7.00,7.00,6.00,7.00,6.00,7.00,7.00,6.70
+922523244009,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,8.00,7.00,8.00,9.00,8.00,9.00,8.00,9.00,8.00,9.00,8.30
+922523244009,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244009,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,6.00,6.00,6.00,7.00,8.00,9.00,9.00,9.00,9.00,9.00,7.80
+922523244037,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,10.00,9.00,8.00,10.00,7.00,8.00,3.00,7.00,9.00,8.00,7.90
+922523244037,Computer Science and Business Systems,4,Pavithra,Database Management Systems,6.00,7.00,6.00,7.00,6.00,8.00,3.00,6.00,7.00,3.00,5.90
+922523244037,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,7.00,8.00,3.00,7.00,6.00,8.00,7.00,4.00,2.00,6.00,5.80
+922523244037,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
+922523244037,Computer Science and Business Systems,4,Manonmani,Machine Learning,10.00,10.00,8.00,8.00,7.00,8.00,7.00,8.00,9.00,8.00,8.30
+922523244037,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,8.00,8.00,5.00,8.00,5.00,6.00,7.00,6.00,3.00,5.00,6.10
+922523244037,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,5.00,6.00,5.00,4.00,8.00,2.00,2.00,5.00,1.00,3.00,4.10
+922523244037,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,9.00,10.00,9.00,8.00,7.00,10.00,10.00,6.00,7.00,6.00,8.20
+922523244037,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,8.00,10.00,6.00,10.00,9.00,8.00,10.00,4.00,8.00,8.00,8.10
+922523244037,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,10.00,9.00,6.00,8.00,6.00,3.00,7.00,3.00,7.00,9.00,6.80
+922523244053,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,8.00,9.00,9.00,8.00,9.00,8.00,8.00,8.00,8.00,8.00,8.30
+922523244053,Computer Science and Business Systems,4,Pavithra,Database Management Systems,8.00,8.00,8.00,8.00,9.00,8.00,9.00,8.00,9.00,9.00,8.40
+922523244053,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,10.00,10.00,10.00,10.00,10.00,10.00,9.00,9.00,9.00,8.00,9.50
+922523244053,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,9.00,9.00,9.00,9.00,8.00,8.00,8.00,8.00,8.00,8.00,8.40
+922523244053,Computer Science and Business Systems,4,Manonmani,Machine Learning,10.00,10.00,10.00,10.00,9.00,10.00,9.00,9.00,9.00,9.00,9.50
+922523244053,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,9.00,9.00,9.00,9.00,9.00,8.00,8.00,8.00,8.00,8.00,8.50
+922523244053,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,9.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.10
+922523244053,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,9.00,9.00,9.00,9.00,9.00,8.00,9.00,8.00,9.00,9.00,8.80
+922523244053,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244053,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,8.00,9.00,9.00,9.00,8.00,8.00,8.00,8.00,8.00,8.00,8.30
+922523244016,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,4.00,6.00,5.00,6.00,6.00,6.00,3.00,7.00,5.00,6.00,5.40
+922523244016,Computer Science and Business Systems,4,Pavithra,Database Management Systems,7.00,6.00,4.00,5.00,7.00,7.00,5.00,6.00,6.00,6.00,5.90
+922523244016,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,7.00,7.00,5.00,6.00,8.00,7.00,7.00,7.00,6.00,7.00,6.70
+922523244016,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,2.00,3.00,2.00,3.00,4.00,5.00,2.00,3.00,3.00,3.00,3.00
+922523244016,Computer Science and Business Systems,4,Manonmani,Machine Learning,8.00,8.00,7.00,9.00,8.00,9.00,8.00,8.00,7.00,8.00,8.00
+922523244016,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,8.00,7.00,5.00,8.00,7.00,7.00,8.00,7.00,7.00,7.00,7.10
+922523244016,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,6.00,5.00,5.00,7.00,7.00,6.00,6.00,5.00,6.00,7.00,6.00
+922523244016,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,8.00,7.00,5.00,8.00,8.00,8.00,8.00,8.00,7.00,8.00,7.50
+922523244016,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,7.00,7.00,5.00,7.00,7.00,7.00,8.00,7.00,7.00,7.00,6.90
+922523244016,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,7.00,7.00,5.00,8.00,8.00,7.00,8.00,8.00,7.00,7.00,7.20
+922523244024,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244024,Computer Science and Business Systems,4,Pavithra,Database Management Systems,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244024,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244024,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244024,Computer Science and Business Systems,4,Manonmani,Machine Learning,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244024,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244024,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244024,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244024,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244024,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244061,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,4.00,4.00,3.00,4.00,4.00,5.00,4.00,3.00,5.00,5.00,4.10
+922523244061,Computer Science and Business Systems,4,Pavithra,Database Management Systems,7.00,5.00,4.00,5.00,6.00,6.00,6.00,5.00,6.00,6.00,5.60
+922523244061,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,5.00,7.00,5.00,6.00,7.00,6.00,8.00,6.00,7.00,6.00,6.30
+922523244061,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,3.00,3.00,3.00,3.00,2.00,1.00,2.00,2.00,2.00,2.00,2.30
+922523244061,Computer Science and Business Systems,4,Manonmani,Machine Learning,4.00,5.00,4.00,7.00,6.00,7.00,6.00,5.00,6.00,7.00,5.70
+922523244061,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,5.00,6.00,4.00,8.00,6.00,7.00,6.00,6.00,5.00,6.00,5.90
+922523244061,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,6.00,7.00,6.00,7.00,5.00,6.00,6.00,6.00,7.00,6.00,6.20
+922523244061,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,7.00,7.00,6.00,6.00,5.00,6.00,6.00,6.00,7.00,5.00,6.10
+922523244061,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,5.00,6.00,5.00,7.00,6.00,6.00,6.00,6.00,5.00,6.00,5.80
+922523244061,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,6.00,7.00,7.00,7.00,6.00,7.00,7.00,6.00,7.00,7.00,6.70
+922523244044,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,8.00,8.00,8.00,9.00,10.00,7.00,6.00,7.00,6.00,7.00,7.60
+922523244044,Computer Science and Business Systems,4,Pavithra,Database Management Systems,4.00,6.00,9.00,8.00,7.00,9.00,7.00,9.00,8.00,7.00,7.40
+922523244044,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,10.00,6.00,5.00,7.00,7.00,5.00,8.00,10.00,10.00,7.00,7.50
+922523244044,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,4.00,3.00,4.00,6.00,5.00,5.00,6.00,5.00,2.00,3.00,4.30
+922523244044,Computer Science and Business Systems,4,Manonmani,Machine Learning,7.00,8.00,8.00,7.00,7.00,8.00,7.00,8.00,7.00,9.00,7.60
+922523244044,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,7.00,6.00,6.00,7.00,7.00,8.00,8.00,7.00,7.00,7.00,7.00
+922523244044,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,6.00,6.00,7.00,9.00,8.00,8.00,7.00,7.00,8.00,9.00,7.50
+922523244044,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,9.00,5.00,6.00,7.00,7.00,8.00,7.00,6.00,7.00,8.00,7.00
+922523244044,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,8.00,6.00,4.00,2.00,6.00,2.00,4.00,4.00,3.00,3.00,4.20
+922523244044,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,7.00,4.00,8.00,6.00,6.00,6.00,6.00,6.00,8.00,8.00,6.50
+922523244039,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,10.00,10.00,10.00,10.00,10.00,10.00,9.00,9.00,9.00,8.00,9.50
+922523244039,Computer Science and Business Systems,4,Pavithra,Database Management Systems,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244039,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,9.00,10.00,10.00,9.00,9.00,9.00,8.00,9.00,10.00,10.00,9.30
+922523244039,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,8.00,8.00,9.00,9.00,9.00,9.00,9.00,10.00,10.00,10.00,9.10
+922523244039,Computer Science and Business Systems,4,Manonmani,Machine Learning,9.00,10.00,9.00,9.00,10.00,10.00,9.00,10.00,9.00,10.00,9.50
+922523244039,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,9.00,10.00,9.00,9.00,9.00,9.00,9.00,8.00,9.00,9.00,9.00
+922523244039,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244039,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,9.00,10.00,9.00,10.00,10.00,10.00,10.00,9.00,9.00,9.00,9.50
+922523244039,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,10.00,9.00,9.00,9.00,10.00,10.00,10.00,10.00,10.00,10.00,9.70
+922523244039,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,10.00,10.00,9.00,8.00,10.00,8.00,9.00,10.00,10.00,9.00,9.30
+922523244045,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,6.00,7.00,7.00,4.00,3.00,4.00,3.00,3.00,3.00,3.00,4.30
+922523244045,Computer Science and Business Systems,4,Pavithra,Database Management Systems,6.00,6.00,6.00,6.00,6.00,6.00,6.00,6.00,6.00,6.00,6.00
+922523244045,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,7.00,7.00,7.00,7.00,8.00,8.00,7.00,8.00,6.00,6.00,7.10
+922523244045,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00
+922523244045,Computer Science and Business Systems,4,Manonmani,Machine Learning,6.00,7.00,9.00,9.00,9.00,9.00,8.00,9.00,8.00,7.00,8.10
+922523244045,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00
+922523244045,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,5.00,5.00,5.00,5.00,5.00,5.00,5.00,5.00,5.00,5.00,5.00
+922523244045,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,7.00,7.00,7.00,7.00,7.00,7.00,7.00,7.00,7.00,7.00,7.00
+922523244045,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244045,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00
+922523244048,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,9.00,9.00,8.00,8.00,8.00,9.00,9.00,8.00,6.00,10.00,8.40
+922523244048,Computer Science and Business Systems,4,Pavithra,Database Management Systems,9.00,9.00,9.00,9.00,9.00,9.00,9.00,9.00,9.00,9.00,9.00
+922523244048,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,4.00,6.00,7.00,8.00,5.00,6.00,3.00,6.00,3.00,3.00,5.10
+922523244048,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,7.00,8.00,6.00,7.00,6.00,7.00,7.00,6.00,6.00,7.00,6.70
+922523244048,Computer Science and Business Systems,4,Manonmani,Machine Learning,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244048,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,8.00,7.00,6.00,5.00,6.00,6.00,7.00,9.00,6.00,7.00,6.70
+922523244048,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,9.00,8.00,8.00,9.00,9.00,9.00,9.00,9.00,9.00,9.00,8.80
+922523244048,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,9.00,9.00,9.00,9.00,9.00,9.00,8.00,8.00,8.00,8.00,8.60
+922523244048,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,9.00,8.00,10.00,7.00,8.00,8.00,7.00,9.00,9.00,9.00,8.40
+922523244048,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,6.00,7.00,8.00,6.00,5.00,6.00,5.00,4.00,6.00,3.00,5.60
+922523244002,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,9.00,10.00,9.90
+922523244002,Computer Science and Business Systems,4,Pavithra,Database Management Systems,10.00,10.00,9.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,9.90
+922523244002,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,10.00,10.00,9.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,9.90
+922523244002,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,9.00,10.00,9.90
+922523244002,Computer Science and Business Systems,4,Manonmani,Machine Learning,10.00,10.00,10.00,10.00,10.00,10.00,9.00,8.00,10.00,9.00,9.60
+922523244002,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,10.00,10.00,9.00,10.00,10.00,9.00,10.00,10.00,9.00,10.00,9.70
+922523244002,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,10.00,10.00,9.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,9.90
+922523244002,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,10.00,9.00,10.00,10.00,10.00,9.00,10.00,10.00,10.00,10.00,9.80
+922523244002,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244002,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,10.00,10.00,9.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,9.90
+922523244030,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,5.00,6.00,5.00,4.00,3.00,5.00,5.00,6.00,6.00,5.00,5.00
+922523244030,Computer Science and Business Systems,4,Pavithra,Database Management Systems,2.00,3.00,4.00,3.00,2.00,3.00,2.00,1.00,3.00,3.00,2.60
+922523244030,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,1.00,1.00,2.00,3.00,3.00,1.00,4.00,2.00,2.00,1.00,2.00
+922523244030,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,1.00,1.00,1.00,1.00,1.00,1.00,1.00,2.00,1.00,1.00,1.10
+922523244030,Computer Science and Business Systems,4,Manonmani,Machine Learning,7.00,7.00,9.00,8.00,7.00,8.00,6.00,7.00,9.00,8.00,7.60
+922523244030,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,7.00,9.00,7.00,7.00,7.00,7.00,8.00,6.00,8.00,9.00,7.50
+922523244030,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,3.00,2.00,3.00,2.00,2.00,4.00,1.00,3.00,3.00,3.00,2.60
+922523244030,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,9.00,8.00,8.00,9.00,9.00,9.00,8.00,10.00,8.00,9.00,8.70
+922523244030,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,6.00,6.00,5.00,7.00,8.00,8.00,7.00,8.00,7.00,6.00,6.80
+922523244030,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,2.00,2.00,2.00,2.00,3.00,3.00,2.00,1.00,1.00,3.00,2.10
+922523244035,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,10.00,9.00,9.00,8.00,8.00,8.00,8.00,7.00,7.00,7.00,8.10
+922523244035,Computer Science and Business Systems,4,Pavithra,Database Management Systems,9.00,7.00,9.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.10
+922523244035,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,8.00,6.00,9.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,7.90
+922523244035,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,9.00,6.00,7.00,8.00,8.00,9.00,9.00,8.00,8.00,8.00,8.00
+922523244035,Computer Science and Business Systems,4,Manonmani,Machine Learning,8.00,8.00,9.00,8.00,8.00,8.00,9.00,8.00,8.00,9.00,8.30
+922523244035,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,8.00,9.00,9.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.20
+922523244035,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,10.00,7.00,9.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.20
+922523244035,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244035,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,8.00,7.00,9.00,9.00,8.00,9.00,9.00,8.00,8.00,9.00,8.40
+922523244035,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,10.00,7.00,9.00,8.00,8.00,8.00,9.00,9.00,9.00,9.00,8.60
+922523244032,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,9.00,10.00,8.00,10.00,10.00,9.00,9.00,8.00,9.00,7.00,8.90
+922523244032,Computer Science and Business Systems,4,Pavithra,Database Management Systems,9.00,10.00,8.00,8.00,10.00,10.00,9.00,9.00,9.00,9.00,9.10
+922523244032,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,9.00,8.00,8.00,8.00,9.00,9.00,9.00,9.00,8.00,8.00,8.50
+922523244032,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,8.00,9.00,9.00,9.00,9.00,10.00,9.00,8.00,8.00,9.00,8.80
+922523244032,Computer Science and Business Systems,4,Manonmani,Machine Learning,7.00,8.00,9.00,9.00,9.00,9.00,7.00,8.00,8.00,8.00,8.20
+922523244032,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,8.00,9.00,9.00,7.00,7.00,10.00,10.00,8.00,7.00,9.00,8.40
+922523244032,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,9.00,8.00,10.00,7.00,9.00,8.00,8.00,8.00,9.00,6.00,8.20
+922523244032,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,9.00,9.00,10.00,8.00,10.00,8.00,9.00,9.00,8.00,10.00,9.00
+922523244032,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,9.00,10.00,10.00,10.00,9.00,8.00,9.00,10.00,10.00,10.00,9.50
+922523244032,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,9.00,10.00,8.00,8.00,7.00,8.00,9.00,9.00,9.00,8.00,8.50
+922523244003,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,10.00,10.00,8.00,10.00,9.00,8.00,8.00,8.00,8.00,10.00,8.90
+922523244003,Computer Science and Business Systems,4,Pavithra,Database Management Systems,10.00,8.00,8.00,9.00,9.00,8.00,8.00,8.00,8.00,7.00,8.30
+922523244003,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,8.00,8.00,8.00,8.00,9.00,8.00,7.00,8.00,8.00,8.00,8.00
+922523244003,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,8.00,7.00,8.00,8.00,9.00,8.00,8.00,8.00,8.00,7.00,7.90
+922523244003,Computer Science and Business Systems,4,Manonmani,Machine Learning,10.00,9.00,8.00,8.00,9.00,8.00,9.00,8.00,8.00,8.00,8.50
+922523244003,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,8.00,8.00,8.00,8.00,9.00,8.00,8.00,8.00,8.00,8.00,8.10
+922523244003,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,10.00,8.00,8.00,8.00,9.00,8.00,8.00,8.00,8.00,8.00,8.30
+922523244003,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,10.00,8.00,8.00,8.00,9.00,8.00,8.00,8.00,8.00,8.00,8.30
+922523244003,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,8.00,8.00,8.00,8.00,9.00,9.00,9.00,8.00,8.00,8.00,8.30
+922523244003,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,9.00,8.00,8.00,8.00,9.00,9.00,9.00,8.00,8.00,8.00,8.40
+922523244005,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,8.00,8.00,8.00,8.00,7.00,4.00,9.00,10.00,9.00,8.00,7.90
+922523244005,Computer Science and Business Systems,4,Pavithra,Database Management Systems,8.00,8.00,7.00,8.00,8.00,3.00,9.00,10.00,8.00,8.00,7.70
+922523244005,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,7.00,8.00,7.00,7.00,8.00,3.00,8.00,10.00,7.00,8.00,7.30
+922523244005,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,3.00,6.00,7.00,7.00,6.00,3.00,5.00,10.00,9.00,7.00,6.30
+922523244005,Computer Science and Business Systems,4,Manonmani,Machine Learning,8.00,9.00,9.00,9.00,9.00,3.00,9.00,10.00,9.00,8.00,8.30
+922523244005,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,8.00,9.00,6.00,9.00,9.00,5.00,9.00,10.00,8.00,8.00,8.10
+922523244005,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,8.00,8.00,7.00,8.00,8.00,3.00,8.00,10.00,9.00,7.00,7.60
+922523244005,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,8.00,8.00,9.00,9.00,9.00,3.00,9.00,10.00,10.00,8.00,8.30
+922523244005,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,6.00,8.00,2.00,5.00,6.00,3.00,4.00,9.00,4.00,8.00,5.50
+922523244005,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,8.00,8.00,2.00,5.00,7.00,3.00,8.00,10.00,7.00,8.00,6.60
+922523244010,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,10.00,10.00,10.00,10.00,10.00,10.00,9.00,10.00,10.00,10.00,9.90
+922523244010,Computer Science and Business Systems,4,Pavithra,Database Management Systems,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244010,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,10.00,10.00,9.00,9.00,10.00,10.00,10.00,10.00,10.00,10.00,9.80
+922523244010,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,10.00,10.00,10.00,10.00,10.00,9.00,9.00,8.00,10.00,10.00,9.60
+922523244010,Computer Science and Business Systems,4,Manonmani,Machine Learning,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244010,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,10.00,9.00,8.00,10.00,9.00,10.00,9.00,10.00,10.00,10.00,9.50
+922523244010,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,9.00,10.00,10.00,10.00,9.00,10.00,9.00,9.00,10.00,10.00,9.60
+922523244010,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,10.00,10.00,9.00,10.00,9.00,10.00,10.00,10.00,10.00,10.00,9.80
+922523244010,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,9.00,10.00,10.00,9.00,10.00,10.00,10.00,10.00,10.00,10.00,9.80
+922523244010,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,10.00,10.00,8.00,10.00,10.00,10.00,10.00,10.00,9.00,10.00,9.70
+922523244040,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,9.00,9.00,9.00,10.00,9.00,9.00,8.00,10.00,8.00,10.00,9.10
+922523244040,Computer Science and Business Systems,4,Pavithra,Database Management Systems,9.00,10.00,9.00,9.00,9.00,9.00,9.00,10.00,9.00,10.00,9.30
+922523244040,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,10.00,9.00,10.00,9.00,10.00,9.00,9.00,9.00,9.00,9.00,9.30
+922523244040,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,6.00,9.00,7.00,8.00,6.00,9.00,7.00,10.00,6.00,10.00,7.80
+922523244040,Computer Science and Business Systems,4,Manonmani,Machine Learning,9.00,9.00,9.00,9.00,9.00,9.00,10.00,9.00,8.00,9.00,9.00
+922523244040,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,10.00,10.00,7.00,8.00,9.00,9.00,10.00,8.00,9.00,9.00,8.90
+922523244040,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,9.00,9.00,9.00,9.00,10.00,9.00,9.00,10.00,9.00,8.00,9.10
+922523244040,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,9.00,9.00,8.00,10.00,10.00,9.00,9.00,9.00,10.00,8.00,9.10
+922523244040,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,9.00,9.00,10.00,9.00,10.00,9.00,8.00,9.00,10.00,9.00,9.20
+922523244040,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,10.00,10.00,9.00,9.00,10.00,9.00,9.00,9.00,8.00,8.00,9.10
+922523244020,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,3.00,7.00,7.00,5.00,4.00,9.00,3.00,3.00,4.00,3.00,4.80
+922523244020,Computer Science and Business Systems,4,Pavithra,Database Management Systems,4.00,3.00,4.00,4.00,6.00,7.00,5.00,3.00,3.00,4.00,4.30
+922523244020,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,5.00,6.00,6.00,7.00,4.00,7.00,7.00,4.00,4.00,4.00,5.40
+922523244020,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,6.00,7.00,7.00,7.00,8.00,7.00,7.00,7.00,7.00,7.00,7.00
+922523244020,Computer Science and Business Systems,4,Manonmani,Machine Learning,8.00,8.00,7.00,7.00,8.00,8.00,7.00,8.00,8.00,8.00,7.70
+922523244020,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,8.00,8.00,7.00,7.00,7.00,8.00,8.00,5.00,7.00,7.00,7.20
+922523244020,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,6.00,6.00,5.00,5.00,5.00,5.00,5.00,5.00,5.00,5.00,5.20
+922523244020,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,8.00,8.00,8.00,8.00,8.00,8.00,7.00,8.00,8.00,8.00,7.90
+922523244020,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244020,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00
+922523244001,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,7.00,7.00,10.00,4.00,6.00,6.00,5.00,8.00,9.00,9.00,7.10
+922523244001,Computer Science and Business Systems,4,Pavithra,Database Management Systems,9.00,9.00,8.00,7.00,9.00,9.00,9.00,8.00,8.00,7.00,8.30
+922523244001,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,9.00,8.00,8.00,9.00,9.00,9.00,9.00,8.00,7.00,7.00,8.30
+922523244001,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,9.00,9.00,9.00,9.00,9.00,9.00,9.00,9.00,9.00,9.00,9.00
+922523244001,Computer Science and Business Systems,4,Manonmani,Machine Learning,9.00,8.00,8.00,9.00,9.00,8.00,9.00,9.00,9.00,10.00,8.80
+922523244001,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,9.00,10.00,10.00,10.00,9.00,9.00,10.00,7.00,10.00,9.00,9.30
+922523244001,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,8.00,9.00,9.00,8.00,10.00,9.00,10.00,8.00,7.00,9.00,8.70
+922523244001,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,10.00,10.00,10.00,10.00,10.00,9.00,8.00,9.00,9.00,8.00,9.30
+922523244001,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
+922523244001,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,10.00,9.00,9.00,8.00,9.00,9.00,7.00,6.00,9.00,3.00,7.90
+922523244011,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,10.00,9.00,10.00,7.00,10.00,7.00,10.00,6.00,9.00,5.00,8.30
+922523244011,Computer Science and Business Systems,4,Pavithra,Database Management Systems,7.00,6.00,5.00,4.00,7.00,1.00,1.00,3.00,5.00,1.00,4.00
+922523244011,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,10.00,7.00,10.00,9.00,10.00,10.00,7.00,10.00,9.00,10.00,9.20
+922523244011,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,7.00,10.00,10.00,10.00,10.00,9.00,10.00,10.00,8.00,4.00,8.80
+922523244011,Computer Science and Business Systems,4,Manonmani,Machine Learning,10.00,8.00,10.00,9.00,10.00,10.00,8.00,8.00,10.00,10.00,9.30
+922523244011,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,9.00,9.00,8.00,10.00,9.00,10.00,10.00,8.00,5.00,10.00,8.80
+922523244011,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,6.00,7.00,7.00,5.00,7.00,1.00,6.00,3.00,6.00,5.00,5.30
+922523244011,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,10.00,7.00,9.00,9.00,10.00,10.00,9.00,10.00,10.00,10.00,9.40
+922523244011,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,9.00,8.00,10.00,10.00,10.00,10.00,10.00,10.00,7.00,10.00,9.40
+922523244011,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,10.00,9.00,8.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,9.70
+922523244014,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,5.00,6.00,5.00,5.00,7.00,4.00,4.00,7.00,7.00,6.00,5.60
+922523244014,Computer Science and Business Systems,4,Pavithra,Database Management Systems,1.00,2.00,1.00,2.00,2.00,1.00,2.00,1.00,2.00,2.00,1.60
+922523244014,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,2.00,4.00,1.00,3.00,1.00,2.00,3.00,4.00,2.00,1.00,2.30
+922523244014,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
+922523244014,Computer Science and Business Systems,4,Manonmani,Machine Learning,8.00,8.00,8.00,7.00,9.00,7.00,8.00,9.00,9.00,9.00,8.20
+922523244014,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,9.00,9.00,9.00,7.00,9.00,8.00,9.00,8.00,7.00,9.00,8.40
+922523244014,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,3.00,4.00,1.00,2.00,2.00,4.00,2.00,2.00,3.00,2.00,2.50
+922523244014,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,9.00,6.00,7.00,9.00,7.00,8.00,8.00,9.00,8.00,9.00,8.00
+922523244014,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,1.00,2.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,2.00,1.20
+922523244014,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,1.00,1.00,2.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.10
+922523244043,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244043,Computer Science and Business Systems,4,Pavithra,Database Management Systems,10.00,9.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,9.00,9.80
+922523244043,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,10.00,10.00,10.00,10.00,10.00,10.00,9.00,10.00,9.00,10.00,9.80
+922523244043,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,10.00,10.00,10.00,10.00,10.00,9.00,9.00,10.00,10.00,10.00,9.80
+922523244043,Computer Science and Business Systems,4,Manonmani,Machine Learning,10.00,9.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,9.90
+922523244043,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,9.00,9.90
+922523244043,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,10.00,10.00,10.00,9.00,10.00,9.00,10.00,10.00,10.00,10.00,9.80
+922523244043,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,10.00,10.00,9.00,10.00,10.00,10.00,10.00,9.00,10.00,10.00,9.80
+922523244043,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244043,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244021,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,7.00,8.00,7.00,5.00,8.00,10.00,5.00,10.00,8.00,7.00,7.50
+922523244021,Computer Science and Business Systems,4,Pavithra,Database Management Systems,2.00,2.00,2.00,2.00,10.00,1.00,2.00,5.00,3.00,1.00,3.00
+922523244021,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,2.00,3.00,2.00,1.00,7.00,1.00,2.00,6.00,2.00,1.00,2.70
+922523244021,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,1.00,5.00,5.00,3.00,10.00,2.00,2.00,5.00,1.00,1.00,3.50
+922523244021,Computer Science and Business Systems,4,Manonmani,Machine Learning,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244021,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,7.00,7.00,5.00,7.00,10.00,7.00,7.00,9.00,6.00,6.00,7.10
+922523244021,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,2.00,2.00,2.00,1.00,7.00,1.00,2.00,7.00,1.00,1.00,2.60
+922523244021,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244021,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,7.00,7.00,3.00,5.00,7.00,6.00,10.00,8.00,4.00,5.00,6.20
+922523244021,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,3.00,3.00,2.00,2.00,8.00,2.00,3.00,5.00,1.00,1.00,3.00
+922523244012,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,10.00,10.00,10.00,10.00,10.00,7.00,9.00,10.00,6.00,8.00,9.00
+922523244012,Computer Science and Business Systems,4,Pavithra,Database Management Systems,5.00,2.00,5.00,4.00,10.00,5.00,7.00,5.00,6.00,7.00,5.60
+922523244012,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,2.00,2.00,3.00,2.00,10.00,9.00,3.00,9.00,2.00,2.00,4.40
+922523244012,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,1.00,5.00,10.00,5.00,9.00,2.00,1.00,2.00,2.00,2.00,3.90
+922523244012,Computer Science and Business Systems,4,Manonmani,Machine Learning,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244012,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,7.00,7.00,8.00,8.00,9.00,8.00,9.00,10.00,8.00,8.00,8.20
+922523244012,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,3.00,4.00,5.00,2.00,6.00,5.00,6.00,7.00,8.00,6.00,5.20
+922523244012,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244012,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,8.00,7.00,6.00,6.00,8.00,8.00,7.00,5.00,6.00,6.00,6.70
+922523244012,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,5.00,6.00,5.00,4.00,3.00,2.00,5.00,4.00,3.00,3.00,4.00
+922523244058,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,7.00,8.00,7.00,8.00,7.00,7.00,7.00,7.00,8.00,7.00,7.30
+922523244058,Computer Science and Business Systems,4,Pavithra,Database Management Systems,3.00,5.00,3.00,3.00,5.00,3.00,6.00,2.00,4.00,3.00,3.70
+922523244058,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,2.00,2.00,2.00,2.00,2.00,2.00,2.00,2.00,2.00,2.00,2.00
+922523244058,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
+922523244058,Computer Science and Business Systems,4,Manonmani,Machine Learning,5.00,6.00,6.00,5.00,5.00,4.00,7.00,3.00,7.00,4.00,5.20
+922523244058,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,9.00,8.00,10.00,8.00,6.00,7.00,9.00,5.00,5.00,8.00,7.50
+922523244058,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,8.00,8.00,7.00,7.00,8.00,6.00,5.00,10.00,7.00,9.00,7.50
+922523244058,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244058,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,8.00,8.00,6.00,7.00,5.00,8.00,6.00,10.00,7.00,9.00,7.40
+922523244058,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,4.00,7.00,5.00,7.00,8.00,5.00,7.00,5.00,5.00,1.00,5.40
+922523244052,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,5.00,8.00,5.00,6.00,9.00,8.00,9.00,10.00,6.00,4.00,7.00
+922523244052,Computer Science and Business Systems,4,Pavithra,Database Management Systems,10.00,8.00,7.00,10.00,10.00,7.00,8.00,8.00,10.00,9.00,8.70
+922523244052,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,8.00,6.00,8.00,9.00,9.00,7.00,8.00,7.00,9.00,8.00,7.90
+922523244052,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,4.00,8.00,6.00,9.00,10.00,7.00,6.00,5.00,5.00,8.00,6.80
+922523244052,Computer Science and Business Systems,4,Manonmani,Machine Learning,10.00,9.00,10.00,9.00,8.00,9.00,9.00,9.00,10.00,10.00,9.30
+922523244052,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,10.00,8.00,9.00,10.00,7.00,9.00,6.00,2.00,7.00,6.00,7.40
+922523244052,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,7.00,7.00,8.00,9.00,7.00,9.00,10.00,7.00,8.00,10.00,8.20
+922523244052,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,10.00,9.00,8.00,9.00,10.00,8.00,9.00,10.00,9.00,10.00,9.20
+922523244052,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,7.00,8.00,9.00,8.00,7.00,8.00,6.00,7.00,8.00,6.00,7.40
+922523244052,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,7.00,8.00,9.00,10.00,9.00,8.00,7.00,9.00,10.00,8.00,8.50
+922523244062,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,8.00,9.00,8.00,8.00,7.00,8.00,10.00,8.00,7.00,7.00,8.00
+922523244062,Computer Science and Business Systems,4,Pavithra,Database Management Systems,7.00,7.00,6.00,7.00,8.00,6.00,7.00,8.00,7.00,8.00,7.10
+922523244062,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,8.00,8.00,9.00,8.00,8.00,9.00,9.00,8.00,8.00,9.00,8.40
+922523244062,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,1.00,1.00,1.00,1.00,5.00,1.00,1.00,1.00,1.00,1.00,1.40
+922523244062,Computer Science and Business Systems,4,Manonmani,Machine Learning,9.00,9.00,9.00,9.00,9.00,9.00,9.00,9.00,10.00,10.00,9.20
+922523244062,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,9.00,9.00,8.00,8.00,8.00,8.00,8.00,8.00,9.00,9.00,8.40
+922523244062,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,7.00,7.00,5.00,6.00,8.00,6.00,7.00,7.00,6.00,8.00,6.70
+922523244062,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,9.00,9.00,9.00,9.00,9.00,9.00,9.00,8.00,10.00,8.00,8.90
+922523244062,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00
+922523244062,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00
+922523244031,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,10.00,9.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,9.90
+922523244031,Computer Science and Business Systems,4,Pavithra,Database Management Systems,10.00,10.00,10.00,10.00,10.00,10.00,10.00,9.00,10.00,10.00,9.90
+922523244031,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,10.00,10.00,9.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,9.90
+922523244031,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,10.00,10.00,10.00,10.00,9.00,10.00,10.00,10.00,10.00,10.00,9.90
+922523244031,Computer Science and Business Systems,4,Manonmani,Machine Learning,10.00,9.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,9.90
+922523244031,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,10.00,10.00,9.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,9.90
+922523244031,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,10.00,10.00,10.00,9.00,10.00,9.00,10.00,10.00,10.00,10.00,9.80
+922523244031,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,9.00,9.90
+922523244031,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,10.00,10.00,10.00,9.00,10.00,10.00,10.00,10.00,10.00,10.00,9.90
+922523244031,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,10.00,9.00,10.00,10.00,10.00,9.00,9.00,10.00,10.00,10.00,9.70
+922523244018,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00
+922523244018,Computer Science and Business Systems,4,Pavithra,Database Management Systems,7.00,7.00,7.00,7.00,7.00,7.00,7.00,7.00,7.00,7.00,7.00
+922523244018,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,8.00,8.00,8.00,8.00,8.00,7.00,8.00,8.00,8.00,8.00,7.90
+922523244018,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,4.00,4.00,4.00,4.00,4.00,4.00,5.00,4.00,4.00,4.00,4.10
+922523244018,Computer Science and Business Systems,4,Manonmani,Machine Learning,9.00,9.00,9.00,9.00,9.00,9.00,9.00,10.00,10.00,10.00,9.30
+922523244018,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,8.00,8.00,8.00,8.00,8.00,8.00,7.00,8.00,7.00,8.00,7.80
+922523244018,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,8.00,8.00,8.00,7.00,6.00,8.00,8.00,8.00,8.00,8.00,7.70
+922523244018,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,8.00,8.00,8.00,7.00,7.00,7.00,9.00,10.00,10.00,10.00,8.40
+922523244018,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,10.00,9.00,10.00,10.00,10.00,10.00,10.00,10.00,8.00,8.00,9.50
+922523244018,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,8.00,8.00,8.00,8.00,8.00,8.00,7.00,8.00,7.00,8.00,7.80
+922523244027,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,7.00,8.00,9.00,9.00,6.00,10.00,8.00,6.00,7.00,10.00,8.00
+922523244027,Computer Science and Business Systems,4,Pavithra,Database Management Systems,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244027,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,10.00,7.00,4.00,9.00,5.00,7.00,8.00,8.00,9.00,10.00,7.70
+922523244027,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
+922523244027,Computer Science and Business Systems,4,Manonmani,Machine Learning,10.00,10.00,9.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,9.90
+922523244027,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,6.00,6.00,8.00,3.00,7.00,8.00,8.00,7.00,7.00,1.00,6.10
+922523244027,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,10.00,9.00,10.00,10.00,10.00,9.00,10.00,9.00,10.00,10.00,9.70
+922523244027,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,10.00,9.00,9.00,10.00,9.00,9.00,9.00,10.00,9.00,10.00,9.40
+922523244027,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,10.00,10.00,10.00,10.00,9.00,10.00,10.00,10.00,10.00,10.00,9.90
+922523244027,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,10.00,10.00,10.00,10.00,10.00,10.00,9.00,9.00,10.00,10.00,9.80
+922523244029,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244029,Computer Science and Business Systems,4,Pavithra,Database Management Systems,9.00,9.00,8.00,8.00,8.00,8.00,7.00,8.00,7.00,7.00,7.90
+922523244029,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244029,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,1.00,5.00,5.00,5.00,4.00,5.00,4.00,4.00,2.00,4.00,3.90
+922523244029,Computer Science and Business Systems,4,Manonmani,Machine Learning,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,1.00,9.10
+922523244029,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244029,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,7.00,7.00,8.00,9.00,7.00,8.00,8.00,8.00,8.00,8.00,7.80
+922523244029,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,1.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,9.10
+922523244029,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,6.00,7.00,8.00,7.00,8.00,7.00,8.00,7.00,7.00,8.00,7.30
+922523244029,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,9.00,8.00,9.00,8.00,8.00,9.00,8.00,9.00,9.00,8.00,8.50
+922523244017,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244017,Computer Science and Business Systems,4,Pavithra,Database Management Systems,7.00,7.00,7.00,7.00,7.00,7.00,7.00,7.00,7.00,7.00,7.00
+922523244017,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,6.00,6.00,6.00,6.00,6.00,6.00,6.00,6.00,6.00,6.00,6.00
+922523244017,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
+922523244017,Computer Science and Business Systems,4,Manonmani,Machine Learning,9.00,9.00,9.00,9.00,9.00,9.00,9.00,9.00,9.00,9.00,9.00
+922523244017,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,9.00,9.00,9.00,9.00,9.00,9.00,9.00,9.00,9.00,9.00,9.00
+922523244017,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,7.00,7.00,7.00,7.00,7.00,7.00,7.00,7.00,7.00,7.00,7.00
+922523244017,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,9.00,9.00,9.00,9.00,9.00,9.00,9.00,9.00,9.00,9.00,9.00
+922523244017,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,7.00,7.00,6.00,6.00,6.00,7.00,6.00,7.00,6.00,6.00,6.40
+922523244017,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00,8.00
+922523244051,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,10.00,10.00,10.00,10.00,10.00,10.00,10.00,9.00,10.00,10.00,9.90
+922523244051,Computer Science and Business Systems,4,Pavithra,Database Management Systems,8.00,8.00,8.00,7.00,8.00,7.00,8.00,8.00,8.00,8.00,7.80
+922523244051,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,8.00,8.00,8.00,8.00,8.00,9.00,9.00,8.00,8.00,9.00,8.30
+922523244051,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,2.00,2.00,2.00,1.00,1.00,1.00,2.00,1.00,2.00,2.00,1.60
+922523244051,Computer Science and Business Systems,4,Manonmani,Machine Learning,9.00,9.00,9.00,9.00,8.00,8.00,8.00,9.00,8.00,8.00,8.50
+922523244051,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,8.00,9.00,9.00,8.00,9.00,9.00,8.00,8.00,8.00,9.00,8.50
+922523244051,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,8.00,5.00,7.00,7.00,7.00,8.00,8.00,8.00,7.00,8.00,7.30
+922523244051,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,9.00,9.00,8.00,8.00,9.00,9.00,9.00,8.00,8.00,8.00,8.50
+922523244051,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,9.00,8.00,7.00,8.00,8.00,8.00,9.00,8.00,8.00,9.00,8.20
+922523244051,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,8.00,9.00,8.00,8.00,8.00,8.00,9.00,8.00,8.00,9.00,8.30
+922523244015,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00,10.00
+922523244015,Computer Science and Business Systems,4,Pavithra,Database Management Systems,7.00,8.00,7.00,7.00,7.00,7.00,8.00,8.00,8.00,7.00,7.40
+922523244015,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,8.00,6.00,7.00,7.00,7.00,7.00,7.00,8.00,8.00,8.00,7.30
+922523244015,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
+922523244015,Computer Science and Business Systems,4,Manonmani,Machine Learning,9.00,8.00,9.00,8.00,8.00,9.00,9.00,8.00,9.00,9.00,8.60
+922523244015,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,9.00,9.00,9.00,9.00,9.00,9.00,9.00,9.00,7.00,8.00,8.70
+922523244015,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,8.00,5.00,10.00,9.00,9.00,10.00,3.00,7.00,8.00,9.00,7.80
+922523244015,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,9.00,8.00,8.00,8.00,8.00,9.00,8.00,8.00,9.00,9.00,8.40
+922523244015,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,9.00,7.00,8.00,9.00,9.00,9.00,8.00,8.00,8.00,8.00,8.30
+922523244015,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,8.00,8.00,9.00,8.00,8.00,8.00,8.00,8.00,8.00,7.00,8.00
+922523244019,Computer Science and Business Systems,4,Syed Fazlullah,Probability and Statistics,7.00,6.00,7.00,8.00,7.00,7.00,7.00,7.00,7.00,9.00,7.20
+922523244019,Computer Science and Business Systems,4,Pavithra,Database Management Systems,7.00,8.00,9.00,8.00,9.00,9.00,9.00,8.00,7.00,9.00,8.30
+922523244019,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems,9.00,10.00,9.00,7.00,8.00,9.00,8.00,7.00,8.00,9.00,8.40
+922523244019,Computer Science and Business Systems,4,Latha,Introduction to Buisness System,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
+922523244019,Computer Science and Business Systems,4,Manonmani,Machine Learning,8.00,9.00,10.00,9.00,8.00,9.00,8.00,6.00,8.00,10.00,8.50
+922523244019,Computer Science and Business Systems,4,Thulasidasan,Environmental Sciences and Sustainability,8.00,10.00,8.00,10.00,8.00,9.00,8.00,10.00,9.00,8.00,8.80
+922523244019,Computer Science and Business Systems,4,Pavithra,Database Management Systems Laboratory,8.00,9.00,8.00,9.00,8.00,8.00,9.00,9.00,9.00,9.00,8.60
+922523244019,Computer Science and Business Systems,4,Manonmani,Machine Learning Laboratory,9.00,9.00,9.00,10.00,9.00,9.00,10.00,9.00,10.00,3.00,8.70
+922523244019,Computer Science and Business Systems,4,Kalyanasundaram,Buisness Communication,7.00,7.00,8.00,7.00,8.00,7.00,8.00,7.00,8.00,8.00,7.50
+922523244019,Computer Science and Business Systems,4,Arunjunai Karthick,Operating Systems Laboratory,7.00,8.00,9.00,8.00,7.00,8.00,8.00,7.00,8.00,7.00,7.70

@@ -38,6 +38,21 @@ def add_staff():
             flash("Staff added successfully!", "success")
     return redirect(url_for('admin'))
 
+@app.route('/add_subject', methods=['POST'])
+def add_subject():
+    subject_name = request.form.get('subject_name', '').strip()
+    if subject_name:
+        with open('subjects.csv', 'r', newline='') as csvfile:
+            reader = csv.reader(csvfile)
+            subject_list = [row[0] for row in reader if row]
+        if subject_name in subject_list:
+            flash("Subject already exists", "danger")
+        else:
+            with open('subjects.csv', 'a', newline='') as csvfile:
+                writer = csv.writer(csvfile)
+                writer.writerow([subject_name])
+            flash("Subject added successfully!", "success")
+    return redirect(url_for('admin'))
 
 
 
@@ -73,11 +88,23 @@ def admin_login():
     if request.method == 'POST':
         password = request.form.get('password')
         if password == 'vsbec':
-            return redirect(url_for('admin'))
+            return redirect(url_for('admin_dashboard'))
         else:
             flash("Incorrect password.", "danger")
             return redirect(url_for('admin_login'))
     return render_template('admin_login.html')
+
+@app.route('/admin_dashboard')
+def admin_dashboard():
+    return render_template('admin_dashboard.html')
+
+@app.route('/admin_students')
+def admin_students():
+    departments = read_csv_as_list(DEPARTMENTS_FILE)
+    semesters = read_csv_as_list(SEMESTERS_FILE)
+    return render_template('admin_students.html',
+                         departments=departments,
+                         semesters=semesters)
 
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
@@ -265,4 +292,4 @@ if __name__ == '__main__':
             exit(1)
 
     import uvicorn
-    uvicorn.run(asgi_app, host="172.16.19.205", port=80)
+    uvicorn.run(asgi_app, host="172.16.18.180", port=80)

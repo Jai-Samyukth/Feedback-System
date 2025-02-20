@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Student Management - Feedback App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body { background: #f0f8ff; }
+        header, footer { background: #007bff; color: #fff; padding: 15px; text-align: center; }
+        footer a { color: #fff; text-decoration: underline; }
+    </style>
+</head>
+<body class="container mt-4">
+    <header><h1>VSB Engineering College - Student Management</h1></header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div id="flash-messages">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <div class="card mt-4">
+        <div class="card-body">
+            <h3>Add Students</h3>
+            <form id="addStudentsForm" action="{{ url_for('add_students') }}" method="POST">
+                <div class="form-group">
+                    <label for="studentDept">Department:</label>
+                    <select class="form-control" name="department" id="studentDept" required>
+                        {% for dept in departments %}
+                            <option value="{{ dept }}">{{ dept }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="studentSem">Semester:</label>
+                    <select class="form-control" name="semester" id="studentSem" required>
+                        {% for sem in semesters %}
+                            <option value="{{ sem }}">{{ sem }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="startReg">Start Registration Number:</label>
+                    <input type="text" class="form-control" name="startReg" id="startReg" required>
+                </div>
+                <div class="form-group">
+                    <label for="endReg">End Registration Number:</label>
+                    <input type="text" class="form-control" name="endReg" id="endReg" required>
+                </div>
+                <button type="submit" class="btn btn-success">Add Students</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+
+    <footer class="mt-4">These site is Created and Managed by GenrecAI. Our Site <a href="https://revolvo-ai.netlify.app" target="_blank">revolvo-ai.netlify.app</a></footer>
+    <script>
+        setTimeout(function() {
+            var flash = document.getElementById('flash-messages');
+            if (flash) { flash.style.display = 'none'; }
+        }, 3000);
+    </script>
+</body>
+</html>
