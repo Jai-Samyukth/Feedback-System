@@ -1,226 +1,316 @@
 Subject
-Algorithms
-Analog and Digital Integrated Circuits
-Analog and Digital Integrated Circuits Laboratory
-Anatomy and Human Physiology
-Applied Hydraulics Engineering
-Artificial Intelligence
-Artificial Intelligence and Machine Learning
-Artificial Intelligence Laboratory
-Basic Electrical and Electronics Engineering
-Basic Electrical Electronics and Instrumentation Engineering
-Basic Electrical Electronics and Instrumentation Engineering Laboratory
-Basic Industrial Biotechnology
-Basic Mechanical Engineering
-Basic Mechanical Engineering Laboratory
-Biochemical Thermodynamics
-Biochemistry
-Biochemistry Laboratory
-Bio Control Systems
-Bioinformatics
-Biomedical Instrumentation
-Biomedical Instrumentation Laboratory
-Biosciences for Medical Engineering
-Biosciences Laboratory
-Bioprocess Engineering
-Bioprocess Laboratory
-Bioprocess Principles
-Big Data Analytics
-Building Drawing and Detailing Laboratory
-C Programming and Data Structures
-C Programming and Data Structures Laboratory
-Cell and Microbiology Laboratory
-Cell Biology
-Chemical Engineering Laboratory for Biotechnologists
-Chemical Engineering Thermodynamics - I
-Chemical Engineering Thermodynamics - II
-Chemical Process Calculations
-Chemical Process Calculations in Biotechnology
-Chemical Process Industries
-Chemical Reaction Engineering - I
-Chemical Reaction Engineering Laboratory
-Circuit Analysis
-Circuits Analysis Laboratory
-Communication Laboratory
-Communication Laboratory / Foreign Language
-Communication Systems
-Communication Systems Laboratory
-Computational Chemical Engineering Laboratory
-Computer Networks
-Construction Materials and Technology
-Concrete Technology
-Control and Instrumentation Laboratory
-Control Systems
-Cryptography and Cyber Security
-Data and Information Security
-Database Design and Management
-Database Design and Management Laboratory
-Database Management Systems
-Database Management Systems Laboratory
-Data Exploration and Visualization
-Data Science Laboratory
-Data Structures
-Data Structures Design
-Data Structures Design Laboratory
-Data Structures Laboratory
-Deep Learning
-Deep Learning Laboratory
-Design and Analysis of Algorithms
-Design of Reinforced Concrete Structural Elements
-Design of Steel Structural Elements
-Diagnostic and Therapeutic Equipment
-Diagnostic and Therapeutic Equipment Laboratory
-Digital Logic Circuits
-Digital Principles and Computer Organization
-Digital Signal Processing
-Digital Systems Design
-Discrete Mathematics
-Distributed Computing
-Differential Equations
-Electric Circuit Analysis
-Electric Circuits Laboratory
-Electrical and Instrumentation Engineering
-Electrical Machines - I
-Electrical Machines - II
-Electrical Machines Laboratory - I
-Electrical Machines Laboratory - II
-Electromagnetic Fields
-Electronic Devices and Circuits
-Electronic Devices and Circuits Laboratory
-Electron Devices and Circuits
-Embedded Systems and IoMT
-Embedded Systems and IoMT Laboratory
-Embedded Systems and IoT
-Embedded Systems and IoT Design
-Engineering Chemistry
-Engineering Geology
-Engineering Graphics
-Engineering Mechanics
-Engineering Physics
+CCW332 - Digital Marketing
+CCS354 - Network Security
+CCS345 - Ethics and AI
+CCS341 - Data Warehousing
+CS3691 - Embedded Systems and IOT
+OEE351 - Renewable Energy Systems
+CCW332- Digital Marketing Laboratory
+CCS354- Network Security Laboratory
+CCS345-Ethics and AI Laboratory
+CCS341-Data Warehousing Laboratory
+OEE351-Embedded Systems and IOT Laboratory
+Professional English-II
+Computational method
+Physics for information science
+Basic electrical and electronic engineering
+Engineering graphics
+Problem solving and python solving
+Tamil and technology
 Engineering Practices Laboratory
-English Laboratory
-Environmental Sciences and Sustainability
-Estimation Costing and Valuation Engineering
-Fluid Flow and Heat Transfer Operations
-Fluid Mechanics
-Fluid Mechanics for Chemical Engineers
-Fluid Mechanics Laboratory
-Foundation Engineering
-Foundations of Data Science
-Full Stack Web Development
-Full Stack Web Development Laboratory
-Fundamentals of Data Science and Analytics
-Fundamentals of Electronic Devices and Circuits
-Fundamentals of Electronic Devices and Circuits Laboratory
-Fundamentals of Healthcare Analytics
-Genetic Engineering
-Heat Transfer
-Heat Transfer Laboratory
-Heritage of Tamils
-High Voltage Engineering
-Highway and Railway Engineering
-Highway Engineering Laboratory
-Human Values and Ethics
-Hydraulic Engineering Laboratory
-Hydrology and Water Resources Engineering
-Immunology
-Immunology Laboratory
-Induction Programme
-Introduction to Chemical Engineering
-Introduction to Operating Systems
-Linear and Digital Circuits Laboratory
-Linear Integrated Circuits
-Linear Integrated Circuits Laboratory
-Machine Learning
-Machine Learning Laboratory
-Mandatory Course - I
-Mandatory Course - II
-Mass Transfer I
-Mass Transfer II
-Mass Transfer Laboratory
-Materials Science
-Materials Testing Laboratory
-Matrices and Calculus
-Measurements and Instrumentation
-Mechanical Operations
-Mechanical Operations Laboratory
-Medical Image Processing
-Medical Physics
-Microprocessor and Microcontroller
-Microprocessor and Microcontroller Laboratory
-Microbiology
-Mobile Application Development Laboratory
-Molecular Biology
-Molecular Biology and Genetic Engineering Laboratory
-NCC Credit Course Level 1
-NCC Credit Course Level 2
-NCC Credit Course Level 3
-Object Oriented Programming
-Object Oriented Programming Laboratory
-Object Oriented Software Engineering
-Operating Systems
-Operating Systems Laboratory
-Open Elective - I
-Open Elective - II
-Open Elective - III
-Open Elective - IV
-Physics and Chemistry Laboratory
-Physics for Civil Engineering
-Physics for Electronics Engineering
-Physics for Electrical Engineering
-Physics for Information Science
-Physics of Materials
-Power Electronics
-Power Electronics Laboratory
-Power System Analysis
-Power System Laboratory
-Power System Operation and Control
-Problem Solving and Python Programming
 Problem Solving and Python Programming Laboratory
-Process Dynamics and Control
-Process Equipment Design and Drawing
-Professional Development
-Professional Elective I
-Professional Elective II
-Professional Elective III
-Professional Elective IV
-Professional Elective V
-Professional Elective VI
-Professional English - I
-Professional English - II
-Programming in C
-Programming in C Laboratory
-Project Work / Internship
-Protection and Switchgear
-Probability and Complex Functions
-Probability and Statistics
-Random Processes and Linear Algebra
-Sensors and Measurements
-Sensors and Measurements Laboratory
-Signal Processing
-Signals and Systems
-Soil Mechanics
-Soil Mechanics Laboratory
-Statistics and Numerical Methods
-Strength of Materials
-Structural Analysis I
+Communication Laboratory
+Placement Training  Communication
+Placement Training  coding
+Professional English-II
+Computational method(C
+Physics for information science(PIS)
+Basic electrical and electronic engineering(BEEE)
+Engineering graphics(EG)
+Problem solving and python solving(PSPP)
+Tamil and technology(TT)
+Engineering Practices Laboratory(EP Lab)
+Problem Solving and Python Programming Laboratory (PSPP Lab)
+Communication Laboratory (CP Lab)
+Placement Training  Communication(PTM)
+Placement Training  coding(PTM)
+PROBABILITY AND STATICS
+OPERATING SYSTEM
+MACHINE LEARNING
+FUNDAMENTALS OF DATA SCIENCE AND ANALYTICS
+COMPUTER NETWORKS
+ENVIRONMENTAL SCIENCE AND ENGINEERING
+OPERATING SYSTEM LABORATORY
+MACHINE LEARNING LABORATORY
+DATA SCIENCE AND ANALYTICS LABORATORY
+COMPUTER NETWORKS LABORATORY
+PLACEMENT TRAINING
+COMMUNICATION TRANING
+Design of Steel Structural Elements
 Structural Analysis II
-Summer Internship
-Survey Camp (2 weeks)
-Surveying and Levelling
-Surveying and Levelling Laboratory
-Tamils and Technology
-Technical Analysis Laboratory
-Telecommunication Switching and Transmission
-Theory of Computation
-Total Quality Management
-Transform Techniques
-Transforms and Partial Differential Equations
+Advanced Construction Techniques
+Engineering Geology
+Rehabilitation/Restoration
+Prestressed Concrete Structures
+Artificial Intelligence and Machine Learning Concepts
+Building Drawing and Detailing Laboratory
+ET3491 - Embedded System & IOT Design
+CS3491 - Artificial Intelligence & Machine Learning
+CEC342 - Mixed Signal IC Design Testing
+CEC349 - RFID System Design & Testing
+CEC331 - 4G/SG Communication Networks
+CCW332 - Digital Marketing
+ET3491 -  Embedded System & I0T Design Laboratory
+CEC331 -  4G/5G Communication Networks
+CEC342 - Mixed Signal IC Design Testing Laboratory
+CEC349 - RFID System Design & Testing Laboratory
+CS3491 - Artificial Intelligence & Machine Learning Laboratory
+CCW332 - Digital Marketing Laboratory (DM LAB)
+CCW332 - Digital Marketing
+CCS354 - Network Security
+CCS345 - Ethics and AI
+CCS341 - Data Warehousing
+CS3691 - Embedded Systems and IOT
+OEE351 - Renewable Energy Systems
+CCW332- Digital Marketing Laboratory
+CCS354- Network Security Laboratory
+CCS345-Ethics and AI Laboratory
+CCS341-Data Warehousing Laboratory
+OEE351-Embedded Systems and IOT Laboratory
+Placement Training  coding
+Professional English-II (PE-II)
+Computational method(CM)
+Physics for information science(PIS)
+ Basic electrical and electronic engineering(BEEE)
+ Engineering graphics(EG)
+ Problem solving and python solving(PSPP)
+Tamil and technology(TT)
+Engineering Practices Laboratory(EP Lab)
+Problem Solving and Python Programming Laboratory (PSPP Lab)
+Communication Laboratory (CP Lab)
+Placement Training  Communication(PTM)
+Placement Training  coding(PTM)
+PROBABILITY AND STATICS
+OPERATING SYSTEM
+MACHINE LEARNING
+FUNDAMENTALS OF DATA SCIENCE AND ANALYTICS
+COMPUTER NETWORKS
+ENVIRONMENTAL SCIENCE AND ENGINEERING
+OPERATING SYSTEM LABORATORY
+MACHINE LEARNING LABORATORY
+DATA SCIENCE AND ANALYTICS LABORATORY
+COMPUTER NETWORKS LABORATORY
+PLACEMENT TRAINING
+COMMUNICATION TRANING
+Professional English II
+Computational Methods
+Physics for Information Science
+Basic Electrical and Electronics Engineering
+Engineering Graphics
+Problem Solving and Python Programming
+Tamils And Technology / தமிழரும் தொழில்நுட்பமும்
+Engineering Practices Laboratory
+Problem Solving and Python Programming Laboratory
+Communication Laboratory/ Foreign Language Laboratory
+Placement Training  Communication
+Placement Training  coding
+Theory of Computation (TOC)
+Artificial Intelligence and Machine Learning (AIML)
+Database Management Systems (DBMS)
+Algorithms (ALG)
+Introduction to Operating Systems (OS)
+Environmental Sciences and Sustainability (ESS)
+Operating Systems Laboratory
+Database Management Systems Laboratory
+ALT402-Artificial Intelligence and Machine Learning Laboratory
+Algorithm Laboratory (ALG LAB)
+Placement Training (CODING)
+Placement Training (COMMUNICATION)
+CCS356- Object oriented Software Engineering (OOSE)
+CS3691-Embedded systems and IOT (ESIOT)
+OEE351 -Renewable Energy System (RES)
+CCS335-Cloud Computing (CC)
+CCS354- Network Security (NS)
+CCW332- Digital Marketing (DM)
+CCS345- Ethics and AI (EAI)
+Placement Training
+Professional English II
+Computational Methods
+Physics for Information Science
+Basic Electrical and Electronics Engineering
+Engineering Graphics
+Problem Solving and Python Programming
+Tamils And Technology / தமிழரும் தொழில்நுட்பமும்
+Engineering Practices Laboratory
+Problem Solving and Python Programming Laboratory
+Communication Laboratory/ Foreign Language Laboratory
+Placement Training  Communication
+Placement Training  coding
+Probability and Statistics [PS]
+Database Management Systems [DBMS]
+Operating Systems [OS]
+Introduction to Business Systems [IBS]
+Machine Learning [ML]
+Enviornmental Sciences and Engineering [ES]
+Database Management Systems [DBMS LAB]
+Machine Learning [ML LAB]
+Business Communication [BC LAB-II]
+Operating Systems [OS LAB]
+Placement Training  Communication
+Placement Training  coding
+CCS345-ETHICS AND AI
+CW3001-BEHAVIOURAL ECONOMICS
+CCS340-CYBERSECURITY
+CW3601-BUSINESS ANALYTICS
+OEE51-RENEWABLE ENERGY SYSTEMS
+CCW332-DIGITAL MARKETING
+CCS356-O0BJECT ORIENTED SOFTWARE ENGINEERING
+TRAINING AND PLACEMENT(CODING)
+Professional English II
+Computational Methods
+Physics for Information Science
+23BET203  Basic Electrical and Electronics Engineering
+Engineering Graphics
+Problem Solving and Python Programming
+Tamils And Technology / தமிழரும் தொழில்நுட்பமும்
+Engineering Practices Laboratory
+Problem Solving and Python Programming Laboratory
+Communication Laboratory/ Foreign Language Laboratory
+Placement Training  Communication
+Placement Training  coding
+THEORY OF COMPUTATION
+DATABASE DESIGN MANAGEMENT SYSTEM
+OPERATING SYSTEM
+ARTIFICIAL INTELLIGENCE
+MACHINE LEARNING
+ENVIRONMENTAL SCIENCE AND ENGINEERING
+PLACEMENT TRAINING  (CODING)
+PLACEMENT TRAINING (COMMUNICATION)
+CCS356 - Object Oriented Software Engineering (OOSE)
+CCS354 -Network Security (NS)
+CCS335 - Cloud Computing (CC)
+CCW332 - Digital Marketing (DM)
+CCS345 - Ethics and AI (E & AI)
+OEE351 - Renewable Energy System (RES)
+CCS356 - Object Oriented Software Engineering Lab (OOSE Lab)
+CCS354 - Network Security Lab (NS Lab)
+CCS335 - Cloud Computing Lab (CC Lab)
+CCW332 - Digital Marketing Lab (DM Lab)
+CCS345 - Ethics and AI Lab (E & AI Lab)
+IT3681 - Mobile Application Development Lab (MAD Lab)
+Placement and Training (P&T)
+Theory of Computation [TOC]
+Artificial Intelligence and Machine Learning [AIML]
+Database Management Systems [DBMS]
+Web Essentials [WE]
+Introduction to Operating Systems [IOS]
+Environmental Sciences and Engineering [EVS]
+Operating Systems Laboratory [OS LAB]
+Database Management Systems Laboratory [DBMS LAB]
+Artificial Intelligence and Machine Learning Laboratory [AIML LAB]
+Web Essentials Laboratory [WE LAB]
+Placement Training Monitoring [PTM]
+Communication Training Monitoring [CTM]
+Library [GP]
+Communication Systems [CS]
+23ALT402 - Artificial Intelligence and Machine Learning  [AIML]
+23CST402- Operating Systems[OS]
+Database Management Systems [DBMS]
+23CST304- Object Oriented Programming [OOP]
+23GET401- Environmental Sciences and Engineering  [ESE]
+23ECP401- Communication systems  Laboratory [CS Lab]
+23CSP402- Database Management Systems Laboratory [DBMS Lab ]
+23CSP302- Object Oriented Programming Lab / Placement Training Monitoring [OOPL/PTM]
+23CST402- Operating  Systems Laboratory [OS Lab]
+23ALT402 - Artificial Intelligence and Machine Learning Laboratory [AIML Lab]
+Communication Training Monitoring [CTM]
+Library
+Professional English II [PE-II]
+23MAT201 - Computational Methods [CM]
+Physics for Information Science [PIS]
+23BET203 - Basic Electrical And Electronics Engineering [BEEE]
+23GET201 - Engineering Graphics [EG]
+23CST201 - Problem Solving and Python Programming [PSPP]
+23GET202 - Tamils and Technology [TT]
+Engineering Practices Laboratory [EP LAB]
+23CSP201 - Problem Solving and Python Programming Laboratory/Placement Training Monitoring [PSPP LAB/PTM]
+23BTP201 - Communication Laboratory/Communication Training Report [CL/CTM]
+Library [LIB]
+Professional English II [PE-II]
+23MAT201 - Computational Methods [CM]
+Physics for Information Science [PIS]
+23BET203 - Basic Electrical And Electronics Engineering [BEEE]
+23GET201 - Engineering Graphics [EG]
+23CST201 - Problem Solving and Python Programming [PSPP]
+23GET202 - Tamils and Technology [TT]
+Engineering Practices Laboratory [EP LAB]
+23CSP201 - Problem Solving and Python Programming Laboratory/Placement Training Monitoring [PSPP LAB/PTM]
+23BTP201 - Communication Laboratory/Communication Training Report [CL/CTM]
+Library [LIB]
+Protection and Switchgear
+Power System Operation and Control
+Artificial Intelligence and Machine Learning Fundamentals
+HVDC and FACTS
+Smart System Automation
+Power Electronics for Renewable Energy Systems
+Placement
+Theory of Machines (TOM)
+Manufacturing Technology (MT)
+Strength of Materials (SOM)
+Hydraulics and Pneumatics (HP)
+Thermal Engineering (TE)
+Environmental Sciences and Engineering (EVSE)
+Thermal Engineering Laboratory (TE LAB)
+Strength of Materials and Fluid Machinery Laboratory
+Placement Training -Coding
+Placement Training -Communication
+Electrical Machines-II
 Transmission and Distribution
-Transmission Lines and RF Systems
-VLSI and Chip Design
-VLSI Laboratory
-Water and Waste Water Analysis Laboratory
-Water Supply and Waste Water Engineering
-Wireless Communication
-buisness studies
+Control System
+Linear Integrated Circuits
+Measurements and Instrumentation
+Environmental Sciences and Engineering
+Electrical Machines-II Lab
+Control and Instrumentation Lab
+Linear and Digital Circuits Lab
+Placement Training - Communication
+Placement Training - JAVA Coding
+Electric Circuit Analysis
+Engineering Graphics
+Tamils and Technology
+23HST201-Professional English  II
+23MAT201Computational Methods
+23PHT206-Material Science for Biotechnologists
+Basic Electrical and Electronics Engineering
+23GET201 Engineering Graphics
+23GET202 தமிழர் மரபு /Heritage of Tamils
+23BTT201-Bioorganic Chemistry
+23GEP201-Engineering Practices Laboratory
+23GEP202-Communication Laboratory
+23BTP201-Bioorganic Chemistry Laboratory
+23BTT401 -Molecular Biology
+23BTT402 - Fluid Flow and Heat Transfer Operations
+23BTT404 - Chemical Process Calculations in Biotechnologist
+23BTT405 - Industrial Enzymology
+23GET401 - Environmental Sciences and Sustainability
+23BTT403 -Analytical Techniques in Biotechnology
+23BTP401- Chemical Engineering Lab for Biotechnologist
+23BTP402 -Analytical Instrumentation  Laboratory
+BT3601 Bioinformatics
+BT365- Bioprocess Engineering
+CBT333 - Tissue Engineering (PEIV)
+BT3025 -Animal Cell Culture Technology (PEV)
+OCS35- Artificial Intelligence and Machine Learning Fundamentals
+OCS351- Artificial Intelligence and Machine Learning Fundamentals Lab
+MX3089- Industrial Safety
+BT3611-Bioinformatics Lab
+BT3661  Bioprocess Laboratory
+Artificial Intelligence And Machine Learning
+Funndamentals of data science and Analysis
+Medical Image processing
+Assistive Technology
+Communication Systems
+Medical Image Systems
+Food Nutrition and Health
+Artificial Intelligence and Machine Learning Laboratory
+Medical Image processing Laboratory
