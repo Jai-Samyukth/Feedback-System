@@ -1,12 +1,14 @@
 import csv
 import os
 import logging
+import sqlite3
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, Frame, PageTemplate
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.pdfgen import canvas
 from datetime import datetime
+from app.models.database import get_db
 
 # Configure logging
 logging.basicConfig(
@@ -27,10 +29,6 @@ def normalize_department_name(department):
     # Remove extra spaces
     while '  ' in dept:
         dept = dept.replace('  ', ' ')
-    # Standardize section indicators
-    dept = dept.replace(' - ', '-')
-    dept = dept.replace(' -', '-')
-    dept = dept.replace('- ', '-')
     # Remove "Semester" prefix if present
     dept = dept.replace('Semester ', '')
     return dept
@@ -51,96 +49,61 @@ def generate_non_submission_report(department, semester):
         department (str): The department to filter by (e.g., "Computer Science and Engineering -A")
         semester (str): The semester to filter by (e.g., "2", "4", "6")
     """
-    # Normalize department name
+    # Normalize inputs
     department = normalize_department_name(department)
     semester = normalize_semester(semester)
     
-    # Get submitted register numbers from submitted.csv
-    submitted_regnos = set()
     logging.info(f"Processing feedback submissions for '{department}' - Semester '{semester}'")
     
-    logging.info("Reading submitted.csv file...")
-    if not os.path.exists('submitted.csv'):
-        logging.warning("submitted.csv file not found!")
+    # Get submitted register numbers from database
+    submitted_regnos = set()
+    logging.info("Reading submitted feedback from database...")
+    
+    try:
+        with get_db() as conn:
+            cursor = conn.cursor()
+            # Get all submitted registration numbers
+            cursor.execute('SELECT registerno FROM submitted_feedback')
+            for row in cursor.fetchall():
+                submitted_regnos.add(row[0].strip())
+            
+            logging.info(f"Found {len(submitted_regnos)} total submissions in database")
+    
+    except Exception as e:
+        logging.error(f"Error reading submitted feedback: {e}")
         return None
-        
-    with open('submitted.csv', 'r', newline='', encoding='utf-8') as f:
-        reader = csv.DictReader(f)
-        
-        # Verify column names
-        columns = reader.fieldnames
-        logging.debug(f"Found columns in submitted.csv: {columns}")
-        required_columns = ['Department', 'Semester', 'Original RegNo']
-        missing_columns = [col for col in required_columns if col not in columns]
-        if missing_columns:
-            logging.error(f"Missing required columns in submitted.csv: {missing_columns}")
-            return None
-        
-        submission_count = 0
-        for row in reader:
-            current_dept = normalize_department_name(row['Department'])
-            current_sem = normalize_semester(row['Semester'])
-            current_regno = row['Original RegNo'].strip()
-            
-            # Debug each row
-            logging.debug(f"Checking submission:")
-            logging.debug(f"Department: '{current_dept}' vs Expected: '{department}'")
-            logging.debug(f"Semester: '{current_sem}' vs Expected: '{semester}'")
-            logging.debug(f"Register No: '{current_regno}'")
-            
-            if (current_dept == department and current_sem == semester):
-                submitted_regnos.add(current_regno)
-                submission_count += 1
-                logging.debug(f"Matched submission: {current_regno}")
-            else:
-                logging.debug("No match")
-        
-        logging.info(f"Found {submission_count} submissions for {department} semester {semester}")
     
     # Get all students from the specified department and semester
-    logging.info("Reading students.csv file...")
-    if not os.path.exists('students.csv'):
-        logging.error("students.csv file not found!")
-        return None
-        
+    logging.info("Reading students from database...")
     all_students = []
-    with open('students.csv', 'r', newline='', encoding='utf-8') as f:
-        reader = csv.DictReader(f)
-        
-        # Verify column names
-        columns = reader.fieldnames
-        logging.debug(f"Found columns in students.csv: {columns}")
-        required_columns = ['department', 'semester', 'registerno']
-        missing_columns = [col for col in required_columns if col not in columns]
-        if missing_columns:
-            logging.error(f"Missing required columns in students.csv: {missing_columns}")
-            return None
+    
+    try:
+        with get_db() as conn:
+            cursor = conn.cursor()
+            cursor.execute('''
+                SELECT registerno, department, semester 
+                FROM students 
+                WHERE department = ? AND semester = ?
+            ''', (department.strip(), semester))
             
-        student_count = 0
-        for row in reader:
-            current_dept = normalize_department_name(row['department'])
-            current_sem = normalize_semester(row['semester'])
-            current_regno = row['registerno'].strip()
-            
-            # Debug each row
-            logging.debug(f"Checking student:")
-            logging.debug(f"Department: '{current_dept}' vs Expected: '{department}'")
-            logging.debug(f"Semester: '{current_sem}' vs Expected: '{semester}'")
-            logging.debug(f"Register No: '{current_regno}'")
-            
-            if (current_dept == department and current_sem == semester):
+            student_count = 0
+            for row in cursor.fetchall():
+                current_regno = row[0].strip()
                 student_info = {
                     'registerno': current_regno,
-                    'department': current_dept,
-                    'semester': current_sem
+                    'department': row[1],
+                    'semester': row[2]
                 }
                 all_students.append(student_info)
                 student_count += 1
-                logging.debug(f"Matched student: {current_regno}")
-            else:
-                logging.debug("No match")
+                logging.debug(f"Found student: {current_regno}")
+            
+            logging.info(f"Found {student_count} students in {department} semester {semester}")
     
-    logging.info(f"Found {student_count} students in {department} semester {semester}")
+    except Exception as e:
+        logging.error(f"Error reading students: {e}")
+        return None
+    
     logging.info("Checking for non-submissions...")
     
     # Find students who haven't submitted

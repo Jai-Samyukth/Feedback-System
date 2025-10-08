@@ -1,12 +1,15 @@
-import csv
-import os
+"""
+Utils module - UPDATED to use SQLite database instead of CSV files
+"""
 import hashlib
 import base64
 import logging
-from config import (
-    RATING_FILE, STUDENT_FILE, ADMIN_MAPPING_FILE,
-    MAINRATING_FILE, REQUIRED_FILES
-)
+
+# Lazy import to avoid circular dependency
+def _get_db():
+    """Get database connection - lazy import to avoid circular dependency."""
+    from app.models.database import get_db
+    return get_db()
 
 # Configure logging
 logging.basicConfig(
@@ -51,187 +54,210 @@ def is_encrypted(value):
     return False
 
 def read_csv_as_list(filename):
-    """Return a list of values from the specified column in the CSV file."""
-    if not os.path.exists(filename):
-        return []
-    with open(filename, newline='', encoding='utf-8') as f:
-        reader = csv.DictReader(f)
-        header = REQUIRED_FILES[filename][0]  # Get the expected header for this file
-        return [row[header].strip() for row in reader if row.get(header)]
+    """
+    UPDATED: Return a list of values from the database instead of CSV file.
+    Kept for backward compatibility.
+    """
+    with _get_db() as conn:
+        cursor = conn.cursor()
+        
+        # Determine which table to query based on filename
+        if 'departments' in filename.lower():
+            cursor.execute('SELECT name FROM departments ORDER BY name')
+        elif 'semesters' in filename.lower():
+            cursor.execute('SELECT name FROM semesters ORDER BY name')
+        elif 'staff' in filename.lower():
+            cursor.execute('SELECT name FROM staff ORDER BY name')
+        elif 'subject' in filename.lower():
+            cursor.execute('SELECT name FROM subjects ORDER BY name')
+        else:
+            return []
+        
+        return [row[0] for row in cursor.fetchall()]
 
 def load_admin_mapping(department, semester):
-    """Return a list of mapping dictionaries matching the given department and semester."""
+    """
+    UPDATED: Return a list of mapping dictionaries from database.
+    """
     mappings = []
     dep_norm = department.strip()
     sem_norm = semester.strip()
+    
+    # Normalize semester (remove "Semester" prefix if present)
     if sem_norm.lower().startswith("semester"):
         sem_norm = sem_norm[len("semester"):].strip()
-    if os.path.exists(ADMIN_MAPPING_FILE):
-        with open(ADMIN_MAPPING_FILE, newline='', encoding='utf-8') as f:
-            reader = csv.DictReader(f)
-            for row in reader:
-                row_dep = row.get('department', '').strip()
-                row_sem = row.get('semester', '').strip()
-                if row_sem.lower().startswith("semester"):
-                    row_sem = row_sem[len("semester"):].strip()
-                if row_dep == dep_norm and row_sem == sem_norm:
-                    mappings.append(row)
+    
+    with _get_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            SELECT department, semester, staff, subject 
+            FROM admin_mappings 
+            WHERE department = ? AND semester = ?
+        ''', (dep_norm, sem_norm))
+        
+        for row in cursor.fetchall():
+            mappings.append({
+                'department': row[0],
+                'semester': row[1],
+                'staff': row[2],
+                'subject': row[3]
+            })
+    
     return mappings
 
 def update_admin_mappings(department, semester, new_mappings):
     """
-    Overwrite any existing mappings for the given department and semester
-    with new_mappings. Other mappings are preserved.
+    UPDATED: Overwrite existing mappings in database.
     """
     dep_norm = department.strip()
     sem_norm = semester.strip()
+    
+    # Normalize semester
     if sem_norm.lower().startswith("semester"):
         sem_norm = sem_norm[len("semester"):].strip()
-    existing = []
-    if os.path.exists(ADMIN_MAPPING_FILE):
-        with open(ADMIN_MAPPING_FILE, newline='', encoding='utf-8') as f:
-            reader = csv.DictReader(f)
-            for row in reader:
-                row_dep = row.get('department', '').strip()
-                row_sem = row.get('semester', '').strip()
-                if row_sem.lower().startswith("semester"):
-                    row_sem = row_sem[len("semester"):].strip()
-                if row_dep == dep_norm and row_sem == sem_norm:
-                    continue
-                else:
-                    existing.append(row)
-    combined = existing + new_mappings
-    with open(ADMIN_MAPPING_FILE, 'w', newline='', encoding='utf-8') as f:
-        fieldnames = ['department', 'semester', 'staff', 'subject']
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
-        writer.writeheader()
-        for row in combined:
-            writer.writerow(row)
+    
+    with _get_db() as conn:
+        cursor = conn.cursor()
+        
+        # Delete existing mappings for this department/semester
+        cursor.execute('''
+            DELETE FROM admin_mappings 
+            WHERE department = ? AND semester = ?
+        ''', (dep_norm, sem_norm))
+        
+        # Insert new mappings
+        for mapping in new_mappings:
+            cursor.execute('''
+                INSERT INTO admin_mappings (department, semester, staff, subject) 
+                VALUES (?, ?, ?, ?)
+            ''', (
+                mapping.get('department', dep_norm),
+                mapping.get('semester', sem_norm),
+                mapping.get('staff', ''),
+                mapping.get('subject', '')
+            ))
 
 def append_ratings(rating_rows):
-    """Append rating rows (list of dicts) to RATING_FILE."""
-    file_exists = os.path.exists(RATING_FILE)
-    with open(RATING_FILE, 'a', newline='', encoding='utf-8') as f:
-        fieldnames = ['registerno', 'department', 'semester', 'staff', 'subject',
-                     'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9', 'q10', 'average']
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
-        if not file_exists:
-            writer.writeheader()
+    """
+    UPDATED: Append rating rows to database instead of CSV.
+    """
+    with _get_db() as conn:
+        cursor = conn.cursor()
+        
         for row in rating_rows:
-            # Store the registration number as is (no encryption)
-            writer.writerow(row)
+            # Insert rating
+            cursor.execute('''
+                INSERT INTO ratings 
+                (registerno, department, semester, staff, subject, 
+                 q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, average) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (
+                row['registerno'],
+                row['department'],
+                row['semester'],
+                row['staff'],
+                row['subject'],
+                float(row['q1']),
+                float(row['q2']),
+                float(row['q3']),
+                float(row['q4']),
+                float(row['q5']),
+                float(row['q6']),
+                float(row['q7']),
+                float(row['q8']),
+                float(row['q9']),
+                float(row['q10']),
+                float(row['average'])
+            ))
+            
+            # Mark as submitted
+            cursor.execute('''
+                INSERT OR IGNORE INTO submitted_feedback (registerno) 
+                VALUES (?)
+            ''', (row['registerno'],))
 
 def get_student_info(registerno):
-    """Return student info (as a dict) from STUDENT_FILE by registration number."""
-    if not os.path.exists(STUDENT_FILE):
-        logging.error("Student file not found")
-        return None
-    
+    """
+    UPDATED: Return student info from database by registration number.
+    """
     logging.info(f"Validating {registerno}")
     reg_num = normalize_regno(registerno)
     
-    with open(STUDENT_FILE, newline='', encoding='utf-8') as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            stored_regno = row.get('registerno', '')
-            if not is_encrypted(stored_regno):
-                stored_regno = normalize_regno(stored_regno)
-            
-            if stored_regno == reg_num or stored_regno == encrypt_regno(reg_num):
-                logging.info(f"Validated {registerno} [Status: OK]")
-                return row
+    with _get_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            SELECT registerno, department, semester 
+            FROM students 
+            WHERE registerno = ?
+        ''', (reg_num,))
+        
+        row = cursor.fetchone()
+        if row:
+            logging.info(f"Validated {registerno} [Status: OK]")
+            return {
+                'registerno': row[0],
+                'department': row[1],
+                'semester': row[2]
+            }
     
     logging.info(f"Validated {registerno} [Status: FAILED]")
     return None
 
 def has_submitted_feedback(registerno):
-    """Return True if the student has already submitted feedback."""
-    if not os.path.exists(RATING_FILE):
-        logging.error("Rating file not found")
-        return False
-
+    """
+    UPDATED: Return True if the student has already submitted feedback (from database).
+    """
     reg_num = normalize_regno(registerno)
     
-    with open(RATING_FILE, newline='', encoding='utf-8') as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            stored_regno = row.get('registerno', '')
-            if not is_encrypted(stored_regno):
-                stored_regno = normalize_regno(stored_regno)
-            
-            if stored_regno == reg_num or stored_regno == encrypt_regno(reg_num):
-                logging.info(f"Feedback found for {registerno}")
-                return True
+    with _get_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            SELECT 1 FROM submitted_feedback 
+            WHERE registerno = ?
+        ''', (reg_num,))
+        
+        result = cursor.fetchone()
+        if result:
+            logging.info(f"Feedback found for {registerno}")
+            return True
     
     return False
 
 def update_mainratings():
     """
-    Aggregate ratings from RATING_FILE grouped by department, semester, staff, and subject,
-    and write the aggregated (overall average) data to MAINRATING_FILE.
-    Also calculates per-question averages.
+    UPDATED: Aggregate ratings from database.
+    This function is kept for compatibility but now works with database.
     """
     aggregated = {}
-    if os.path.exists(RATING_FILE):
-        with open(RATING_FILE, newline='', encoding='utf-8') as f:
-            reader = csv.DictReader(f)
-            for row in reader:
-                dep = row.get('department', '').strip()
-                sem = row.get('semester', '').strip()
-                staff = row.get('staff', '').strip()
-                subject = row.get('subject', '').strip()
-                key = (dep, sem, staff, subject)
-                
-                # Initialize if this is the first rating for this combination
-                if key not in aggregated:
-                    aggregated[key] = {
-                        'q_sums': [0.0] * 10,  # Sum for each question
-                        'count': 0,  # Number of ratings
-                        'total_avg': 0.0  # Running sum of averages
-                    }
-                
-                # Add individual question ratings
-                for i in range(1, 11):
-                    try:
-                        q_val = float(row.get(f'q{i}', 0))
-                        aggregated[key]['q_sums'][i-1] += q_val
-                    except (ValueError, TypeError):
-                        continue
-                
-                try:
-                    avg = float(row.get('average', 0))
-                    aggregated[key]['total_avg'] += avg
-                    aggregated[key]['count'] += 1
-                except (ValueError, TypeError):
-                    continue
     
-    with open(MAINRATING_FILE, 'w', newline='', encoding='utf-8') as f:
-        fieldnames = ['department', 'semester', 'staff', 'subject', 'q1_avg', 'q2_avg', 
-                    'q3_avg', 'q4_avg', 'q5_avg', 'q6_avg', 'q7_avg', 'q8_avg', 'q9_avg', 
-                    'q10_avg', 'overall_average']
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
-        writer.writeheader()
+    with _get_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            SELECT department, semester, staff, subject, 
+                   q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, average 
+            FROM ratings
+        ''')
         
-        for key, data in aggregated.items():
-            dep, sem, staff, subject = key
-            count = data['count']
-            if count > 0:
-                row_data = {
-                    'department': dep,
-                    'semester': sem,
-                    'staff': staff,
-                    'subject': subject,
+        for row in cursor.fetchall():
+            dep, sem, staff, subject = row[0], row[1], row[2], row[3]
+            key = (dep, sem, staff, subject)
+            
+            if key not in aggregated:
+                aggregated[key] = {
+                    'q_sums': [0.0] * 10,
+                    'count': 0,
+                    'total_avg': 0.0
                 }
-                # Calculate per-question averages
-                for i in range(10):
-                    q_avg = data['q_sums'][i] / count
-                    row_data[f'q{i+1}_avg'] = f"{q_avg:.2f}"
-                
-                # Calculate overall average
-                overall_avg = data['total_avg'] / count
-                row_data['overall_average'] = f"{overall_avg:.2f}"
-                
-                writer.writerow(row_data)
+            
+            # Add individual question ratings
+            for i in range(10):
+                aggregated[key]['q_sums'][i] += row[4 + i]
+            
+            aggregated[key]['total_avg'] += row[14]  # average
+            aggregated[key]['count'] += 1
+    
+    # Store aggregated results (you can save this to a table if needed)
+    return aggregated
 
 def normalize_semester(semester):
     """Normalize semester string by removing 'semester' prefix if present."""

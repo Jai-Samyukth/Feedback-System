@@ -202,26 +202,50 @@
             {% endwith %}
 
             <div class="row mt-4">
-                <div class="col-md-6">
+                <div class="col-md-6 col-lg-4 mb-4">
                     <div class="card h-100">
                         <div class="card-body text-center">
                             <i class="fas fa-chalkboard-teacher card-icon"></i>
                             <h3 class="card-title">Staff-Subject Mapping</h3>
-                            <p class="card-text">Manage staff and subject mappings, add new staff or subjects to the system.</p>
-                            <a href="{{ url_for('admin') }}" class="btn btn-gold">
+                            <p class="card-text">Map staff to subjects for each department and semester. Upload via Excel or add manually.</p>
+                            <a href="{{ url_for('admin.admin') }}" class="btn btn-gold">
                                 <i class="fas fa-link mr-2"></i>Go to Mapping
                             </a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-list-alt card-icon"></i>
+                            <h3 class="card-title">View/Delete Mappings</h3>
+                            <p class="card-text">View all existing mappings and delete individual or bulk mappings by department/semester.</p>
+                            <a href="{{ url_for('admin.view_mappings') }}" class="btn btn-warning">
+                                <i class="fas fa-eye mr-2"></i>View Mappings
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-plus-circle card-icon"></i>
+                            <h3 class="card-title">Bulk Add Staff/Subjects</h3>
+                            <p class="card-text">Add multiple staff members and subjects at once by entering names line by line.</p>
+                            <a href="{{ url_for('admin.bulk_add') }}" class="btn btn-info">
+                                <i class="fas fa-plus mr-2"></i>Bulk Add
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4">
                     <div class="card h-100">
                         <div class="card-body text-center">
                             <i class="fas fa-user-graduate card-icon"></i>
                             <h3 class="card-title">Student Management</h3>
-                            <p class="card-text">Add and manage student registrations by department and semester.</p>
-                            <a href="{{ url_for('admin_students') }}" class="btn btn-dark-red">
-                                <i class="fas fa-users mr-2"></i>Go to Student Management
+                            <p class="card-text">Add and manage student registrations by department and semester via Excel or manually.</p>
+                            <a href="{{ url_for('admin.admin_students') }}" class="btn btn-dark-red">
+                                <i class="fas fa-users mr-2"></i>Manage Students
                             </a>
                         </div>
                     </div>

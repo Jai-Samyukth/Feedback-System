@@ -1,3 +1,61 @@
+# Virtual Environment
 .venv/
+venv/
+env/
+ENV/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# History and Backups
 history/
-__pycache__
+backups/
+*.backup
+
+# Logs
+*.log
+logs/
+feedback_report.log
+
+# Generated Reports
+*.pdf
+reports/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data files (optional - comment out if you want to track them)
+# *.csv
+# !departments.csv
+# !semesters.csv
+# Database
+data/
+*.db
+*.sqlite
+*.sqlite3
+
+# Uploads
+uploads/
+!uploads/.gitkeep
+
+# Backups
+*_old.py
+*_old.html
+*_backup.*

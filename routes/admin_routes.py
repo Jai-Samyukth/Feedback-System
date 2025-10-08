@@ -1,16 +1,27 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
-from utils import (
-    read_csv_as_list,
-    update_admin_mappings,
-    encrypt_regno,
-    is_encrypted,
-    normalize_regno
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify, send_file
+from werkzeug.utils import secure_filename
+import os
+import logging
+from app.models.database import get_db
+from app.models.student import Student
+from app.services.excel_service import process_student_excel, create_sample_excel
+from app.services.mapping_service import (
+    process_mapping_excel, create_sample_mapping_excel,
+    bulk_add_staff, bulk_add_subjects
 )
-from config import DEPARTMENTS_FILE, SEMESTERS_FILE, STAFFS_FILE, SUBJECTS_FILE, STUDENT_FILE
-import csv
-import json
+from config import UPLOAD_FOLDER, ALLOWED_EXTENSIONS, MAX_FILE_SIZE
+from utils import normalize_regno
+
+logger = logging.getLogger(__name__)
 
 admin_bp = Blueprint('admin', __name__)
+
+# Ensure upload folder exists
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+def allowed_file(filename):
+    """Check if file has an allowed extension."""
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @admin_bp.route('/admin_login', methods=['GET', 'POST'])
 def admin_login():
@@ -23,168 +34,302 @@ def admin_login():
             return redirect(url_for('admin.admin_login'))
     return render_template('admin_login.html')
 
-@admin_bp.route('/admin', methods=['GET', 'POST'])
-def admin():
-    departments = read_csv_as_list(DEPARTMENTS_FILE)
-    semesters = read_csv_as_list(SEMESTERS_FILE)
-    staffs = read_csv_as_list(STAFFS_FILE)
-    subjects = read_csv_as_list(SUBJECTS_FILE)
-
-    if request.method == 'POST':
-        department = request.form.get('department')
-        semester = request.form.get('semester')
-        staff_list = request.form.getlist('staff')
-        subject_list = request.form.getlist('subject')
-
-        new_mappings = [{
-            'department': department,
-            'semester': semester,
-            'staff': staff.strip(),
-            'subject': subject.strip()
-        } for staff, subject in zip(staff_list, subject_list) 
-          if staff.strip() and subject.strip()]
-
-        if not new_mappings:
-            flash("Please enter at least one valid staff–subject mapping.", "danger")
-        else:
-            update_admin_mappings(department, semester, new_mappings)
-            flash("Mapping(s) saved successfully.", "success")
-            return redirect(url_for('admin.admin'))
-
-    return render_template('admin_mapping.html',
-                         departments=departments,
-                         semesters=semesters,
-                         staffs=staffs,
-                         subjects=subjects)
-
 @admin_bp.route('/admin/dashboard')
 def admin_dashboard():
     return render_template('admin_dashboard.html')
 
 @admin_bp.route('/admin/students', methods=['GET'])
 def admin_students():
-    departments = read_csv_as_list(DEPARTMENTS_FILE)
-    semesters = read_csv_as_list(SEMESTERS_FILE)
+    """Display the student management page."""
+    with get_db() as conn:
+        cursor = conn.cursor()
+        
+        # Get departments from students table (actual data)
+        cursor.execute('SELECT DISTINCT department FROM students ORDER BY department')
+        departments = [row[0] for row in cursor.fetchall()]
+        
+        # Get semesters from students table (actual data) - these are stored as numbers
+        cursor.execute('SELECT DISTINCT semester FROM students ORDER BY CAST(semester AS INTEGER)')
+        semesters = [row[0] for row in cursor.fetchall()]
+    
     return render_template('admin_students.html',
                          departments=departments,
                          semesters=semesters)
 
-@admin_bp.route('/admin/add_students', methods=['POST'])
-def add_students():
-    print("[DEBUG] add_students form data:", request.form.to_dict())
-    department = request.form.get('department', '').strip()
-    semester = request.form.get('semester', '').strip()
-    start_reg = request.form.get('startReg', '').strip()
-    end_reg = request.form.get('endReg', '').strip()
-
-    print(f"[DEBUG] Processing add_students: department={department}, semester={semester}, start_reg={start_reg}, end_reg={end_reg}")
-
-    # Clean up semester input - extract just the number
-    semester = semester.replace('Semester ', '').replace('semester ', '').strip()
-
-    if (not department or not semester or not start_reg or not end_reg
-        or department.lower() == 'department' or semester.lower() == 'semester'
-        or not semester.isdigit()):
+@admin_bp.route('/admin/students/list', methods=['GET'])
+def list_students():
+    """Get list of students filtered by department and semester."""
+    department = request.args.get('department', '').strip()
+    semester = request.args.get('semester', '').strip()
+    
+    if not department or not semester:
         return jsonify({
             'success': False,
-            'message': 'All fields (Department, Semester, Start Registration Number, End Registration Number) are required and must be properly selected.'
+            'message': 'Department and semester are required'
+        })
+    
+    try:
+        students = Student.get_by_dept_sem(department, semester)
+        return jsonify({
+            'success': True,
+            'students': students,
+            'count': len(students)
+        })
+    except Exception as e:
+        logger.error(f"Error listing students: {e}")
+        return jsonify({
+            'success': False,
+            'message': f'Error fetching students: {str(e)}'
         })
 
+@admin_bp.route('/admin/students/add', methods=['POST'])
+def add_students():
+    """Add students via registration number range."""
     try:
-        start_num = int(start_reg)
-        end_num = int(end_reg)
-
-        # Check if the range is within 120
-        if (end_num - start_num + 1) > 120:
+        department = request.form.get('department', '').strip()
+        semester = request.form.get('semester', '').strip()
+        start_reg = request.form.get('startReg', '').strip()
+        end_reg = request.form.get('endReg', '').strip()
+        
+        # Validate inputs
+        if not all([department, semester, start_reg, end_reg]):
             return jsonify({
                 'success': False,
-                'message': 'The range between start and end numbers should not exceed 120'
+                'message': 'All fields are required'
             })
-
-        # Read existing students to check for duplicates
-        existing_students = {}
-        try:
-            with open(STUDENT_FILE, 'r', newline='', encoding='utf-8') as f:
-                reader = csv.DictReader(f)
-                for row in reader:
-                    key = (row['department'], row['semester'])
-                    regno = row['registerno']
-                    if key not in existing_students:
-                        existing_students[key] = {'encrypted': set(), 'plain': set()}
-                    
-                    if is_encrypted(regno):
-                        existing_students[key]['encrypted'].add(regno)
-                        # Try to guess the original number by checking common patterns
-                        for i in range(1, 1000):
-                            if encrypt_regno(str(i)) == regno:
-                                existing_students[key]['plain'].add(str(i))
-                                break
-                    else:
-                        existing_students[key]['plain'].add(regno)
-                        existing_students[key]['encrypted'].add(encrypt_regno(regno))
-        except FileNotFoundError:
-            # Create file with headers if it doesn't exist
-            with open(STUDENT_FILE, 'w', newline='', encoding='utf-8') as f:
-                writer = csv.writer(f)
-                writer.writerow(['registerno', 'department', 'semester'])
-                print(f"[DEBUG] Created new students.csv file with headers")
-
-        # Add new students
-        new_students = []
-        duplicates = []
-        dept_sem_key = (department, semester)
-        existing_plain = existing_students.get(dept_sem_key, {}).get('plain', set())
-        existing_encrypted = existing_students.get(dept_sem_key, {}).get('encrypted', set())
         
-        print(f"[DEBUG] Existing students for {dept_sem_key}: plain={len(existing_plain)}, encrypted={len(existing_encrypted)}")
-
+        # Convert to integers
+        start_num = int(start_reg)
+        end_num = int(end_reg)
+        
+        if start_num > end_num:
+            return jsonify({
+                'success': False,
+                'message': 'Start registration number must be less than or equal to end number'
+            })
+        
+        if (end_num - start_num + 1) > 600:
+            return jsonify({
+                'success': False,
+                'message': 'The range should not exceed 600 students'
+            })
+        
+        # Prepare student data
+        students_data = []
         for reg_no in range(start_num, end_num + 1):
-            reg_str = str(reg_no)  # Don't pad with zeros to match the format in the form
-            
-            # Check if this register number already exists (either in plain or encrypted form)
-            if reg_str in existing_plain or encrypt_regno(reg_str) in existing_encrypted:
-                duplicates.append(reg_str)  # Store original for display to user
-            else:
-                # Store plain text version
-                new_students.append([reg_str, department, semester])
-
-        if new_students:
-            with open(STUDENT_FILE, 'a', newline='', encoding='utf-8') as f:
-                writer = csv.writer(f)
-                writer.writerows(new_students)
-                print(f"[DEBUG] Department/Semester: {dept_sem_key} | Added {len(new_students)} new students | Skipped {len(duplicates)} duplicates")
-            
-            msg = f"Successfully added {len(new_students)} students."
-            if duplicates:
-                msg += f" Registration numbers {', '.join(duplicates)} were skipped as they already exist."
+            students_data.append((str(reg_no), department, semester))
+        
+        # Add students
+        added_count, duplicate_count, duplicates = Student.bulk_add(students_data)
+        
+        if added_count > 0:
+            message = f"Successfully added {added_count} students."
+            if duplicate_count > 0:
+                message += f" {duplicate_count} duplicates were skipped."
             return jsonify({
                 'success': True,
-                'message': msg
+                'message': message,
+                'added': added_count,
+                'duplicates': duplicate_count
             })
         else:
             return jsonify({
                 'success': False,
-                'message': f"All the registration numbers already exist for this department and semester: {', '.join(duplicates)}"
+                'message': f'All {duplicate_count} students already exist'
             })
-
-    except ValueError as ve:
-        print(f"[DEBUG] ValueError in add_students: {str(ve)}")
+    
+    except ValueError:
         return jsonify({
             'success': False,
-            'message': 'Please enter valid registration numbers'
+            'message': 'Invalid registration number format'
         })
     except Exception as e:
-        import traceback
-        error_traceback = traceback.format_exc()
-        error_msg = f"Error in add_students: {str(e)}\nTraceback:\n{error_traceback}"
-        print(error_msg)
+        logger.error(f"Error adding students: {e}")
         return jsonify({
             'success': False,
-            'message': 'An error occurred while adding students. Please try again with different registration numbers or contact support if the issue persists.'
+            'message': f'Error adding students: {str(e)}'
         })
+
+@admin_bp.route('/admin/students/upload', methods=['POST'])
+def upload_students_excel():
+    """Upload students via Excel file."""
+    try:
+        # Check if file was uploaded
+        if 'file' not in request.files:
+            return jsonify({
+                'success': False,
+                'message': 'No file uploaded'
+            })
+        
+        file = request.files['file']
+        
+        if file.filename == '':
+            return jsonify({
+                'success': False,
+                'message': 'No file selected'
+            })
+        
+        if not allowed_file(file.filename):
+            return jsonify({
+                'success': False,
+                'message': 'Invalid file type. Please upload an Excel file (.xlsx or .xls)'
+            })
+        
+        # Check file size
+        file.seek(0, os.SEEK_END)
+        file_size = file.tell()
+        file.seek(0)
+        
+        if file_size > MAX_FILE_SIZE:
+            return jsonify({
+                'success': False,
+                'message': f'File too large. Maximum size is {MAX_FILE_SIZE / (1024*1024):.0f}MB'
+            })
+        
+        # Save file
+        filename = secure_filename(file.filename)
+        filepath = os.path.join(UPLOAD_FOLDER, filename)
+        file.save(filepath)
+        
+        # Process file
+        success, message, stats = process_student_excel(filepath)
+        
+        # Clean up uploaded file
+        try:
+            os.remove(filepath)
+        except:
+            pass
+        
+        if success:
+            return jsonify({
+                'success': True,
+                'message': message,
+                'stats': stats
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'message': message,
+                'stats': stats
+            })
+    
+    except Exception as e:
+        logger.error(f"Error uploading Excel: {e}")
+        return jsonify({
+            'success': False,
+            'message': f'Error processing file: {str(e)}'
+        })
+
+@admin_bp.route('/admin/students/delete', methods=['POST'])
+def delete_student():
+    """Delete a student."""
+    try:
+        registerno = request.form.get('registerno', '').strip()
+        department = request.form.get('department', '').strip()
+        semester = request.form.get('semester', '').strip()
+        
+        if not all([registerno, department, semester]):
+            return jsonify({
+                'success': False,
+                'message': 'All fields are required'
+            })
+        
+        # Normalize registration number
+        registerno = normalize_regno(registerno)
+        
+        # Delete student
+        deleted = Student.delete(registerno, department, semester)
+        
+        if deleted:
+            return jsonify({
+                'success': True,
+                'message': f'Student {registerno} deleted successfully'
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'message': 'Student not found'
+            })
+    
+    except Exception as e:
+        logger.error(f"Error deleting student: {e}")
+        return jsonify({
+            'success': False,
+            'message': f'Error deleting student: {str(e)}'
+        })
+
+@admin_bp.route('/admin/students/download-sample')
+def download_sample():
+    """Download a sample Excel file."""
+    try:
+        sample_path = os.path.join(UPLOAD_FOLDER, 'sample_students.xlsx')
+        create_sample_excel(sample_path)
+        return send_file(sample_path, as_attachment=True, download_name='sample_students.xlsx')
+    except Exception as e:
+        logger.error(f"Error creating sample file: {e}")
+        flash('Error creating sample file', 'danger')
+        return redirect(url_for('admin.admin_students'))
+
+@admin_bp.route('/admin', methods=['GET', 'POST'])
+def admin():
+    """Admin mapping page."""
+    with get_db() as conn:
+        cursor = conn.cursor()
+        
+        cursor.execute('SELECT name FROM departments ORDER BY name')
+        departments = [row[0] for row in cursor.fetchall()]
+        
+        cursor.execute('SELECT name FROM semesters ORDER BY name')
+        semesters = [row[0] for row in cursor.fetchall()]
+        
+        cursor.execute('SELECT name FROM staff ORDER BY name')
+        staffs = [row[0] for row in cursor.fetchall()]
+        
+        cursor.execute('SELECT name FROM subjects ORDER BY name')
+        subjects = [row[0] for row in cursor.fetchall()]
+    
+    if request.method == 'POST':
+        department = request.form.get('department')
+        semester = request.form.get('semester')
+        staff_list = request.form.getlist('staff')
+        subject_list = request.form.getlist('subject')
+        
+        new_mappings = [
+            (department, semester, staff.strip(), subject.strip())
+            for staff, subject in zip(staff_list, subject_list)
+            if staff.strip() and subject.strip()
+        ]
+        
+        if not new_mappings:
+            flash("Please enter at least one valid staff–subject mapping.", "danger")
+        else:
+            with get_db() as conn:
+                cursor = conn.cursor()
+                
+                # Delete existing mappings for this dept/semester
+                cursor.execute('''
+                    DELETE FROM admin_mappings 
+                    WHERE department = ? AND semester = ?
+                ''', (department, semester))
+                
+                # Insert new mappings
+                cursor.executemany('''
+                    INSERT INTO admin_mappings (department, semester, staff, subject) 
+                    VALUES (?, ?, ?, ?)
+                ''', new_mappings)
+            
+            flash("Mapping(s) saved successfully.", "success")
+            return redirect(url_for('admin.admin'))
+    
+    return render_template('admin_mapping.html',
+                         departments=departments,
+                         semesters=semesters,
+                         staffs=staffs,
+                         subjects=subjects)
 
 @admin_bp.route('/admin/add_staff', methods=['POST'])
 def add_staff():
+    """Add a new staff member."""
     try:
         staff_name = request.form.get('staff_name', '').strip()
         if not staff_name:
@@ -192,35 +337,33 @@ def add_staff():
                 'success': False,
                 'message': 'Staff name cannot be empty'
             })
-
-        # Read existing staff
-        staffs = read_csv_as_list(STAFFS_FILE)
         
-        if staff_name in staffs:
-            return jsonify({
-                'success': False,
-                'message': 'Staff name already exists'
-            })
-
-        # Append new staff
-        with open(STAFFS_FILE, 'a', newline='', encoding='utf-8') as f:
-            writer = csv.writer(f)
-            writer.writerow([staff_name])
-
-        return jsonify({
-            'success': True,
-            'message': f'Successfully added staff: {staff_name}',
-            'staff_name': staff_name
-        })
-
+        with get_db() as conn:
+            cursor = conn.cursor()
+            cursor.execute('INSERT OR IGNORE INTO staff (name) VALUES (?)', (staff_name,))
+            
+            if cursor.rowcount > 0:
+                return jsonify({
+                    'success': True,
+                    'message': f'Successfully added staff: {staff_name}',
+                    'staff_name': staff_name
+                })
+            else:
+                return jsonify({
+                    'success': False,
+                    'message': 'Staff name already exists'
+                })
+    
     except Exception as e:
+        logger.error(f"Error adding staff: {e}")
         return jsonify({
             'success': False,
-            'message': f'An error occurred: {str(e)}'
+            'message': f'Error adding staff: {str(e)}'
         })
 
 @admin_bp.route('/admin/add_subject', methods=['POST'])
 def add_subject():
+    """Add a new subject."""
     try:
         subject_name = request.form.get('subject_name', '').strip()
         if not subject_name:
@@ -228,45 +371,319 @@ def add_subject():
                 'success': False,
                 'message': 'Subject name cannot be empty'
             })
-
-        # Read existing subjects
-        subjects = read_csv_as_list(SUBJECTS_FILE)
         
-        if subject_name in subjects:
-            return jsonify({
-                'success': False,
-                'message': 'Subject already exists'
-            })
-
-        # Append new subject
-        with open(SUBJECTS_FILE, 'a', newline='', encoding='utf-8') as f:
-            writer = csv.writer(f)
-            writer.writerow([subject_name])
-
-        return jsonify({
-            'success': True,
-            'message': f'Successfully added subject: {subject_name}',
-            'subject_name': subject_name
-        })
-
+        with get_db() as conn:
+            cursor = conn.cursor()
+            cursor.execute('INSERT OR IGNORE INTO subjects (name) VALUES (?)', (subject_name,))
+            
+            if cursor.rowcount > 0:
+                return jsonify({
+                    'success': True,
+                    'message': f'Successfully added subject: {subject_name}',
+                    'subject_name': subject_name
+                })
+            else:
+                return jsonify({
+                    'success': False,
+                    'message': 'Subject already exists'
+                })
+    
     except Exception as e:
+        logger.error(f"Error adding subject: {e}")
         return jsonify({
             'success': False,
-            'message': f'An error occurred: {str(e)}'
+            'message': f'Error adding subject: {str(e)}'
         })
 
 @admin_bp.route('/admin/get_lists', methods=['GET'])
 def get_lists():
+    """Get staff and subject lists."""
     try:
-        staffs = read_csv_as_list(STAFFS_FILE)
-        subjects = read_csv_as_list(SUBJECTS_FILE)
+        with get_db() as conn:
+            cursor = conn.cursor()
+            
+            cursor.execute('SELECT name FROM staff ORDER BY name')
+            staffs = [row[0] for row in cursor.fetchall()]
+            
+            cursor.execute('SELECT name FROM subjects ORDER BY name')
+            subjects = [row[0] for row in cursor.fetchall()]
+        
         return jsonify({
             'success': True,
             'staffs': staffs,
             'subjects': subjects
         })
     except Exception as e:
+        logger.error(f"Error getting lists: {e}")
         return jsonify({
             'success': False,
             'message': f'Error fetching lists: {str(e)}'
         })
+
+@admin_bp.route('/admin/mappings/view', methods=['GET'])
+def view_mappings():
+    """View all staff-subject mappings."""
+    with get_db() as conn:
+        cursor = conn.cursor()
+        
+        # Get departments and semesters for filtering
+        cursor.execute('SELECT name FROM departments ORDER BY name')
+        departments = [row[0] for row in cursor.fetchall()]
+        
+        cursor.execute('SELECT name FROM semesters ORDER BY name')
+        semesters = [row[0] for row in cursor.fetchall()]
+    
+    return render_template('admin_view_mappings.html',
+                         departments=departments,
+                         semesters=semesters)
+
+@admin_bp.route('/admin/mappings/list', methods=['GET'])
+def list_mappings():
+    """Get list of mappings filtered by department and semester."""
+    department = request.args.get('department', '').strip()
+    semester = request.args.get('semester', '').strip()
+    
+    try:
+        with get_db() as conn:
+            cursor = conn.cursor()
+            
+            if department and semester:
+                cursor.execute('''
+                    SELECT id, department, semester, staff, subject 
+                    FROM admin_mappings 
+                    WHERE department = ? AND semester = ?
+                    ORDER BY staff, subject
+                ''', (department, semester))
+            elif department:
+                cursor.execute('''
+                    SELECT id, department, semester, staff, subject 
+                    FROM admin_mappings 
+                    WHERE department = ?
+                    ORDER BY semester, staff, subject
+                ''', (department,))
+            elif semester:
+                cursor.execute('''
+                    SELECT id, department, semester, staff, subject 
+                    FROM admin_mappings 
+                    WHERE semester = ?
+                    ORDER BY department, staff, subject
+                ''', (semester,))
+            else:
+                cursor.execute('''
+                    SELECT id, department, semester, staff, subject 
+                    FROM admin_mappings 
+                    ORDER BY department, semester, staff, subject
+                    LIMIT 500
+                ''')
+            
+            mappings = []
+            for row in cursor.fetchall():
+                mappings.append({
+                    'id': row[0],
+                    'department': row[1],
+                    'semester': row[2],
+                    'staff': row[3],
+                    'subject': row[4]
+                })
+        
+        return jsonify({
+            'success': True,
+            'mappings': mappings,
+            'count': len(mappings)
+        })
+    except Exception as e:
+        logger.error(f"Error listing mappings: {e}")
+        return jsonify({
+            'success': False,
+            'message': f'Error fetching mappings: {str(e)}'
+        })
+
+@admin_bp.route('/admin/mappings/delete', methods=['POST'])
+def delete_mapping():
+    """Delete a specific mapping."""
+    try:
+        mapping_id = request.form.get('mapping_id', '').strip()
+        
+        if not mapping_id:
+            return jsonify({
+                'success': False,
+                'message': 'Mapping ID is required'
+            })
+        
+        with get_db() as conn:
+            cursor = conn.cursor()
+            cursor.execute('DELETE FROM admin_mappings WHERE id = ?', (mapping_id,))
+            
+            if cursor.rowcount > 0:
+                return jsonify({
+                    'success': True,
+                    'message': 'Mapping deleted successfully'
+                })
+            else:
+                return jsonify({
+                    'success': False,
+                    'message': 'Mapping not found'
+                })
+    
+    except Exception as e:
+        logger.error(f"Error deleting mapping: {e}")
+        return jsonify({
+            'success': False,
+            'message': f'Error deleting mapping: {str(e)}'
+        })
+
+@admin_bp.route('/admin/mappings/delete-all', methods=['POST'])
+def delete_all_mappings():
+    """Delete all mappings for a department and semester."""
+    try:
+        department = request.form.get('department', '').strip()
+        semester = request.form.get('semester', '').strip()
+        
+        if not department or not semester:
+            return jsonify({
+                'success': False,
+                'message': 'Department and semester are required'
+            })
+        
+        with get_db() as conn:
+            cursor = conn.cursor()
+            cursor.execute('''
+                DELETE FROM admin_mappings 
+                WHERE department = ? AND semester = ?
+            ''', (department, semester))
+            
+            deleted_count = cursor.rowcount
+            
+            return jsonify({
+                'success': True,
+                'message': f'Deleted {deleted_count} mappings successfully',
+                'count': deleted_count
+            })
+    
+    except Exception as e:
+        logger.error(f"Error deleting mappings: {e}")
+        return jsonify({
+            'success': False,
+            'message': f'Error deleting mappings: {str(e)}'
+        })
+
+@admin_bp.route('/admin/mappings/upload', methods=['POST'])
+def upload_mapping_excel():
+    """Upload staff-subject mappings via Excel file."""
+    try:
+        if 'file' not in request.files:
+            return jsonify({
+                'success': False,
+                'message': 'No file uploaded'
+            })
+        
+        file = request.files['file']
+        
+        if file.filename == '':
+            return jsonify({
+                'success': False,
+                'message': 'No file selected'
+            })
+        
+        if not allowed_file(file.filename):
+            return jsonify({
+                'success': False,
+                'message': 'Invalid file type. Please upload an Excel file (.xlsx or .xls)'
+            })
+        
+        file.seek(0, os.SEEK_END)
+        file_size = file.tell()
+        file.seek(0)
+        
+        if file_size > MAX_FILE_SIZE:
+            return jsonify({
+                'success': False,
+                'message': f'File too large. Maximum size is {MAX_FILE_SIZE / (1024*1024):.0f}MB'
+            })
+        
+        filename = secure_filename(file.filename)
+        filepath = os.path.join(UPLOAD_FOLDER, filename)
+        file.save(filepath)
+        
+        replace_existing = request.form.get('replace_existing', 'false').lower() == 'true'
+        
+        success, message, stats = process_mapping_excel(filepath, replace_existing)
+        
+        try:
+            os.remove(filepath)
+        except:
+            pass
+        
+        if success:
+            return jsonify({
+                'success': True,
+                'message': message,
+                'stats': stats
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'message': message,
+                'stats': stats
+            })
+    
+    except Exception as e:
+        logger.error(f"Error uploading mapping Excel: {e}")
+        return jsonify({
+            'success': False,
+            'message': f'Error processing file: {str(e)}'
+        })
+
+@admin_bp.route('/admin/mappings/download-sample')
+def download_mapping_sample():
+    """Download a sample Excel file for mappings."""
+    try:
+        sample_path = os.path.join(UPLOAD_FOLDER, 'sample_mapping.xlsx')
+        create_sample_mapping_excel(sample_path)
+        return send_file(sample_path, as_attachment=True, download_name='sample_staff_mapping.xlsx')
+    except Exception as e:
+        logger.error(f"Error creating sample mapping file: {e}")
+        flash('Error creating sample file', 'danger')
+        return redirect(url_for('admin.admin'))
+
+@admin_bp.route('/admin/bulk-add', methods=['GET', 'POST'])
+def bulk_add():
+    """Page for bulk adding staff and subjects."""
+    if request.method == 'POST':
+        action = request.form.get('action')
+        
+        if action == 'add_staff':
+            staff_text = request.form.get('staff_text', '').strip()
+            staff_list = [s.strip() for s in staff_text.split('\n') if s.strip()]
+            
+            if not staff_list:
+                flash('Please enter at least one staff name', 'danger')
+            else:
+                added, duplicates = bulk_add_staff(staff_list)
+                if added > 0:
+                    message = f'Successfully added {added} staff members.'
+                    if duplicates > 0:
+                        message += f' {duplicates} duplicates were skipped.'
+                    flash(message, 'success')
+                else:
+                    flash(f'No new staff added. All {duplicates} were duplicates.', 'warning')
+        
+        elif action == 'add_subjects':
+            subjects_text = request.form.get('subjects_text', '').strip()
+            subjects_list = [s.strip() for s in subjects_text.split('\n') if s.strip()]
+            
+            if not subjects_list:
+                flash('Please enter at least one subject name', 'danger')
+            else:
+                added, duplicates = bulk_add_subjects(subjects_list)
+                if added > 0:
+                    message = f'Successfully added {added} subjects.'
+                    if duplicates > 0:
+                        message += f' {duplicates} duplicates were skipped.'
+                    flash(message, 'success')
+                else:
+                    flash(f'No new subjects added. All {duplicates} were duplicates.', 'warning')
+        
+        return redirect(url_for('admin.bulk_add'))
+    
+    return render_template('admin_bulk_add.html')

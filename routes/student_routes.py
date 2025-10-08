@@ -29,11 +29,11 @@ def feedback():
 
     if not department or not semester or not registerno:
         flash("Missing department, semester, or registration number.", "danger")
-        return redirect(url_for('student.student_login'))
+        return redirect(url_for('student_login'))
 
     if has_submitted_feedback(registerno):
         flash("Feedback already submitted. You have already registered.", "info")
-        return redirect(url_for('student.student_login'))
+        return redirect(url_for('student_login'))
 
     mappings = load_admin_mapping(department, semester)
     if not mappings:
@@ -42,7 +42,7 @@ def feedback():
     if request.method == 'POST':
         if has_submitted_feedback(registerno):
             flash("Feedback already submitted. You have already registered.", "info")
-            return redirect(url_for('student.student_login'))
+            return redirect(url_for('student_login'))
 
         rating_rows = []
         error_flag = False
@@ -83,7 +83,7 @@ def feedback():
         else:
             append_ratings(rating_rows)
             flash("Feedback submitted successfully. Thank you!", "success")
-            return redirect(url_for('student.student_login'))
+            return redirect(url_for('student_login'))
 
     return render_template('feedback_form.html',
                          department=department,

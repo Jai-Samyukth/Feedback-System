@@ -1,4 +1,7 @@
-# File paths
+# Database configuration
+DATABASE_PATH = 'data/feedback.db'
+
+# File paths (kept for backward compatibility during migration)
 DEPARTMENTS_FILE = 'departments.csv'
 SEMESTERS_FILE = 'semesters.csv'
 STAFFS_FILE = 'staffs.csv'
@@ -7,6 +10,11 @@ ADMIN_MAPPING_FILE = 'admin_mapping.csv'
 RATING_FILE = 'ratings.csv'
 STUDENT_FILE = 'students.csv'  # Contains: registerno,department,semester
 MAINRATING_FILE = 'mainrating.csv'  # New aggregated ratings file
+
+# Upload configuration
+UPLOAD_FOLDER = 'uploads'
+ALLOWED_EXTENSIONS = {'xlsx', 'xls'}
+MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
 
 # Required CSV files and their headers
 REQUIRED_FILES = {

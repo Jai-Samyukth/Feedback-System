@@ -6,6 +6,7 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from utils import read_csv_as_list, update_mainratings, normalize_semester
 from config import (DEPARTMENTS_FILE, SEMESTERS_FILE, MAINRATING_FILE,
                    RATING_FILE, STUDENT_FILE, REQUIRED_FILES, ADMIN_MAPPING_FILE)
+from app.models.database import get_db
 import subprocess
 from report_non_submission import generate_non_submission_report
 import os
@@ -65,31 +66,41 @@ def hod_select():
                 feedback_data = {}
                 staff_counter = 1
                 
-                if os.path.exists(MAINRATING_FILE):
-                    with open(MAINRATING_FILE, newline='', encoding='utf-8') as f:
-                        reader = csv.DictReader(f)
-                        for row in reader:
-                            dep = row.get('department', '').strip()
-                            sem = normalize_semester(row.get('semester', ''))
-                            if dep == department.strip() and sem == normalized_input_semester:
-                                staff_name = row.get('staff', '').strip()
-                                subject_name = row.get('subject', '').strip()
-                                scores = []
-                                for i in range(1, 11):
-                                    try:
-                                        score = float(row.get(f'q{i}_avg', '0.00'))
-                                        scores.append(score)
-                                    except (ValueError, TypeError):
-                                        scores.append(0.0)
-                                
-                                key = f"{staff_name}_{subject_name}"
-                                feedback_data[key] = {
-                                    'reference': f'S{staff_counter}',
-                                    'staff_name': staff_name,
-                                    'subject': subject_name,
-                                    'scores': scores
-                                }
-                                staff_counter += 1
+                # Query ratings from database and calculate averages
+                # Try multiple semester formats since data might be inconsistent
+                sem_variations = [
+                    normalized_input_semester,
+                    f"Semester {normalized_input_semester}",
+                    semester.strip()
+                ]
+                
+                with get_db() as conn:
+                    cursor = conn.cursor()
+                    placeholders = ', '.join(['?'] * len(sem_variations))
+                    cursor.execute(f'''
+                        SELECT staff, subject,
+                               AVG(q1) as q1_avg, AVG(q2) as q2_avg, AVG(q3) as q3_avg,
+                               AVG(q4) as q4_avg, AVG(q5) as q5_avg, AVG(q6) as q6_avg,
+                               AVG(q7) as q7_avg, AVG(q8) as q8_avg, AVG(q9) as q9_avg,
+                               AVG(q10) as q10_avg
+                        FROM ratings
+                        WHERE department = ? AND semester IN ({placeholders})
+                        GROUP BY staff, subject
+                    ''', (department.strip(), *sem_variations))
+                    
+                    for row in cursor.fetchall():
+                        staff_name = row[0].strip()
+                        subject_name = row[1].strip()
+                        scores = [row[i] for i in range(2, 12)]  # q1_avg to q10_avg
+                        
+                        key = f"{staff_name}_{subject_name}"
+                        feedback_data[key] = {
+                            'reference': f'S{staff_counter}',
+                            'staff_name': staff_name,
+                            'subject': subject_name,
+                            'scores': scores
+                        }
+                        staff_counter += 1
                 
                 if not feedback_data:
                     flash("No rating data found for the selected department and semester.", "danger")
@@ -142,19 +153,7 @@ def hod_select():
         
         elif action == 'non_submission_report':
             try:
-                # Run deencrypt.py to generate the submitted.csv file
-                try:
-                    result = subprocess.run(['python', 'deencrypt.py'], 
-                                        check=True, 
-                                        capture_output=True, 
-                                        text=True)
-                    current_app.logger.info(f"Deencrypt output: {result.stdout}")
-                except subprocess.CalledProcessError as e:
-                    current_app.logger.error(f"Deencrypt error: {e.stderr}")
-                    flash(f"Error running deencrypt.py: {e.stderr}", "danger")
-                    return redirect(url_for('hod.hod_select'))
-                
-                # Generate the non-submission report
+                # Generate the non-submission report directly from database
                 pdf_path = generate_non_submission_report(department, semester)
                 
                 if not pdf_path or not os.path.exists(pdf_path):
@@ -184,6 +183,7 @@ def hod_select():
                 
         elif action == 'archive':
             try:
+                # Create history directory
                 if not os.path.exists('history'):
                     os.makedirs('history')
                 
@@ -192,26 +192,72 @@ def hod_select():
                 if not os.path.exists(archive_dir):
                     os.makedirs(archive_dir)
                 
-                files_to_handle = {
-                    RATING_FILE: REQUIRED_FILES[RATING_FILE],
-                    STUDENT_FILE: REQUIRED_FILES[STUDENT_FILE],
-                    ADMIN_MAPPING_FILE: ['department', 'semester', 'staff', 'subject'],
-                    MAINRATING_FILE: None
-                }
+                # Backup database file
+                db_path = os.path.join('data', 'feedback.db')
+                if os.path.exists(db_path):
+                    archive_db_path = os.path.join(archive_dir, 'feedback_backup.db')
+                    shutil.copy2(db_path, archive_db_path)
+                    current_app.logger.info(f"Database backed up to: {archive_db_path}")
                 
-                for file, headers in files_to_handle.items():
+                # Clear specific tables (keep: staff, subjects, semesters, departments)
+                with get_db() as conn:
+                    cursor = conn.cursor()
+                    
+                    # Clear ratings table
+                    cursor.execute('DELETE FROM ratings')
+                    ratings_deleted = cursor.rowcount
+                    current_app.logger.info(f"Deleted {ratings_deleted} rows from ratings table")
+                    
+                    # Clear submitted_feedback table
+                    cursor.execute('DELETE FROM submitted_feedback')
+                    submitted_deleted = cursor.rowcount
+                    current_app.logger.info(f"Deleted {submitted_deleted} rows from submitted_feedback table")
+                    
+                    # Clear admin_mappings table
+                    cursor.execute('DELETE FROM admin_mappings')
+                    mappings_deleted = cursor.rowcount
+                    current_app.logger.info(f"Deleted {mappings_deleted} rows from admin_mappings table")
+                    
+                    # Clear students table
+                    cursor.execute('DELETE FROM students')
+                    students_deleted = cursor.rowcount
+                    current_app.logger.info(f"Deleted {students_deleted} rows from students table")
+                    
+                    conn.commit()
+                
+                # Delete unnecessary files
+                files_to_delete = [
+                    'feedback_report.log',
+                    'submitted.csv',
+                    'students.csv'
+                ]
+                for file in files_to_delete:
                     if os.path.exists(file):
-                        archive_path = os.path.join(archive_dir, os.path.basename(file))
-                        safe_move_file(file, archive_path)
-                        
-                        if headers is not None:
-                            create_empty_csv(file, headers)
-                        elif file == MAINRATING_FILE and os.path.exists(file):
+                        try:
                             os.remove(file)
+                            current_app.logger.info(f"Deleted file: {file}")
+                        except Exception as e:
+                            current_app.logger.warning(f"Could not delete {file}: {e}")
                 
-                flash("Data successfully archived and system reset.", "success")
+                # Delete generated PDF reports
+                for file in os.listdir('.'):
+                    if file.startswith('feedback_report_') and file.endswith('.pdf'):
+                        try:
+                            os.remove(file)
+                            current_app.logger.info(f"Deleted report: {file}")
+                        except Exception as e:
+                            current_app.logger.warning(f"Could not delete {file}: {e}")
+                    elif file.startswith('non_submission_report_') and file.endswith('.pdf'):
+                        try:
+                            os.remove(file)
+                            current_app.logger.info(f"Deleted report: {file}")
+                        except Exception as e:
+                            current_app.logger.warning(f"Could not delete {file}: {e}")
+                
+                flash("Data successfully archived and system reset. Preserved: staff, subjects, semesters, departments.", "success")
                 
             except Exception as e:
+                current_app.logger.error(f"Error during archival: {str(e)}")
                 flash(f"Error during archival process: {str(e)}", "danger")
             
             return redirect(url_for('hod.hod_select'))
