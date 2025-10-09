@@ -67,40 +67,53 @@ def process_mapping_excel(file_path: str, replace_existing: bool = False) -> Tup
         return False, error_msg, {}
     
     try:
-        with get_db() as conn:
-            cursor = conn.cursor()
+        client = get_db()
+        
+        added_count = 0
+        skipped_count = 0
+        dept_sem_combinations = set()
+        
+        for _, row in df.iterrows():
+            dept = str(row['department'])
+            sem = str(row['semester'])
+            staff = str(row['staff'])
+            subject = str(row['subject'])
             
-            added_count = 0
-            skipped_count = 0
-            dept_sem_combinations = set()
+            dept_sem_key = (dept, sem)
             
-            for _, row in df.iterrows():
-                dept = str(row['department'])
-                sem = str(row['semester'])
-                staff = str(row['staff'])
-                subject = str(row['subject'])
+            # If replace_existing is True and this is first record for this dept/sem, delete existing
+            if replace_existing and dept_sem_key not in dept_sem_combinations:
+                client.table('admin_mappings')\
+                    .delete()\
+                    .eq('department', dept)\
+                    .eq('semester', sem)\
+                    .execute()
+                dept_sem_combinations.add(dept_sem_key)
+            
+            # Try to insert the mapping
+            try:
+                # Check if mapping already exists
+                existing = client.table('admin_mappings')\
+                    .select('id')\
+                    .eq('department', dept)\
+                    .eq('semester', sem)\
+                    .eq('staff', staff)\
+                    .eq('subject', subject)\
+                    .execute()
                 
-                dept_sem_key = (dept, sem)
-                
-                # If replace_existing is True and this is first record for this dept/sem, delete existing
-                if replace_existing and dept_sem_key not in dept_sem_combinations:
-                    cursor.execute('''
-                        DELETE FROM admin_mappings 
-                        WHERE department = ? AND semester = ?
-                    ''', (dept, sem))
-                    dept_sem_combinations.add(dept_sem_key)
-                
-                # Try to insert the mapping
-                try:
-                    cursor.execute('''
-                        INSERT INTO admin_mappings (department, semester, staff, subject) 
-                        VALUES (?, ?, ?, ?)
-                    ''', (dept, sem, staff, subject))
+                if not existing.data:
+                    client.table('admin_mappings').insert({
+                        'department': dept,
+                        'semester': sem,
+                        'staff': staff,
+                        'subject': subject
+                    }).execute()
                     added_count += 1
-                except Exception:
+                else:
                     skipped_count += 1
-            
-            conn.commit()
+            except Exception as e:
+                logger.error(f"Error inserting mapping: {e}")
+                skipped_count += 1
         
         stats = {
             'total': len(df),
@@ -146,24 +159,25 @@ def bulk_add_staff(staff_list: List[str]) -> Tuple[int, int]:
     added_count = 0
     duplicate_count = 0
     
-    with get_db() as conn:
-        cursor = conn.cursor()
+    client = get_db()
+    
+    for staff_name in staff_list:
+        staff_name = staff_name.strip()
+        if not staff_name:
+            continue
         
-        for staff_name in staff_list:
-            staff_name = staff_name.strip()
-            if not staff_name:
-                continue
+        try:
+            # Check if staff already exists
+            existing = client.table('staff').select('name').eq('name', staff_name).execute()
             
-            try:
-                cursor.execute('INSERT INTO staff (name) VALUES (?)', (staff_name,))
-                if cursor.rowcount > 0:
-                    added_count += 1
-                else:
-                    duplicate_count += 1
-            except Exception:
+            if not existing.data:
+                client.table('staff').insert({'name': staff_name}).execute()
+                added_count += 1
+            else:
                 duplicate_count += 1
-        
-        conn.commit()
+        except Exception as e:
+            logger.error(f"Error adding staff {staff_name}: {e}")
+            duplicate_count += 1
     
     return added_count, duplicate_count
 
@@ -177,23 +191,24 @@ def bulk_add_subjects(subject_list: List[str]) -> Tuple[int, int]:
     added_count = 0
     duplicate_count = 0
     
-    with get_db() as conn:
-        cursor = conn.cursor()
+    client = get_db()
+    
+    for subject_name in subject_list:
+        subject_name = subject_name.strip()
+        if not subject_name:
+            continue
         
-        for subject_name in subject_list:
-            subject_name = subject_name.strip()
-            if not subject_name:
-                continue
+        try:
+            # Check if subject already exists
+            existing = client.table('subjects').select('name').eq('name', subject_name).execute()
             
-            try:
-                cursor.execute('INSERT INTO subjects (name) VALUES (?)', (subject_name,))
-                if cursor.rowcount > 0:
-                    added_count += 1
-                else:
-                    duplicate_count += 1
-            except Exception:
+            if not existing.data:
+                client.table('subjects').insert({'name': subject_name}).execute()
+                added_count += 1
+            else:
                 duplicate_count += 1
-        
-        conn.commit()
+        except Exception as e:
+            logger.error(f"Error adding subject {subject_name}: {e}")
+            duplicate_count += 1
     
     return added_count, duplicate_count

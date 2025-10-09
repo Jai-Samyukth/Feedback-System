@@ -1,7 +1,6 @@
 import csv
 import os
 import logging
-import sqlite3
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, Frame, PageTemplate
@@ -60,14 +59,13 @@ def generate_non_submission_report(department, semester):
     logging.info("Reading submitted feedback from database...")
     
     try:
-        with get_db() as conn:
-            cursor = conn.cursor()
-            # Get all submitted registration numbers
-            cursor.execute('SELECT registerno FROM submitted_feedback')
-            for row in cursor.fetchall():
-                submitted_regnos.add(row[0].strip())
-            
-            logging.info(f"Found {len(submitted_regnos)} total submissions in database")
+        client = get_db()
+        # Get all submitted registration numbers
+        result = client.table('submitted_feedback').select('registerno').execute()
+        for row in result.data:
+            submitted_regnos.add(row['registerno'].strip())
+        
+        logging.info(f"Found {len(submitted_regnos)} total submissions in database")
     
     except Exception as e:
         logging.error(f"Error reading submitted feedback: {e}")
@@ -78,27 +76,26 @@ def generate_non_submission_report(department, semester):
     all_students = []
     
     try:
-        with get_db() as conn:
-            cursor = conn.cursor()
-            cursor.execute('''
-                SELECT registerno, department, semester 
-                FROM students 
-                WHERE department = ? AND semester = ?
-            ''', (department.strip(), semester))
-            
-            student_count = 0
-            for row in cursor.fetchall():
-                current_regno = row[0].strip()
-                student_info = {
-                    'registerno': current_regno,
-                    'department': row[1],
-                    'semester': row[2]
-                }
-                all_students.append(student_info)
-                student_count += 1
-                logging.debug(f"Found student: {current_regno}")
-            
-            logging.info(f"Found {student_count} students in {department} semester {semester}")
+        client = get_db()
+        result = client.table('students')\
+            .select('registerno, department, semester')\
+            .eq('department', department.strip())\
+            .eq('semester', semester)\
+            .execute()
+        
+        student_count = 0
+        for row in result.data:
+            current_regno = row['registerno'].strip()
+            student_info = {
+                'registerno': current_regno,
+                'department': row['department'],
+                'semester': row['semester']
+            }
+            all_students.append(student_info)
+            student_count += 1
+            logging.debug(f"Found student: {current_regno}")
+        
+        logging.info(f"Found {student_count} students in {department} semester {semester}")
     
     except Exception as e:
         logging.error(f"Error reading students: {e}")

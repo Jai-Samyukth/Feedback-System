@@ -74,24 +74,47 @@ def hod_select():
                     semester.strip()
                 ]
                 
-                with get_db() as conn:
-                    cursor = conn.cursor()
-                    placeholders = ', '.join(['?'] * len(sem_variations))
-                    cursor.execute(f'''
-                        SELECT staff, subject,
-                               AVG(q1) as q1_avg, AVG(q2) as q2_avg, AVG(q3) as q3_avg,
-                               AVG(q4) as q4_avg, AVG(q5) as q5_avg, AVG(q6) as q6_avg,
-                               AVG(q7) as q7_avg, AVG(q8) as q8_avg, AVG(q9) as q9_avg,
-                               AVG(q10) as q10_avg
-                        FROM ratings
-                        WHERE department = ? AND semester IN ({placeholders})
-                        GROUP BY staff, subject
-                    ''', (department.strip(), *sem_variations))
+                client = get_db()
+                try:
+                    result = client.rpc('get_average_ratings', {
+                        'dept': department.strip(),
+                        'sem_variations': sem_variations
+                    }).execute()
                     
-                    for row in cursor.fetchall():
-                        staff_name = row[0].strip()
-                        subject_name = row[1].strip()
-                        scores = [row[i] for i in range(2, 12)]  # q1_avg to q10_avg
+                    # Alternative: Manual aggregation if RPC not available
+                    result = client.table('ratings')\
+                        .select('staff, subject, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10')\
+                        .eq('department', department.strip())\
+                        .in_('semester', sem_variations)\
+                        .execute()
+                    
+                    # Group by staff and subject manually
+                    from collections import defaultdict
+                    grouped_data = defaultdict(lambda: {'q1': [], 'q2': [], 'q3': [], 'q4': [], 'q5': [], 
+                                                         'q6': [], 'q7': [], 'q8': [], 'q9': [], 'q10': []})
+                    
+                    for row in result.data:
+                        key = (row['staff'], row['subject'])
+                        for i in range(1, 11):
+                            grouped_data[key][f'q{i}'].append(row[f'q{i}'])
+                    
+                    # Calculate averages
+                    aggregated_results = []
+                    for (staff, subject), scores in grouped_data.items():
+                        avg_row = {'staff': staff, 'subject': subject}
+                        for i in range(1, 11):
+                            q_scores = scores[f'q{i}']
+                            avg_row[f'q{i}_avg'] = sum(q_scores) / len(q_scores) if q_scores else 0
+                        aggregated_results.append(avg_row)
+                except Exception as e:
+                    current_app.logger.error(f"Database Error: {str(e)}")
+                    flash(f"Error fetching ratings: {str(e)}", "danger")
+                    return redirect(url_for('hod.hod_select'))
+                    
+                    for row in aggregated_results:
+                        staff_name = row['staff'].strip()
+                        subject_name = row['subject'].strip()
+                        scores = [row[f'q{i}_avg'] for i in range(1, 11)]
                         
                         key = f"{staff_name}_{subject_name}"
                         feedback_data[key] = {
@@ -200,30 +223,30 @@ def hod_select():
                     current_app.logger.info(f"Database backed up to: {archive_db_path}")
                 
                 # Clear specific tables (keep: staff, subjects, semesters, departments)
-                with get_db() as conn:
-                    cursor = conn.cursor()
-                    
+                client = get_db()
+                try:
                     # Clear ratings table
-                    cursor.execute('DELETE FROM ratings')
-                    ratings_deleted = cursor.rowcount
+                    ratings_result = client.table('ratings').delete().neq('id', 0).execute()
+                    ratings_deleted = len(ratings_result.data) if ratings_result.data else 0
                     current_app.logger.info(f"Deleted {ratings_deleted} rows from ratings table")
                     
                     # Clear submitted_feedback table
-                    cursor.execute('DELETE FROM submitted_feedback')
-                    submitted_deleted = cursor.rowcount
+                    submitted_result = client.table('submitted_feedback').delete().neq('id', 0).execute()
+                    submitted_deleted = len(submitted_result.data) if submitted_result.data else 0
                     current_app.logger.info(f"Deleted {submitted_deleted} rows from submitted_feedback table")
                     
                     # Clear admin_mappings table
-                    cursor.execute('DELETE FROM admin_mappings')
-                    mappings_deleted = cursor.rowcount
+                    mappings_result = client.table('admin_mappings').delete().neq('id', 0).execute()
+                    mappings_deleted = len(mappings_result.data) if mappings_result.data else 0
                     current_app.logger.info(f"Deleted {mappings_deleted} rows from admin_mappings table")
                     
                     # Clear students table
-                    cursor.execute('DELETE FROM students')
-                    students_deleted = cursor.rowcount
+                    students_result = client.table('students').delete().neq('id', 0).execute()
+                    students_deleted = len(students_result.data) if students_result.data else 0
                     current_app.logger.info(f"Deleted {students_deleted} rows from students table")
-                    
-                    conn.commit()
+                except Exception as e:
+                    current_app.logger.error(f"Error clearing tables: {str(e)}")
+                    flash(f"Error clearing tables: {str(e)}", "danger")
                 
                 # Delete unnecessary files
                 files_to_delete = [

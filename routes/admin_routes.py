@@ -41,16 +41,20 @@ def admin_dashboard():
 @admin_bp.route('/admin/students', methods=['GET'])
 def admin_students():
     """Display the student management page."""
-    with get_db() as conn:
-        cursor = conn.cursor()
+    client = get_db()
+    
+    try:
+        # Get departments from departments table
+        dept_result = client.table('departments').select('name').order('name').execute()
+        departments = [row['name'] for row in dept_result.data]
         
-        # Get departments from students table (actual data)
-        cursor.execute('SELECT DISTINCT department FROM students ORDER BY department')
-        departments = [row[0] for row in cursor.fetchall()]
-        
-        # Get semesters from students table (actual data) - these are stored as numbers
-        cursor.execute('SELECT DISTINCT semester FROM students ORDER BY CAST(semester AS INTEGER)')
-        semesters = [row[0] for row in cursor.fetchall()]
+        # Get semesters from semesters table
+        sem_result = client.table('semesters').select('name').order('name').execute()
+        semesters = [row['name'] for row in sem_result.data]
+    except Exception as e:
+        logger.error(f"Error loading student management data: {e}")
+        departments = []
+        semesters = []
     
     return render_template('admin_students.html',
                          departments=departments,
@@ -270,23 +274,242 @@ def download_sample():
         flash('Error creating sample file', 'danger')
         return redirect(url_for('admin.admin_students'))
 
+@admin_bp.route('/admin/students/delete-multiple', methods=['POST'])
+def delete_multiple_students():
+    """Delete multiple students at once."""
+    try:
+        data = request.get_json()
+        students = data.get('students', [])
+        
+        if not students:
+            return jsonify({
+                'success': False,
+                'message': 'No students selected for deletion'
+            })
+        
+        client = get_db()
+        deleted_count = 0
+        errors = []
+        
+        for student in students:
+            try:
+                registerno = normalize_regno(student.get('registerno', ''))
+                department = student.get('department', '').strip()
+                semester = student.get('semester', '').strip()
+                
+                # Delete student
+                result = client.table('students')\
+                    .delete()\
+                    .eq('registerno', registerno)\
+                    .eq('department', department)\
+                    .eq('semester', semester)\
+                    .execute()
+                
+                if result.data:
+                    deleted_count += 1
+            except Exception as e:
+                errors.append(f"Error deleting {student.get('registerno')}: {str(e)}")
+        
+        if deleted_count > 0:
+            message = f'Successfully deleted {deleted_count} students.'
+            if errors:
+                message += f' {len(errors)} errors occurred.'
+            return jsonify({
+                'success': True,
+                'message': message,
+                'deleted': deleted_count,
+                'errors': errors
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'message': 'No students were deleted. ' + (' '.join(errors) if errors else '')
+            })
+    
+    except Exception as e:
+        logger.error(f"Error deleting multiple students: {e}")
+        return jsonify({
+            'success': False,
+            'message': f'Error deleting students: {str(e)}'
+        })
+
+@admin_bp.route('/admin/download-department-names')
+def download_department_names():
+    """Download department names as CSV file."""
+    try:
+        import csv
+        import io
+        
+        client = get_db()
+        dept_result = client.table('departments').select('name').order('name').execute()
+        departments = [row['name'] for row in dept_result.data]
+        
+        # Create CSV in memory
+        output = io.StringIO()
+        writer = csv.writer(output)
+        writer.writerow(['Department Names'])
+        writer.writerow(['⚠️ IMPORTANT: Use these EXACT names when uploading Excel files'])
+        writer.writerow([])
+        
+        for dept in departments:
+            writer.writerow([dept])
+        
+        # Prepare response
+        output.seek(0)
+        from flask import Response
+        return Response(
+            output.getvalue(),
+            mimetype='text/csv',
+            headers={'Content-Disposition': 'attachment; filename=department_names.csv'}
+        )
+    except Exception as e:
+        logger.error(f"Error downloading department names: {e}")
+        flash('Error downloading department names', 'danger')
+        return redirect(url_for('admin.admin_students'))
+
+@admin_bp.route('/admin/download-semester-names')
+def download_semester_names():
+    """Download semester names as CSV file."""
+    try:
+        import csv
+        import io
+        
+        client = get_db()
+        sem_result = client.table('semesters').select('name').order('name').execute()
+        semesters = [row['name'] for row in sem_result.data]
+        
+        # Create CSV in memory
+        output = io.StringIO()
+        writer = csv.writer(output)
+        writer.writerow(['Semester Names'])
+        writer.writerow(['⚠️ IMPORTANT: Use these EXACT names when uploading Excel files'])
+        writer.writerow([])
+        
+        for sem in semesters:
+            writer.writerow([sem])
+        
+        # Prepare response
+        output.seek(0)
+        from flask import Response
+        return Response(
+            output.getvalue(),
+            mimetype='text/csv',
+            headers={'Content-Disposition': 'attachment; filename=semester_names.csv'}
+        )
+    except Exception as e:
+        logger.error(f"Error downloading semester names: {e}")
+        flash('Error downloading semester names', 'danger')
+        return redirect(url_for('admin.admin_students'))
+
+@admin_bp.route('/admin/download-reference-file')
+def download_reference_file():
+    """Download a comprehensive reference file with all departments and semesters."""
+    try:
+        import openpyxl
+        from openpyxl.styles import Font, PatternFill, Alignment
+        
+        client = get_db()
+        
+        # Get departments
+        dept_result = client.table('departments').select('name').order('name').execute()
+        departments = [row['name'] for row in dept_result.data]
+        
+        # Get semesters
+        sem_result = client.table('semesters').select('name').order('name').execute()
+        semesters = [row['name'] for row in sem_result.data]
+        
+        # Get staff
+        staff_result = client.table('staff').select('name').order('name').execute()
+        staffs = [row['name'] for row in staff_result.data]
+        
+        # Get subjects
+        subj_result = client.table('subjects').select('name').order('name').execute()
+        subjects = [row['name'] for row in subj_result.data]
+        
+        # Create Excel workbook
+        wb = openpyxl.Workbook()
+        
+        # Remove default sheet
+        wb.remove(wb.active)
+        
+        # Create sheets
+        dept_sheet = wb.create_sheet('Departments')
+        sem_sheet = wb.create_sheet('Semesters')
+        staff_sheet = wb.create_sheet('Staff')
+        subj_sheet = wb.create_sheet('Subjects')
+        
+        # Style for headers
+        header_fill = PatternFill(start_color='FFC000', end_color='FFC000', fill_type='solid')
+        header_font = Font(bold=True, size=12, color='000000')
+        
+        # Warning style
+        warning_fill = PatternFill(start_color='FF0000', end_color='FF0000', fill_type='solid')
+        warning_font = Font(bold=True, size=11, color='FFFFFF')
+        
+        # Helper function to populate sheet
+        def populate_sheet(sheet, title, items):
+            # Add warning
+            sheet['A1'] = '⚠️ CRITICAL: Use EXACT names from below when uploading Excel files'
+            sheet['A1'].fill = warning_fill
+            sheet['A1'].font = warning_font
+            sheet['A1'].alignment = Alignment(horizontal='center', vertical='center')
+            sheet.merge_cells('A1:B1')
+            sheet.row_dimensions[1].height = 25
+            
+            # Add header
+            sheet['A3'] = title
+            sheet['A3'].fill = header_fill
+            sheet['A3'].font = header_font
+            sheet['A3'].alignment = Alignment(horizontal='center')
+            sheet.column_dimensions['A'].width = 50
+            
+            # Add items
+            for idx, item in enumerate(items, start=4):
+                sheet[f'A{idx}'] = item
+        
+        # Populate sheets
+        populate_sheet(dept_sheet, 'Department Names', departments)
+        populate_sheet(sem_sheet, 'Semester Names', semesters)
+        populate_sheet(staff_sheet, 'Staff Names', staffs)
+        populate_sheet(subj_sheet, 'Subject Names', subjects)
+        
+        # Save to file
+        reference_path = os.path.join(UPLOAD_FOLDER, 'reference_names.xlsx')
+        wb.save(reference_path)
+        
+        return send_file(reference_path, as_attachment=True, download_name='REFERENCE_Names.xlsx')
+    except Exception as e:
+        logger.error(f"Error creating reference file: {e}")
+        flash('Error creating reference file', 'danger')
+        return redirect(url_for('admin.admin_students'))
+
 @admin_bp.route('/admin', methods=['GET', 'POST'])
 def admin():
     """Admin mapping page."""
-    with get_db() as conn:
-        cursor = conn.cursor()
+    client = get_db()
+    
+    try:
+        # Get departments
+        dept_result = client.table('departments').select('name').order('name').execute()
+        departments = [row['name'] for row in dept_result.data]
         
-        cursor.execute('SELECT name FROM departments ORDER BY name')
-        departments = [row[0] for row in cursor.fetchall()]
+        # Get semesters
+        sem_result = client.table('semesters').select('name').order('name').execute()
+        semesters = [row['name'] for row in sem_result.data]
         
-        cursor.execute('SELECT name FROM semesters ORDER BY name')
-        semesters = [row[0] for row in cursor.fetchall()]
+        # Get staff
+        staff_result = client.table('staff').select('name').order('name').execute()
+        staffs = [row['name'] for row in staff_result.data]
         
-        cursor.execute('SELECT name FROM staff ORDER BY name')
-        staffs = [row[0] for row in cursor.fetchall()]
-        
-        cursor.execute('SELECT name FROM subjects ORDER BY name')
-        subjects = [row[0] for row in cursor.fetchall()]
+        # Get subjects
+        subj_result = client.table('subjects').select('name').order('name').execute()
+        subjects = [row['name'] for row in subj_result.data]
+    except Exception as e:
+        logger.error(f"Error loading admin page data: {e}")
+        departments = []
+        semesters = []
+        staffs = []
+        subjects = []
     
     if request.method == 'POST':
         department = request.form.get('department')
@@ -295,7 +518,7 @@ def admin():
         subject_list = request.form.getlist('subject')
         
         new_mappings = [
-            (department, semester, staff.strip(), subject.strip())
+            {'department': department, 'semester': semester, 'staff': staff.strip(), 'subject': subject.strip()}
             for staff, subject in zip(staff_list, subject_list)
             if staff.strip() and subject.strip()
         ]
@@ -303,22 +526,22 @@ def admin():
         if not new_mappings:
             flash("Please enter at least one valid staff–subject mapping.", "danger")
         else:
-            with get_db() as conn:
-                cursor = conn.cursor()
-                
+            try:
                 # Delete existing mappings for this dept/semester
-                cursor.execute('''
-                    DELETE FROM admin_mappings 
-                    WHERE department = ? AND semester = ?
-                ''', (department, semester))
+                client.table('admin_mappings')\
+                    .delete()\
+                    .eq('department', department)\
+                    .eq('semester', semester)\
+                    .execute()
                 
                 # Insert new mappings
-                cursor.executemany('''
-                    INSERT INTO admin_mappings (department, semester, staff, subject) 
-                    VALUES (?, ?, ?, ?)
-                ''', new_mappings)
+                client.table('admin_mappings').insert(new_mappings).execute()
+                
+                flash("Mapping(s) saved successfully.", "success")
+            except Exception as e:
+                logger.error(f"Error saving mappings: {e}")
+                flash(f"Error saving mappings: {str(e)}", "danger")
             
-            flash("Mapping(s) saved successfully.", "success")
             return redirect(url_for('admin.admin'))
     
     return render_template('admin_mapping.html',
@@ -338,21 +561,25 @@ def add_staff():
                 'message': 'Staff name cannot be empty'
             })
         
-        with get_db() as conn:
-            cursor = conn.cursor()
-            cursor.execute('INSERT OR IGNORE INTO staff (name) VALUES (?)', (staff_name,))
-            
-            if cursor.rowcount > 0:
-                return jsonify({
-                    'success': True,
-                    'message': f'Successfully added staff: {staff_name}',
-                    'staff_name': staff_name
-                })
-            else:
-                return jsonify({
-                    'success': False,
-                    'message': 'Staff name already exists'
-                })
+        client = get_db()
+        
+        # Check if staff already exists
+        existing = client.table('staff').select('name').eq('name', staff_name).execute()
+        
+        if existing.data:
+            return jsonify({
+                'success': False,
+                'message': 'Staff name already exists'
+            })
+        
+        # Insert new staff
+        client.table('staff').insert({'name': staff_name}).execute()
+        
+        return jsonify({
+            'success': True,
+            'message': f'Successfully added staff: {staff_name}',
+            'staff_name': staff_name
+        })
     
     except Exception as e:
         logger.error(f"Error adding staff: {e}")
@@ -372,21 +599,25 @@ def add_subject():
                 'message': 'Subject name cannot be empty'
             })
         
-        with get_db() as conn:
-            cursor = conn.cursor()
-            cursor.execute('INSERT OR IGNORE INTO subjects (name) VALUES (?)', (subject_name,))
-            
-            if cursor.rowcount > 0:
-                return jsonify({
-                    'success': True,
-                    'message': f'Successfully added subject: {subject_name}',
-                    'subject_name': subject_name
-                })
-            else:
-                return jsonify({
-                    'success': False,
-                    'message': 'Subject already exists'
-                })
+        client = get_db()
+        
+        # Check if subject already exists
+        existing = client.table('subjects').select('name').eq('name', subject_name).execute()
+        
+        if existing.data:
+            return jsonify({
+                'success': False,
+                'message': 'Subject already exists'
+            })
+        
+        # Insert new subject
+        client.table('subjects').insert({'name': subject_name}).execute()
+        
+        return jsonify({
+            'success': True,
+            'message': f'Successfully added subject: {subject_name}',
+            'subject_name': subject_name
+        })
     
     except Exception as e:
         logger.error(f"Error adding subject: {e}")
@@ -399,14 +630,15 @@ def add_subject():
 def get_lists():
     """Get staff and subject lists."""
     try:
-        with get_db() as conn:
-            cursor = conn.cursor()
-            
-            cursor.execute('SELECT name FROM staff ORDER BY name')
-            staffs = [row[0] for row in cursor.fetchall()]
-            
-            cursor.execute('SELECT name FROM subjects ORDER BY name')
-            subjects = [row[0] for row in cursor.fetchall()]
+        client = get_db()
+        
+        # Get staff list
+        staff_result = client.table('staff').select('name').order('name').execute()
+        staffs = [row['name'] for row in staff_result.data]
+        
+        # Get subjects list
+        subj_result = client.table('subjects').select('name').order('name').execute()
+        subjects = [row['name'] for row in subj_result.data]
         
         return jsonify({
             'success': True,
@@ -423,15 +655,20 @@ def get_lists():
 @admin_bp.route('/admin/mappings/view', methods=['GET'])
 def view_mappings():
     """View all staff-subject mappings."""
-    with get_db() as conn:
-        cursor = conn.cursor()
+    client = get_db()
+    
+    try:
+        # Get departments for filtering
+        dept_result = client.table('departments').select('name').order('name').execute()
+        departments = [row['name'] for row in dept_result.data]
         
-        # Get departments and semesters for filtering
-        cursor.execute('SELECT name FROM departments ORDER BY name')
-        departments = [row[0] for row in cursor.fetchall()]
-        
-        cursor.execute('SELECT name FROM semesters ORDER BY name')
-        semesters = [row[0] for row in cursor.fetchall()]
+        # Get semesters for filtering
+        sem_result = client.table('semesters').select('name').order('name').execute()
+        semesters = [row['name'] for row in sem_result.data]
+    except Exception as e:
+        logger.error(f"Error loading mappings view data: {e}")
+        departments = []
+        semesters = []
     
     return render_template('admin_view_mappings.html',
                          departments=departments,
@@ -444,47 +681,24 @@ def list_mappings():
     semester = request.args.get('semester', '').strip()
     
     try:
-        with get_db() as conn:
-            cursor = conn.cursor()
-            
-            if department and semester:
-                cursor.execute('''
-                    SELECT id, department, semester, staff, subject 
-                    FROM admin_mappings 
-                    WHERE department = ? AND semester = ?
-                    ORDER BY staff, subject
-                ''', (department, semester))
-            elif department:
-                cursor.execute('''
-                    SELECT id, department, semester, staff, subject 
-                    FROM admin_mappings 
-                    WHERE department = ?
-                    ORDER BY semester, staff, subject
-                ''', (department,))
-            elif semester:
-                cursor.execute('''
-                    SELECT id, department, semester, staff, subject 
-                    FROM admin_mappings 
-                    WHERE semester = ?
-                    ORDER BY department, staff, subject
-                ''', (semester,))
-            else:
-                cursor.execute('''
-                    SELECT id, department, semester, staff, subject 
-                    FROM admin_mappings 
-                    ORDER BY department, semester, staff, subject
-                    LIMIT 500
-                ''')
-            
-            mappings = []
-            for row in cursor.fetchall():
-                mappings.append({
-                    'id': row[0],
-                    'department': row[1],
-                    'semester': row[2],
-                    'staff': row[3],
-                    'subject': row[4]
-                })
+        client = get_db()
+        query = client.table('admin_mappings').select('id, department, semester, staff, subject')
+        
+        if department and semester:
+            query = query.eq('department', department).eq('semester', semester)
+            query = query.order('staff').order('subject')
+        elif department:
+            query = query.eq('department', department)
+            query = query.order('semester').order('staff').order('subject')
+        elif semester:
+            query = query.eq('semester', semester)
+            query = query.order('department').order('staff').order('subject')
+        else:
+            query = query.order('department').order('semester').order('staff').order('subject')
+            query = query.limit(500)
+        
+        result = query.execute()
+        mappings = result.data
         
         return jsonify({
             'success': True,
@@ -510,20 +724,19 @@ def delete_mapping():
                 'message': 'Mapping ID is required'
             })
         
-        with get_db() as conn:
-            cursor = conn.cursor()
-            cursor.execute('DELETE FROM admin_mappings WHERE id = ?', (mapping_id,))
-            
-            if cursor.rowcount > 0:
-                return jsonify({
-                    'success': True,
-                    'message': 'Mapping deleted successfully'
-                })
-            else:
-                return jsonify({
-                    'success': False,
-                    'message': 'Mapping not found'
-                })
+        client = get_db()
+        result = client.table('admin_mappings').delete().eq('id', mapping_id).execute()
+        
+        if result.data:
+            return jsonify({
+                'success': True,
+                'message': 'Mapping deleted successfully'
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'message': 'Mapping not found'
+            })
     
     except Exception as e:
         logger.error(f"Error deleting mapping: {e}")
@@ -545,20 +758,20 @@ def delete_all_mappings():
                 'message': 'Department and semester are required'
             })
         
-        with get_db() as conn:
-            cursor = conn.cursor()
-            cursor.execute('''
-                DELETE FROM admin_mappings 
-                WHERE department = ? AND semester = ?
-            ''', (department, semester))
-            
-            deleted_count = cursor.rowcount
-            
-            return jsonify({
-                'success': True,
-                'message': f'Deleted {deleted_count} mappings successfully',
-                'count': deleted_count
-            })
+        client = get_db()
+        result = client.table('admin_mappings')\
+            .delete()\
+            .eq('department', department)\
+            .eq('semester', semester)\
+            .execute()
+        
+        deleted_count = len(result.data) if result.data else 0
+        
+        return jsonify({
+            'success': True,
+            'message': f'Deleted {deleted_count} mappings successfully',
+            'count': deleted_count
+        })
     
     except Exception as e:
         logger.error(f"Error deleting mappings: {e}")

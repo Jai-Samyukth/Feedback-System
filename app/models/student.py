@@ -8,13 +8,17 @@ class Student:
     @staticmethod
     def add(registerno, department, semester):
         """Add a new student to the database."""
-        with get_db() as conn:
-            cursor = conn.cursor()
-            cursor.execute('''
-                INSERT INTO students (registerno, department, semester)
-                VALUES (?, ?, ?)
-            ''', (registerno, department, semester))
-            return cursor.lastrowid
+        client = get_db()
+        try:
+            result = client.table('students').insert({
+                'registerno': registerno,
+                'department': department,
+                'semester': semester
+            }).execute()
+            return result.data[0]['id'] if result.data else None
+        except Exception as e:
+            logger.error(f"Error adding student: {e}")
+            raise
     
     @staticmethod
     def bulk_add(students):
@@ -22,121 +26,143 @@ class Student:
         students: list of tuples (registerno, department, semester)
         Returns: (added_count, duplicate_count, duplicates_list)
         """
+        client = get_db()
         added = []
         duplicates = []
         
-        with get_db() as conn:
-            cursor = conn.cursor()
-            
-            for registerno, department, semester in students:
-                try:
-                    # Check if student already exists
-                    cursor.execute('''
-                        SELECT registerno FROM students 
-                        WHERE registerno = ? AND department = ? AND semester = ?
-                    ''', (registerno, department, semester))
-                    
-                    if cursor.fetchone():
-                        duplicates.append(registerno)
-                    else:
-                        cursor.execute('''
-                            INSERT INTO students (registerno, department, semester)
-                            VALUES (?, ?, ?)
-                        ''', (registerno, department, semester))
-                        added.append(registerno)
-                except Exception as e:
-                    logger.error(f"Error adding student {registerno}: {e}")
+        for registerno, department, semester in students:
+            try:
+                # Check if student already exists
+                existing = client.table('students')\
+                    .select('registerno')\
+                    .eq('registerno', registerno)\
+                    .eq('department', department)\
+                    .eq('semester', semester)\
+                    .execute()
+                
+                if existing.data:
                     duplicates.append(registerno)
+                else:
+                    client.table('students').insert({
+                        'registerno': registerno,
+                        'department': department,
+                        'semester': semester
+                    }).execute()
+                    added.append(registerno)
+            except Exception as e:
+                logger.error(f"Error adding student {registerno}: {e}")
+                duplicates.append(registerno)
         
         return len(added), len(duplicates), duplicates
     
     @staticmethod
     def delete(registerno, department, semester):
         """Delete a student from the database."""
-        with get_db() as conn:
-            cursor = conn.cursor()
-            cursor.execute('''
-                DELETE FROM students 
-                WHERE registerno = ? AND department = ? AND semester = ?
-            ''', (registerno, department, semester))
-            return cursor.rowcount > 0
+        client = get_db()
+        try:
+            result = client.table('students')\
+                .delete()\
+                .eq('registerno', registerno)\
+                .eq('department', department)\
+                .eq('semester', semester)\
+                .execute()
+            return len(result.data) > 0
+        except Exception as e:
+            logger.error(f"Error deleting student: {e}")
+            return False
     
     @staticmethod
     def get_by_regno(registerno):
         """Get student info by registration number."""
         reg_num = normalize_regno(registerno)
+        client = get_db()
         
-        with get_db() as conn:
-            cursor = conn.cursor()
-            cursor.execute('''
-                SELECT registerno, department, semester 
-                FROM students 
-                WHERE registerno = ?
-            ''', (reg_num,))
+        try:
+            result = client.table('students')\
+                .select('registerno, department, semester')\
+                .eq('registerno', reg_num)\
+                .execute()
             
-            row = cursor.fetchone()
-            if row:
+            if result.data:
+                row = result.data[0]
                 return {
-                    'registerno': row[0],
-                    'department': row[1],
-                    'semester': row[2]
+                    'registerno': row['registerno'],
+                    'department': row['department'],
+                    'semester': row['semester']
                 }
+            return None
+        except Exception as e:
+            logger.error(f"Error getting student by regno: {e}")
             return None
     
     @staticmethod
     def get_by_dept_sem(department, semester):
         """Get all students for a department and semester."""
-        with get_db() as conn:
-            cursor = conn.cursor()
-            cursor.execute('''
-                SELECT registerno, department, semester 
-                FROM students 
-                WHERE department = ? AND semester = ?
-                ORDER BY registerno
-            ''', (department, semester))
+        client = get_db()
+        
+        try:
+            result = client.table('students')\
+                .select('registerno, department, semester')\
+                .eq('department', department)\
+                .eq('semester', semester)\
+                .order('registerno')\
+                .execute()
             
-            return [{'registerno': row[0], 'department': row[1], 'semester': row[2]} 
-                    for row in cursor.fetchall()]
+            return [{'registerno': row['registerno'], 
+                    'department': row['department'], 
+                    'semester': row['semester']} 
+                    for row in result.data]
+        except Exception as e:
+            logger.error(f"Error getting students by dept/sem: {e}")
+            return []
     
     @staticmethod
     def get_all():
         """Get all students."""
-        with get_db() as conn:
-            cursor = conn.cursor()
-            cursor.execute('''
-                SELECT registerno, department, semester 
-                FROM students 
-                ORDER BY department, semester, registerno
-            ''')
+        client = get_db()
+        
+        try:
+            result = client.table('students')\
+                .select('registerno, department, semester')\
+                .order('department')\
+                .order('semester')\
+                .order('registerno')\
+                .execute()
             
-            return [{'registerno': row[0], 'department': row[1], 'semester': row[2]} 
-                    for row in cursor.fetchall()]
+            return [{'registerno': row['registerno'], 
+                    'department': row['department'], 
+                    'semester': row['semester']} 
+                    for row in result.data]
+        except Exception as e:
+            logger.error(f"Error getting all students: {e}")
+            return []
     
     @staticmethod
     def exists(registerno, department=None, semester=None):
         """Check if a student exists."""
         reg_num = normalize_regno(registerno)
+        client = get_db()
         
-        with get_db() as conn:
-            cursor = conn.cursor()
+        try:
+            query = client.table('students').select('id').eq('registerno', reg_num)
             
             if department and semester:
-                cursor.execute('''
-                    SELECT 1 FROM students 
-                    WHERE registerno = ? AND department = ? AND semester = ?
-                ''', (reg_num, department, semester))
-            else:
-                cursor.execute('''
-                    SELECT 1 FROM students 
-                    WHERE registerno = ?
-                ''', (reg_num,))
+                query = query.eq('department', department).eq('semester', semester)
             
-            return cursor.fetchone() is not None
+            result = query.execute()
+            return len(result.data) > 0
+        except Exception as e:
+            logger.error(f"Error checking student existence: {e}")
+            return False
     
     @staticmethod
     def count():
         """Get total number of students."""
-        with get_db() as conn:
-            cursor = conn.cursor()
-            cursor.execute('SELECT COUNT(*) FROM students')
-            return cursor.fetchone()[0]
+        client = get_db()
+        
+        try:
+            result = client.table('students').select('id', count='exact').execute()
+            return result.count if result.count else 0
+        except Exception as e:
+            logger.error(f"Error counting students: {e}")
+            return 0

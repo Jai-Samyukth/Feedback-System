@@ -148,6 +148,81 @@
             <h2 class="mt-4">Staff-Subject Mapping</h2>
             <div id="flash-messages"></div>
             
+            <!-- CRITICAL WARNING BOX -->
+            <div class="alert alert-danger mb-3" style="border-left: 5px solid #dc3545;">
+                <h5 class="alert-heading">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>⚠️ CRITICAL: All Names MUST Match Database EXACTLY!
+                </h5>
+                <p class="mb-2"><strong>Department, Semester, Staff, and Subject names MUST be EXACTLY as stored in database!</strong></p>
+                <p class="mb-2">Even ONE extra space, missing period, or capitalization difference will cause failure!</p>
+                <hr>
+                <p class="mb-3"><strong>Solution:</strong> Download the reference file and COPY-PASTE the exact names! <strong>DO NOT TYPE!</strong></p>
+                <div>
+                    <a href="{{ url_for('admin.download_reference_file') }}" class="btn btn-success">
+                        <i class="fas fa-download mr-2"></i>Download Reference File (All Names)
+                    </a>
+                    <a href="/admin/mappings/download-sample" class="btn btn-info ml-2">
+                        <i class="fas fa-download mr-2"></i>Download Sample Excel Template
+                    </a>
+                </div>
+            </div>
+
+            <!-- QUICK REFERENCE LIST -->
+            <div class="card mb-3" style="border-left: 5px solid #ffc107;">
+                <div class="card-body">
+                    <h6 class="text-warning"><i class="fas fa-list mr-2"></i>Quick Reference - Copy These Names:</h6>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <strong class="text-primary">Departments:</strong>
+                            <div class="small mt-1" style="max-height: 150px; overflow-y: auto; border: 1px solid #ddd; padding: 8px; background: #f9f9f9;">
+                                {% for dept in departments %}
+                                    <div><code style="font-size: 11px;">{{ dept }}</code></div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <strong class="text-primary">Semesters:</strong>
+                            <div class="small mt-1" style="max-height: 150px; overflow-y: auto; border: 1px solid #ddd; padding: 8px; background: #f9f9f9;">
+                                {% for sem in semesters %}
+                                    <div><code style="font-size: 11px;">{{ sem }}</code></div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <strong class="text-primary">Staff (first 10):</strong>
+                            <div class="small mt-1" style="max-height: 150px; overflow-y: auto; border: 1px solid #ddd; padding: 8px; background: #f9f9f9;">
+                                {% for staff in staffs[:10] %}
+                                    <div><code style="font-size: 11px;">{{ staff }}</code></div>
+                                {% endfor %}
+                                {% if staffs|length > 10 %}
+                                    <div class="text-muted"><em>...and {{ staffs|length - 10 }} more</em></div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <strong class="text-primary">Subjects (first 10):</strong>
+                            <div class="small mt-1" style="max-height: 150px; overflow-y: auto; border: 1px solid #ddd; padding: 8px; background: #f9f9f9;">
+                                {% for subj in subjects[:10] %}
+                                    <div><code style="font-size: 11px;">{{ subj }}</code></div>
+                                {% endfor %}
+                                {% if subjects|length > 10 %}
+                                    <div class="text-muted"><em>...and {{ subjects|length - 10 }} more</em></div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert alert-info mt-3 mb-0 small">
+                        <strong>📝 Instructions:</strong>
+                        <ol class="mb-0 pl-3">
+                            <li>Download the Reference File above</li>
+                            <li>Open it alongside your Excel file</li>
+                            <li><strong>COPY</strong> names from reference → <strong>PASTE</strong> into your file</li>
+                            <li><strong>Never type names manually!</strong></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
             <!-- Excel Upload Section -->
             <div class="card mb-4">
                 <div class="card-body">
@@ -172,9 +247,6 @@
                             </div>
                         </div>
                     </form>
-                    <a href="/admin/mappings/download-sample" class="btn btn-outline-primary btn-sm">
-                        <i class="fas fa-download mr-2"></i>Download Sample Excel
-                    </a>
                 </div>
             </div>
 

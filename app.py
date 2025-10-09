@@ -59,19 +59,23 @@ def get_student_info_db(registerno):
 def has_submitted_feedback_db(registerno):
     """Check if student has submitted feedback."""
     reg_num = normalize_regno(registerno)
+    client = get_db()
     
-    with get_db() as conn:
-        cursor = conn.cursor()
-        cursor.execute('''
-            SELECT 1 FROM submitted_feedback 
-            WHERE registerno = ?
-        ''', (reg_num,))
-        
-        return cursor.fetchone() is not None
+    try:
+        result = client.table('submitted_feedback')\
+            .select('id')\
+            .eq('registerno', reg_num)\
+            .execute()
+        return len(result.data) > 0
+    except Exception as e:
+        logger.error(f"Error checking feedback submission: {e}")
+        return False
 
 
 def load_admin_mapping_db(department, semester):
     """Load admin mappings from database."""
+    client = get_db()
+    
     # Normalize semester to match database format (handle inconsistencies)
     sem_variations = [
         semester,
@@ -80,80 +84,84 @@ def load_admin_mapping_db(department, semester):
         semester.replace("Semester", "").strip()
     ]
     
-    with get_db() as conn:
-        cursor = conn.cursor()
-        # Try multiple semester formats
-        placeholders = ', '.join(['?'] * len(sem_variations))
-        cursor.execute(f'''
-            SELECT DISTINCT department, semester, staff, subject 
-            FROM admin_mappings 
-            WHERE department = ? AND semester IN ({placeholders})
-        ''', (department, *sem_variations))
+    try:
+        result = client.table('admin_mappings')\
+            .select('department, semester, staff, subject')\
+            .eq('department', department)\
+            .in_('semester', sem_variations)\
+            .execute()
         
         mappings = []
-        for row in cursor.fetchall():
+        for row in result.data:
             mappings.append({
-                'department': row[0],
-                'semester': row[1],
-                'staff': row[2],
-                'subject': row[3]
+                'department': row['department'],
+                'semester': row['semester'],
+                'staff': row['staff'],
+                'subject': row['subject']
             })
         
         return mappings
+    except Exception as e:
+        logger.error(f"Error loading admin mappings: {e}")
+        return []
 
 
 def append_ratings_db(rating_rows):
     """Append ratings to database."""
-    with get_db() as conn:
-        cursor = conn.cursor()
-        
-        for row in rating_rows:
+    client = get_db()
+    
+    for row in rating_rows:
+        try:
             # Insert rating
-            cursor.execute('''
-                INSERT INTO ratings 
-                (registerno, department, semester, staff, subject, 
-                 q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, average) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            ''', (
-                row['registerno'],
-                row['department'],
-                row['semester'],
-                row['staff'],
-                row['subject'],
-                float(row['q1']),
-                float(row['q2']),
-                float(row['q3']),
-                float(row['q4']),
-                float(row['q5']),
-                float(row['q6']),
-                float(row['q7']),
-                float(row['q8']),
-                float(row['q9']),
-                float(row['q10']),
-                float(row['average'])
-            ))
+            client.table('ratings').insert({
+                'registerno': row['registerno'],
+                'department': row['department'],
+                'semester': row['semester'],
+                'staff': row['staff'],
+                'subject': row['subject'],
+                'q1': float(row['q1']),
+                'q2': float(row['q2']),
+                'q3': float(row['q3']),
+                'q4': float(row['q4']),
+                'q5': float(row['q5']),
+                'q6': float(row['q6']),
+                'q7': float(row['q7']),
+                'q8': float(row['q8']),
+                'q9': float(row['q9']),
+                'q10': float(row['q10']),
+                'average': float(row['average'])
+            }).execute()
             
-            # Mark as submitted
-            cursor.execute('''
-                INSERT OR IGNORE INTO submitted_feedback (registerno) 
-                VALUES (?)
-            ''', (row['registerno'],))
+            # Mark as submitted (upsert to handle duplicates)
+            try:
+                client.table('submitted_feedback').insert({
+                    'registerno': row['registerno']
+                }).execute()
+            except:
+                # Ignore if already exists
+                pass
+        except Exception as e:
+            logger.error(f"Error appending rating for {row.get('registerno')}: {e}")
 
 
 @app.route("/add_staff", methods=["POST"])
 def add_staff():
     staff_name = request.form.get("staff_name", "").strip()
     if staff_name:
-        with get_db() as conn:
-            cursor = conn.cursor()
-            cursor.execute('SELECT 1 FROM staff WHERE name = ?', (staff_name,))
+        client = get_db()
+        try:
+            # Check if staff already exists
+            existing = client.table('staff').select('id').eq('name', staff_name).execute()
             
-            if cursor.fetchone():
+            if existing.data:
                 flash("Staff already exists", "danger")
             else:
-                cursor.execute('INSERT INTO staff (name) VALUES (?)', (staff_name,))
+                client.table('staff').insert({'name': staff_name}).execute()
                 flash("Staff added successfully!", "success")
                 return {"success": True, "message": "Staff added successfully!"}
+        except Exception as e:
+            logger.error(f"Error adding staff: {e}")
+            return {"success": False, "message": f"Error: {str(e)}"}
     return {"success": False, "message": "Staff name is required"}
 
 
@@ -161,16 +169,20 @@ def add_staff():
 def add_subject():
     subject_name = request.form.get("subject_name", "").strip()
     if subject_name:
-        with get_db() as conn:
-            cursor = conn.cursor()
-            cursor.execute('SELECT 1 FROM subjects WHERE name = ?', (subject_name,))
+        client = get_db()
+        try:
+            # Check if subject already exists
+            existing = client.table('subjects').select('id').eq('name', subject_name).execute()
             
-            if cursor.fetchone():
+            if existing.data:
                 flash("Subject already exists", "danger")
             else:
-                cursor.execute('INSERT INTO subjects (name) VALUES (?)', (subject_name,))
+                client.table('subjects').insert({'name': subject_name}).execute()
                 flash("Subject added successfully!", "success")
                 return {"success": True, "message": "Subject added successfully!"}
+        except Exception as e:
+            logger.error(f"Error adding subject: {e}")
+            return {"success": False, "message": f"Error: {str(e)}"}
     return {"success": False, "message": "Subject name is required"}
 
 
@@ -216,14 +228,18 @@ def validate_regno():
         department = student_info.get("department")
         semester = student_info.get("semester")
         
-        with get_db() as conn:
-            cursor = conn.cursor()
-            cursor.execute('''
-                SELECT registerno FROM students 
-                WHERE department = ? AND semester = ?
-            ''', (department, semester))
+        client = get_db()
+        try:
+            result = client.table('students')\
+                .select('registerno')\
+                .eq('department', department)\
+                .eq('semester', semester)\
+                .execute()
             
-            reg_nums = [int(row[0]) for row in cursor.fetchall()]
+            reg_nums = [int(row['registerno']) for row in result.data]
+        except Exception as e:
+            logger.error(f"Error fetching student registration numbers: {e}")
+            reg_nums = []
 
         if reg_nums:
             min_reg = min(reg_nums)
@@ -274,14 +290,18 @@ def student_login():
             department = student_info.get("department")
             semester = student_info.get("semester")
             
-            with get_db() as conn:
-                cursor = conn.cursor()
-                cursor.execute('''
-                    SELECT registerno FROM students 
-                    WHERE department = ? AND semester = ?
-                ''', (department, semester))
+            client = get_db()
+            try:
+                result = client.table('students')\
+                    .select('registerno')\
+                    .eq('department', department)\
+                    .eq('semester', semester)\
+                    .execute()
                 
-                reg_nums = [int(row[0]) for row in cursor.fetchall()]
+                reg_nums = [int(row['registerno']) for row in result.data]
+            except Exception as e:
+                logger.error(f"Error fetching student registration numbers: {e}")
+                reg_nums = []
             
             if reg_nums:
                 min_reg = min(reg_nums)
@@ -331,16 +351,25 @@ def admin_dashboard():
 @app.route("/admin_students")
 def admin_students():
     """Student management page - FIXED to use actual student data"""
-    with get_db() as conn:
-        cursor = conn.cursor()
+    client = get_db()
+    
+    try:
+        # Get distinct departments from students table
+        dept_result = client.table('students')\
+            .select('department')\
+            .order('department')\
+            .execute()
+        departments = sorted(list(set([row['department'] for row in dept_result.data])))
         
-        # Get departments from students table (actual data)
-        cursor.execute('SELECT DISTINCT department FROM students ORDER BY department')
-        departments = [row[0] for row in cursor.fetchall()]
-        
-        # Get semesters from students table (actual data) - stored as numbers
-        cursor.execute('SELECT DISTINCT semester FROM students ORDER BY CAST(semester AS INTEGER)')
-        semesters = [row[0] for row in cursor.fetchall()]
+        # Get distinct semesters from students table
+        sem_result = client.table('students')\
+            .select('semester')\
+            .execute()
+        semesters = sorted(list(set([row['semester'] for row in sem_result.data])), key=lambda x: int(x) if x.isdigit() else 0)
+    except Exception as e:
+        logger.error(f"Error loading student management data: {e}")
+        departments = []
+        semesters = []
     
     return render_template(
         "admin_students.html", departments=departments, semesters=semesters
@@ -349,20 +378,26 @@ def admin_students():
 
 @app.route("/admin", methods=["GET", "POST"])
 def admin():
-    with get_db() as conn:
-        cursor = conn.cursor()
+    client = get_db()
+    
+    try:
+        dept_result = client.table('departments').select('name').order('name').execute()
+        departments = [row['name'] for row in dept_result.data]
         
-        cursor.execute('SELECT name FROM departments ORDER BY name')
-        departments = [row[0] for row in cursor.fetchall()]
+        sem_result = client.table('semesters').select('name').order('name').execute()
+        semesters = [row['name'] for row in sem_result.data]
         
-        cursor.execute('SELECT name FROM semesters ORDER BY name')
-        semesters = [row[0] for row in cursor.fetchall()]
+        staff_result = client.table('staff').select('name').order('name').execute()
+        staffs = [row['name'] for row in staff_result.data]
         
-        cursor.execute('SELECT name FROM staff ORDER BY name')
-        staffs = [row[0] for row in cursor.fetchall()]
-        
-        cursor.execute('SELECT name FROM subjects ORDER BY name')
-        subjects = [row[0] for row in cursor.fetchall()]
+        subj_result = client.table('subjects').select('name').order('name').execute()
+        subjects = [row['name'] for row in subj_result.data]
+    except Exception as e:
+        logger.error(f"Error loading admin data: {e}")
+        departments = []
+        semesters = []
+        staffs = []
+        subjects = []
 
     if request.method == "POST":
         department = request.form.get("department")
@@ -371,7 +406,7 @@ def admin():
         subject_list = request.form.getlist("subject")
         
         new_mappings = [
-            (department, semester, staff.strip(), subject.strip())
+            {'department': department, 'semester': semester, 'staff': staff.strip(), 'subject': subject.strip()}
             for staff, subject in zip(staff_list, subject_list)
             if staff.strip() and subject.strip()
         ]
@@ -379,22 +414,23 @@ def admin():
         if not new_mappings:
             flash("Please enter at least one valid staff–subject mapping.", "danger")
         else:
-            with get_db() as conn:
-                cursor = conn.cursor()
-                
+            try:
                 # Delete existing mappings
-                cursor.execute('''
-                    DELETE FROM admin_mappings 
-                    WHERE department = ? AND semester = ?
-                ''', (department, semester))
+                client.table('admin_mappings')\
+                    .delete()\
+                    .eq('department', department)\
+                    .eq('semester', semester)\
+                    .execute()
                 
                 # Insert new mappings
-                cursor.executemany('''
-                    INSERT INTO admin_mappings (department, semester, staff, subject) 
-                    VALUES (?, ?, ?, ?)
-                ''', new_mappings)
+                for mapping in new_mappings:
+                    client.table('admin_mappings').insert(mapping).execute()
+                
+                flash("Mapping(s) saved successfully.", "success")
+            except Exception as e:
+                logger.error(f"Error saving mappings: {e}")
+                flash(f"Error saving mappings: {str(e)}", "danger")
             
-            flash("Mapping(s) saved successfully.", "success")
             return redirect(url_for("admin"))
 
     return render_template(
@@ -509,6 +545,8 @@ if __name__ == "__main__":
     
     import uvicorn
     import socket
-    host_ip = socket.gethostbyname(socket.gethostname())
-    logger.info(f"Starting server on {host_ip}:80")
-    uvicorn.run(asgi_app, host=host_ip, port=80, log_config=None)
+    host_ip = "0.0.0.0"  # Listen on all interfaces
+    port = 5000
+    logger.info(f"Starting server on {host_ip}:{port}")
+    logger.info(f"Access at: http://localhost:{port} or http://{socket.gethostbyname(socket.gethostname())}:{port}")
+    uvicorn.run(asgi_app, host=host_ip, port=port, log_config=None)
