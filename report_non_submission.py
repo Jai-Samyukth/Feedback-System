@@ -28,8 +28,6 @@ def normalize_department_name(department):
     # Remove extra spaces
     while '  ' in dept:
         dept = dept.replace('  ', ' ')
-    # Remove "Semester" prefix if present
-    dept = dept.replace('Semester ', '')
     return dept
 
 def normalize_semester(semester):
@@ -77,10 +75,16 @@ def generate_non_submission_report(department, semester):
     
     try:
         client = get_db()
+        # Try multiple semester formats since data might be inconsistent
+        sem_variations = [
+            semester,
+            f"Semester {semester}",
+            f"semester {semester}"
+        ]
         result = client.table('students')\
             .select('registerno, department, semester')\
             .eq('department', department.strip())\
-            .eq('semester', semester)\
+            .in_('semester', sem_variations)\
             .execute()
         
         student_count = 0

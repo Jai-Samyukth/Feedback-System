@@ -76,12 +76,7 @@ def hod_select():
                 
                 client = get_db()
                 try:
-                    result = client.rpc('get_average_ratings', {
-                        'dept': department.strip(),
-                        'sem_variations': sem_variations
-                    }).execute()
-                    
-                    # Alternative: Manual aggregation if RPC not available
+                    # Query ratings from database
                     result = client.table('ratings')\
                         .select('staff, subject, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10')\
                         .eq('department', department.strip())\
@@ -106,11 +101,8 @@ def hod_select():
                             q_scores = scores[f'q{i}']
                             avg_row[f'q{i}_avg'] = sum(q_scores) / len(q_scores) if q_scores else 0
                         aggregated_results.append(avg_row)
-                except Exception as e:
-                    current_app.logger.error(f"Database Error: {str(e)}")
-                    flash(f"Error fetching ratings: {str(e)}", "danger")
-                    return redirect(url_for('hod.hod_select'))
                     
+                    # Build feedback data
                     for row in aggregated_results:
                         staff_name = row['staff'].strip()
                         subject_name = row['subject'].strip()
@@ -124,6 +116,11 @@ def hod_select():
                             'scores': scores
                         }
                         staff_counter += 1
+                        
+                except Exception as e:
+                    current_app.logger.error(f"Database Error: {str(e)}")
+                    flash(f"Error fetching ratings: {str(e)}", "danger")
+                    return redirect(url_for('hod.hod_select'))
                 
                 if not feedback_data:
                     flash("No rating data found for the selected department and semester.", "danger")
