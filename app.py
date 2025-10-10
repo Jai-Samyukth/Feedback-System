@@ -3,6 +3,7 @@ import logging
 from rich.logging import RichHandler
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 import matplotlib
+
 matplotlib.use("Agg")
 
 # Initialize database before importing routes
@@ -10,6 +11,7 @@ from app.models import init_db, get_db
 from app.models.student import Student
 from routes.hod_routes import hod_bp
 from routes.admin_routes import admin_bp
+from rich.console import Console
 
 from utils import (
     encrypt_regno,
@@ -29,15 +31,19 @@ logging.basicConfig(
 )
 
 logging.root.handlers = [
-    RichHandler(rich_tracebacks=True, show_path=True, tracebacks_show_locals=False,
-                log_time_format="[%b %d, %Y, %I:%M:%S %p]",
-                )
+    RichHandler(
+        console=Console(width=150),
+        rich_tracebacks=True,
+        show_path=True,
+        tracebacks_show_locals=False,
+        log_time_format="[%b %d, %Y, %I:%M:%S %p]",
+    )
 ]
 logger = logging.getLogger("feedback_system")
 
 app = Flask(__name__)
-app.secret_key = os.environ.get('SECRET_KEY', 'your_secret_key_change_in_production')
-app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024  # 10MB max upload size
+app.secret_key = os.environ.get("SECRET_KEY", "your_secret_key_change_in_production")
+app.config["MAX_CONTENT_LENGTH"] = 10 * 1024 * 1024  # 10MB max upload size
 
 # Register blueprints
 app.register_blueprint(hod_bp)
@@ -60,12 +66,14 @@ def has_submitted_feedback_db(registerno):
     """Check if student has submitted feedback."""
     reg_num = normalize_regno(registerno)
     client = get_db()
-    
+
     try:
-        result = client.table('submitted_feedback')\
-            .select('id')\
-            .eq('registerno', reg_num)\
+        result = (
+            client.table("submitted_feedback")
+            .select("id")
+            .eq("registerno", reg_num)
             .execute()
+        )
         return len(result.data) > 0
     except Exception as e:
         logger.error(f"Error checking feedback submission: {e}")
@@ -75,31 +83,35 @@ def has_submitted_feedback_db(registerno):
 def load_admin_mapping_db(department, semester):
     """Load admin mappings from database."""
     client = get_db()
-    
+
     # Normalize semester to match database format (handle inconsistencies)
     sem_variations = [
         semester,
         f"Semester {semester}",
         f"Semester Semester {semester}",
-        semester.replace("Semester", "").strip()
+        semester.replace("Semester", "").strip(),
     ]
-    
+
     try:
-        result = client.table('admin_mappings')\
-            .select('department, semester, staff, subject')\
-            .eq('department', department)\
-            .in_('semester', sem_variations)\
+        result = (
+            client.table("admin_mappings")
+            .select("department, semester, staff, subject")
+            .eq("department", department)
+            .in_("semester", sem_variations)
             .execute()
-        
+        )
+
         mappings = []
         for row in result.data:
-            mappings.append({
-                'department': row['department'],
-                'semester': row['semester'],
-                'staff': row['staff'],
-                'subject': row['subject']
-            })
-        
+            mappings.append(
+                {
+                    "department": row["department"],
+                    "semester": row["semester"],
+                    "staff": row["staff"],
+                    "subject": row["subject"],
+                }
+            )
+
         return mappings
     except Exception as e:
         logger.error(f"Error loading admin mappings: {e}")
@@ -109,34 +121,36 @@ def load_admin_mapping_db(department, semester):
 def append_ratings_db(rating_rows):
     """Append ratings to database."""
     client = get_db()
-    
+
     for row in rating_rows:
         try:
             # Insert rating
-            client.table('ratings').insert({
-                'registerno': row['registerno'],
-                'department': row['department'],
-                'semester': row['semester'],
-                'staff': row['staff'],
-                'subject': row['subject'],
-                'q1': float(row['q1']),
-                'q2': float(row['q2']),
-                'q3': float(row['q3']),
-                'q4': float(row['q4']),
-                'q5': float(row['q5']),
-                'q6': float(row['q6']),
-                'q7': float(row['q7']),
-                'q8': float(row['q8']),
-                'q9': float(row['q9']),
-                'q10': float(row['q10']),
-                'average': float(row['average'])
-            }).execute()
-            
+            client.table("ratings").insert(
+                {
+                    "registerno": row["registerno"],
+                    "department": row["department"],
+                    "semester": row["semester"],
+                    "staff": row["staff"],
+                    "subject": row["subject"],
+                    "q1": float(row["q1"]),
+                    "q2": float(row["q2"]),
+                    "q3": float(row["q3"]),
+                    "q4": float(row["q4"]),
+                    "q5": float(row["q5"]),
+                    "q6": float(row["q6"]),
+                    "q7": float(row["q7"]),
+                    "q8": float(row["q8"]),
+                    "q9": float(row["q9"]),
+                    "q10": float(row["q10"]),
+                    "average": float(row["average"]),
+                }
+            ).execute()
+
             # Mark as submitted (upsert to handle duplicates)
             try:
-                client.table('submitted_feedback').insert({
-                    'registerno': row['registerno']
-                }).execute()
+                client.table("submitted_feedback").insert(
+                    {"registerno": row["registerno"]}
+                ).execute()
             except:
                 # Ignore if already exists
                 pass
@@ -151,12 +165,14 @@ def add_staff():
         client = get_db()
         try:
             # Check if staff already exists
-            existing = client.table('staff').select('id').eq('name', staff_name).execute()
-            
+            existing = (
+                client.table("staff").select("id").eq("name", staff_name).execute()
+            )
+
             if existing.data:
                 flash("Staff already exists", "danger")
             else:
-                client.table('staff').insert({'name': staff_name}).execute()
+                client.table("staff").insert({"name": staff_name}).execute()
                 flash("Staff added successfully!", "success")
                 return {"success": True, "message": "Staff added successfully!"}
         except Exception as e:
@@ -172,12 +188,14 @@ def add_subject():
         client = get_db()
         try:
             # Check if subject already exists
-            existing = client.table('subjects').select('id').eq('name', subject_name).execute()
-            
+            existing = (
+                client.table("subjects").select("id").eq("name", subject_name).execute()
+            )
+
             if existing.data:
                 flash("Subject already exists", "danger")
             else:
-                client.table('subjects').insert({'name': subject_name}).execute()
+                client.table("subjects").insert({"name": subject_name}).execute()
                 flash("Subject added successfully!", "success")
                 return {"success": True, "message": "Subject added successfully!"}
         except Exception as e:
@@ -190,53 +208,57 @@ def add_subject():
 def validate_regno():
     registerno = request.form.get("registerno", "").strip()
     if not registerno:
-        return jsonify({
-            "valid": False,
-            "message": "Please enter a registration number"
-        })
+        return jsonify(
+            {"valid": False, "message": "Please enter a registration number"}
+        )
 
     try:
-        registerno = ''.join(filter(str.isdigit, registerno))
-        
+        registerno = "".join(filter(str.isdigit, registerno))
+
         if not registerno:
-            return jsonify({
-                "valid": False,
-                "message": "Registration number must contain at least one digit"
-            })
+            return jsonify(
+                {
+                    "valid": False,
+                    "message": "Registration number must contain at least one digit",
+                }
+            )
 
         reg_num = int(registerno)
         if reg_num < 1:
-            return jsonify({
-                "valid": False,
-                "message": "Registration number must be a positive number"
-            })
+            return jsonify(
+                {
+                    "valid": False,
+                    "message": "Registration number must be a positive number",
+                }
+            )
 
         student_info = get_student_info_db(registerno)
         if not student_info:
-            return jsonify({
-                "valid": False,
-                "message": "Registration number not found"
-            })
+            return jsonify({"valid": False, "message": "Registration number not found"})
 
         if has_submitted_feedback_db(registerno):
-            return jsonify({
-                "valid": False,
-                "message": "Feedback already submitted for this registration number"
-            })
+            return jsonify(
+                {
+                    "valid": False,
+                    "message": "Feedback already submitted for this registration number",
+                }
+            )
 
         # Check registration number range
         department = student_info.get("department")
         semester = student_info.get("semester")
-        
+
         client = get_db()
         try:
-            result = client.table('students')\
-                .select('registerno')\
-                .eq('department', department)\
-                .eq('semester', semester)\
+            result = (
+                client.table("students")
+                .select("registerno")
+                .eq("department", department)
+                .eq("semester", semester)
                 .execute()
-            
-            reg_nums = [int(row['registerno']) for row in result.data]
+            )
+
+            reg_nums = [int(row["registerno"]) for row in result.data]
         except Exception as e:
             logger.error(f"Error fetching student registration numbers: {e}")
             reg_nums = []
@@ -245,21 +267,21 @@ def validate_regno():
             min_reg = min(reg_nums)
             max_reg = max(reg_nums)
             if (max_reg - min_reg) > 600:
-                return jsonify({
-                    "valid": False,
-                    "message": "Registration number range exceeds limit for your batch"
-                })
+                return jsonify(
+                    {
+                        "valid": False,
+                        "message": "Registration number range exceeds limit for your batch",
+                    }
+                )
 
-        return jsonify({
-            "valid": True,
-            "message": "Registration number validated successfully!"
-        })
+        return jsonify(
+            {"valid": True, "message": "Registration number validated successfully!"}
+        )
 
     except ValueError:
-        return jsonify({
-            "valid": False,
-            "message": "Invalid registration number format"
-        })
+        return jsonify(
+            {"valid": False, "message": "Invalid registration number format"}
+        )
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -269,51 +291,58 @@ def student_login():
         if not registerno:
             flash("Please enter your registration number.", "danger")
             return render_template("student_login.html")
-        
-        registerno = ''.join(filter(str.isdigit, registerno))
-        
+
+        registerno = "".join(filter(str.isdigit, registerno))
+
         if not registerno:
             flash("Registration number must contain at least one digit.", "danger")
             return render_template("student_login.html")
-        
+
         try:
             reg_num = int(registerno)
             if reg_num < 1:
                 flash("Registration number must be a positive number.", "danger")
                 return render_template("student_login.html")
-            
+
             student_info = get_student_info_db(registerno)
             if not student_info:
                 flash("Registration number not found. Please try again.", "danger")
                 return render_template("student_login.html")
-            
+
             department = student_info.get("department")
             semester = student_info.get("semester")
-            
+
             client = get_db()
             try:
-                result = client.table('students')\
-                    .select('registerno')\
-                    .eq('department', department)\
-                    .eq('semester', semester)\
+                result = (
+                    client.table("students")
+                    .select("registerno")
+                    .eq("department", department)
+                    .eq("semester", semester)
                     .execute()
-                
-                reg_nums = [int(row['registerno']) for row in result.data]
+                )
+
+                reg_nums = [int(row["registerno"]) for row in result.data]
             except Exception as e:
                 logger.error(f"Error fetching student registration numbers: {e}")
                 reg_nums = []
-            
+
             if reg_nums:
                 min_reg = min(reg_nums)
                 max_reg = max(reg_nums)
                 if (max_reg - min_reg) > 600:
-                    flash("Registration number range exceeds limit for your batch.", "danger")
+                    flash(
+                        "Registration number range exceeds limit for your batch.",
+                        "danger",
+                    )
                     return render_template("student_login.html")
-            
+
             if has_submitted_feedback_db(registerno):
-                flash("Feedback already submitted for this registration number.", "info")
+                flash(
+                    "Feedback already submitted for this registration number.", "info"
+                )
                 return render_template("student_login.html")
-            
+
             flash("Registration number validated successfully!", "success")
             return redirect(
                 url_for(
@@ -323,11 +352,11 @@ def student_login():
                     registerno=registerno,
                 )
             )
-            
+
         except ValueError:
             flash("Invalid registration number format.", "danger")
             return render_template("student_login.html")
-    
+
     return render_template("student_login.html")
 
 
@@ -352,25 +381,25 @@ def admin_dashboard():
 def admin_students():
     """Student management page - FIXED to use actual student data"""
     client = get_db()
-    
+
     try:
         # Get distinct departments from students table
-        dept_result = client.table('students')\
-            .select('department')\
-            .order('department')\
-            .execute()
-        departments = sorted(list(set([row['department'] for row in dept_result.data])))
-        
+        dept_result = (
+            client.table("students").select("department").order("department").execute()
+        )
+        departments = sorted(list(set([row["department"] for row in dept_result.data])))
+
         # Get distinct semesters from students table
-        sem_result = client.table('students')\
-            .select('semester')\
-            .execute()
-        semesters = sorted(list(set([row['semester'] for row in sem_result.data])), key=lambda x: int(x) if x.isdigit() else 0)
+        sem_result = client.table("students").select("semester").execute()
+        semesters = sorted(
+            list(set([row["semester"] for row in sem_result.data])),
+            key=lambda x: int(x) if x.isdigit() else 0,
+        )
     except Exception as e:
         logger.error(f"Error loading student management data: {e}")
         departments = []
         semesters = []
-    
+
     return render_template(
         "admin_students.html", departments=departments, semesters=semesters
     )
@@ -379,19 +408,19 @@ def admin_students():
 @app.route("/admin", methods=["GET", "POST"])
 def admin():
     client = get_db()
-    
+
     try:
-        dept_result = client.table('departments').select('name').order('name').execute()
-        departments = [row['name'] for row in dept_result.data]
-        
-        sem_result = client.table('semesters').select('name').order('name').execute()
-        semesters = [row['name'] for row in sem_result.data]
-        
-        staff_result = client.table('staff').select('name').order('name').execute()
-        staffs = [row['name'] for row in staff_result.data]
-        
-        subj_result = client.table('subjects').select('name').order('name').execute()
-        subjects = [row['name'] for row in subj_result.data]
+        dept_result = client.table("departments").select("name").order("name").execute()
+        departments = [row["name"] for row in dept_result.data]
+
+        sem_result = client.table("semesters").select("name").order("name").execute()
+        semesters = [row["name"] for row in sem_result.data]
+
+        staff_result = client.table("staff").select("name").order("name").execute()
+        staffs = [row["name"] for row in staff_result.data]
+
+        subj_result = client.table("subjects").select("name").order("name").execute()
+        subjects = [row["name"] for row in subj_result.data]
     except Exception as e:
         logger.error(f"Error loading admin data: {e}")
         departments = []
@@ -404,9 +433,14 @@ def admin():
         semester = request.form.get("semester")
         staff_list = request.form.getlist("staff")
         subject_list = request.form.getlist("subject")
-        
+
         new_mappings = [
-            {'department': department, 'semester': semester, 'staff': staff.strip(), 'subject': subject.strip()}
+            {
+                "department": department,
+                "semester": semester,
+                "staff": staff.strip(),
+                "subject": subject.strip(),
+            }
             for staff, subject in zip(staff_list, subject_list)
             if staff.strip() and subject.strip()
         ]
@@ -416,21 +450,19 @@ def admin():
         else:
             try:
                 # Delete existing mappings
-                client.table('admin_mappings')\
-                    .delete()\
-                    .eq('department', department)\
-                    .eq('semester', semester)\
-                    .execute()
-                
+                client.table("admin_mappings").delete().eq("department", department).eq(
+                    "semester", semester
+                ).execute()
+
                 # Insert new mappings
                 for mapping in new_mappings:
-                    client.table('admin_mappings').insert(mapping).execute()
-                
+                    client.table("admin_mappings").insert(mapping).execute()
+
                 flash("Mapping(s) saved successfully.", "success")
             except Exception as e:
                 logger.error(f"Error saving mappings: {e}")
                 flash(f"Error saving mappings: {str(e)}", "danger")
-            
+
             return redirect(url_for("admin"))
 
     return render_template(
@@ -535,18 +567,23 @@ if __name__ == "__main__":
     logger.info("Initializing database...")
     init_db()
     logger.info("Database initialized")
-    
+
     # Check if data migration is needed
     import sys
-    if len(sys.argv) > 1 and sys.argv[1] == '--migrate':
+
+    if len(sys.argv) > 1 and sys.argv[1] == "--migrate":
         logger.info("Running data migration...")
         from migrate_to_sqlite import main as migrate_main
+
         migrate_main()
-    
+
     import uvicorn
     import socket
+
     host_ip = os.getenv("HOST", "0.0.0.0")  # Listen on all interfaces
     port = int(os.getenv("PORT", 5000))
     logger.info(f"Starting server on {host_ip}:{port}")
-    logger.info(f"Access at: http://localhost:{port} or http://{socket.gethostbyname(socket.gethostname())}:{port}")
+    logger.info(
+        f"Access at: http://localhost:{port} or http://{socket.gethostbyname(socket.gethostname())}:{port}"
+    )
     uvicorn.run(asgi_app, host=host_ip, port=port, log_config=None)

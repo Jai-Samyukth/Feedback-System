@@ -91,7 +91,7 @@
             padding: 12px;
             border: 1px solid #ced4da;
             transition: all 0.3s;
-            font-size: 14px;
+            font-size: 15px;
             color: #333;
             background-color: white;
         }
@@ -103,6 +103,23 @@
             padding: 10px;
             color: #333;
             background-color: white;
+            font-size: 15px;
+        }
+        .student-checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        .bulk-actions {
+            display: none;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #fff3cd;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+        }
+        .bulk-actions.active {
+            display: block;
         }
         .btn {
             padding: 12px 24px;
@@ -468,6 +485,17 @@
                         </div>
                     </div>
                     <div class="stats" id="stats" style="display:none;"></div>
+                    <div class="bulk-actions" id="bulkActions">
+                        <span class="font-weight-bold text-dark">
+                            <i class="fas fa-check-square mr-2"></i><span id="selectedCount">0</span> student(s) selected
+                        </span>
+                        <button class="btn btn-danger ml-3" onclick="deleteSelectedStudents()">
+                            <i class="fas fa-trash-alt mr-2"></i>Delete Selected
+                        </button>
+                        <button class="btn btn-secondary ml-2" onclick="clearSelection()">
+                            <i class="fas fa-times mr-2"></i>Clear Selection
+                        </button>
+                    </div>
                     <div class="loading" id="loading">
                         <i class="fas fa-spinner fa-spin fa-3x text-primary"></i>
                         <p>Loading students...</p>
@@ -667,6 +695,9 @@
                     <table class="table">
                         <thead>
                             <tr>
+                                <th>
+                                    <input type="checkbox" id="selectAll" class="student-checkbox" onchange="toggleSelectAll()" title="Select/Deselect All">
+                                </th>
                                 <th>#</th>
                                 <th>Registration Number</th>
                                 <th>Department</th>
@@ -680,6 +711,13 @@
             students.forEach((student, index) => {
                 html += `
                     <tr>
+                        <td>
+                            <input type="checkbox" class="student-checkbox student-select" 
+                                   value="${student.registerno}" 
+                                   data-department="${student.department}" 
+                                   data-semester="${student.semester}"
+                                   onchange="updateBulkActions()">
+                        </td>
                         <td>${index + 1}</td>
                         <td>${student.registerno}</td>
                         <td>${student.department}</td>
@@ -727,6 +765,88 @@
                 }
             } catch (error) {
                 showMessage('Error deleting student: ' + error.message, 'danger');
+            }
+        }
+
+        function toggleSelectAll() {
+            const selectAll = document.getElementById('selectAll');
+            const checkboxes = document.querySelectorAll('.student-select');
+            checkboxes.forEach(cb => {
+                cb.checked = selectAll.checked;
+            });
+            updateBulkActions();
+        }
+
+        function updateBulkActions() {
+            const checkboxes = document.querySelectorAll('.student-select:checked');
+            const count = checkboxes.length;
+            const bulkActions = document.getElementById('bulkActions');
+            const selectedCount = document.getElementById('selectedCount');
+            
+            if (count > 0) {
+                bulkActions.classList.add('active');
+                selectedCount.textContent = count;
+            } else {
+                bulkActions.classList.remove('active');
+                selectedCount.textContent = '0';
+            }
+
+            // Update select all checkbox state
+            const allCheckboxes = document.querySelectorAll('.student-select');
+            const selectAll = document.getElementById('selectAll');
+            if (selectAll) {
+                selectAll.checked = allCheckboxes.length > 0 && count === allCheckboxes.length;
+            }
+        }
+
+        function clearSelection() {
+            const checkboxes = document.querySelectorAll('.student-select');
+            checkboxes.forEach(cb => {
+                cb.checked = false;
+            });
+            const selectAll = document.getElementById('selectAll');
+            if (selectAll) selectAll.checked = false;
+            updateBulkActions();
+        }
+
+        async function deleteSelectedStudents() {
+            const checkboxes = document.querySelectorAll('.student-select:checked');
+            if (checkboxes.length === 0) {
+                showMessage('Please select at least one student to delete', 'warning');
+                return;
+            }
+
+            if (!confirm(`Are you sure you want to delete ${checkboxes.length} student(s)? This action cannot be undone.`)) {
+                return;
+            }
+
+            const students = [];
+            checkboxes.forEach(cb => {
+                students.push({
+                    registerno: cb.value,
+                    department: cb.dataset.department,
+                    semester: cb.dataset.semester
+                });
+            });
+
+            try {
+                const response = await fetch('/admin/students/delete-multiple', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ students: students })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    showMessage(`Successfully deleted ${data.deleted} student(s)`, 'success');
+                    loadStudents();  // Reload the list
+                } else {
+                    showMessage(data.message, 'danger');
+                }
+            } catch (error) {
+                showMessage('Error deleting students: ' + error.message, 'danger');
             }
         }
     </script>
