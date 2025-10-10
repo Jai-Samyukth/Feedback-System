@@ -80,30 +80,78 @@
         }
         .card-body {
             padding: 2rem;
+            overflow: visible;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
         }
         .form-group label {
             font-weight: 600;
             color: #333;
             margin-bottom: 8px;
+            display: block;
+        }
+        /* Ensure col-md-* don't restrict dropdown width */
+        .row .col-md-5,
+        .row .col-md-6 {
+            overflow: visible;
         }
         .form-control {
             border-radius: 8px;
-            padding: 12px;
+            padding: 12px 16px;
             border: 1px solid #ced4da;
             transition: all 0.3s;
             font-size: 15px;
+            line-height: 1.6;
             color: #333;
             background-color: white;
+            min-height: 48px;
+            width: 100%;
+            /* Fix dropdown display issues */
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+            padding-right: 40px;
+        }
+        /* For standard select elements (not custom styled) */
+        select.form-control {
+            appearance: menulist;
+            -webkit-appearance: menulist;
+            -moz-appearance: menulist;
+            background-image: none;
+            padding-right: 16px;
         }
         .form-control:focus {
             border-color: #007bff;
             box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+            outline: none;
         }
         .form-control option {
-            padding: 10px;
+            padding: 12px 16px;
             color: #333;
             background-color: white;
             font-size: 15px;
+            line-height: 1.8;
+            min-height: 40px;
+            /* Better text rendering */
+            font-weight: 400;
+            white-space: normal;
+            word-wrap: break-word;
+        }
+        /* Ensure dropdown options are fully visible */
+        select.form-control option {
+            padding: 8px 12px;
+        }
+        /* Fix for Firefox */
+        @-moz-document url-prefix() {
+            select.form-control {
+                padding: 10px 16px;
+            }
         }
         .student-checkbox {
             width: 18px;
@@ -267,6 +315,44 @@
             color: #6c757d;
             font-size: 0.9rem;
             margin-top: 5px;
+        }
+        
+        /* Responsive fixes for dropdowns */
+        @media (max-width: 768px) {
+            .form-control {
+                font-size: 16px; /* Prevents zoom on iOS */
+                min-height: 44px;
+            }
+            .form-control option {
+                font-size: 16px;
+            }
+            .row .col-md-5,
+            .row .col-md-6 {
+                margin-bottom: 15px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .form-control {
+                font-size: 14px;
+                padding: 10px 14px;
+            }
+            select.form-control {
+                padding-right: 14px;
+            }
+        }
+        
+        /* Ensure dropdowns appear above other content */
+        select.form-control {
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Better visibility for long department names */
+        select.form-control option {
+            overflow: visible;
+            text-overflow: clip;
+            max-width: none;
         }
     </style>
 </head>
