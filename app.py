@@ -546,7 +546,7 @@ if __name__ == "__main__":
     import uvicorn
     import socket
     host_ip = os.getenv("HOST", "0.0.0.0")  # Listen on all interfaces
-    port = os.getenv("PORT", 5000)
+    port = int(os.getenv("PORT", 5000))
     logger.info(f"Starting server on {host_ip}:{port}")
     logger.info(f"Access at: http://localhost:{port} or http://{socket.gethostbyname(socket.gethostname())}:{port}")
     uvicorn.run(asgi_app, host=host_ip, port=port, log_config=None)
