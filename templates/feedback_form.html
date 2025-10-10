@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Feedback for {{ department }} - {{ semester }}</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.png') }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
@@ -24,6 +25,18 @@
             right: 0;
             top: 0;
             z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .header-logo {
+            position: absolute;
+            left: 20px;
+            height: 100px;
+            width: auto;
+        }
+        .header-content {
+            flex: 1;
         }
         header h1 {
             font-weight: bold;
@@ -137,8 +150,10 @@
 </head>
 <body>
     <header>
-      
-        <h1>Student Feedback Form</h1>
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="VSB Engineering College Logo" class="header-logo">
+        <div class="header-content">
+            <h1>Student Feedback Form</h1>
+        </div>
     </header>
     <div class="main-content">
         <div class="content-box">

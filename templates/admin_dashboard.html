@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Admin Dashboard - Feedback App</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.png') }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
@@ -28,6 +29,18 @@
             top: 0;
             z-index: 100;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .header-logo {
+            position: absolute;
+            left: 20px;
+            height: 120px;
+            width: auto;
+        }
+        .header-content {
+            flex: 1;
         }
         header h1 {
             font-weight: bold;
@@ -182,8 +195,11 @@
 </head>
 <body>
     <header>
-        <div class="college-name">VSB ENGINEERING COLLEGE</div>
-        <h1>Admin Dashboard</h1>
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="VSB Engineering College Logo" class="header-logo">
+        <div class="header-content">
+            <div class="college-name">VSB ENGINEERING COLLEGE</div>
+            <h1>Admin Dashboard</h1>
+        </div>
     </header>
     
     <div class="main-content container">
