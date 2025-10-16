@@ -4,7 +4,10 @@ Utils module - UPDATED to use SQLite database instead of CSV files
 import hashlib
 import base64
 import logging
+import os
+# import dotenv
 
+# dotenv.load_dotenv()
 # Lazy import to avoid circular dependency
 def _get_db():
     """Get database connection - lazy import to avoid circular dependency."""
@@ -14,7 +17,7 @@ def _get_db():
 # Configure logging
 logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s',
-    level=logging.INFO,
+    level=os.getenv('LOG_LEVEL', 'WARNING').upper(),
     datefmt='%Y-%m-%d %H:%M:%S'
 )
 
