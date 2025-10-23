@@ -26,9 +26,17 @@ from asgiref.wsgi import WsgiToAsgi
 
 # Configure rich logging
 logging.basicConfig(
-    level=logging.INFO,
+    level=logging.WARNING,
     format="%(message)s",
 )
+
+# Set levels for specific loggers to suppress INFO logs
+logging.getLogger('uvicorn').setLevel(logging.WARNING)
+logging.getLogger('uvicorn.error').setLevel(logging.WARNING)
+logging.getLogger('uvicorn.access').setLevel(logging.WARNING)
+logging.getLogger('httpx').setLevel(logging.WARNING)
+logging.getLogger('h11').setLevel(logging.WARNING)
+logging.getLogger('h11_impl').setLevel(logging.WARNING)
 
 logging.root.handlers = [
     RichHandler(
@@ -586,4 +594,4 @@ if __name__ == "__main__":
     logger.info(
         f"Access at: http://localhost:{port} or http://{socket.gethostbyname(socket.gethostname())}:{port}"
     )
-    uvicorn.run(asgi_app, host=host_ip, port=port, log_config=None)
+    uvicorn.run(asgi_app, host=host_ip, port=port, log_level="warning")

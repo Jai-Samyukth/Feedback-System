@@ -12,7 +12,7 @@ from pathlib import Path
 
 # Configure logging
 logging.basicConfig(
-    level=logging.INFO,
+    level=logging.WARNING,
     format='%(asctime)s - %(levelname)s - %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S'
 )
@@ -109,7 +109,7 @@ def start_server():
             asgi_app,
             host=host_ip,
             port=selected_port,
-            log_config=None
+            log_level="warning"
         )
     except KeyboardInterrupt:
         logger.info("\nServer stopped by user")
