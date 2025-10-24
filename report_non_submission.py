@@ -137,7 +137,7 @@ def generate_non_submission_report(department, semester):
             alignment=1  # Center alignment
         )
         watermark_text = Paragraph(
-            "THIS REPORT AND SITE IS CREATED AND MANAGED BY GENRECAI",
+            "THIS REPORT AND SITE IS CREATED AND MANAGED BY CSBS 2023-2027 BATCH",
             watermark_style
         )
         # Draw watermark at bottom of page

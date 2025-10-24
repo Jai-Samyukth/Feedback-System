@@ -92,7 +92,7 @@ class FooterCanvas:
         # Draw watermark at the bottom of the page
         self.canvas.saveState()
         watermark1 = "Form No. AC 14b      Rev.No. 00      Effective Date: 15/12/2017"
-        watermark2_center = "© GENREC AI"
+        watermark2_center = "© EduEcho"
         watermark2_right = "VSB ENGINEERING COLLEGE/CSBS/BATCH 2023-2027"
         self.canvas.setFont("Helvetica", 7)
         self.canvas.setFillColor(colors.gray)
