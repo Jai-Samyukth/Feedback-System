@@ -112,7 +112,7 @@ class FooterCanvas:
 
 def generate_feedback_report(academic_year, branch, semester, year, feedback_data):
     """Generate a single-page PDF report with prominent graph."""
-    filename = f"feedback_report_{branch}_Semester {semester}.pdf"
+    filename = f"{branch}_Semester {semester}.pdf"
     filepath = os.path.abspath(filename)
     logger.info(f"Generating report: {filename}")
     
